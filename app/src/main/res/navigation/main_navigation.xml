@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ke.co.ideagalore.olyxadmin.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/salesFragment"
+        android:name="ke.co.ideagalore.olyxadmin.SalesFragment"
+        android:label="fragment_sales"
+        tools:layout="@layout/fragment_sales" />
+    <fragment
+        android:id="@+id/shopsFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ShopsFragment"
+        android:label="fragment_shops"
+        tools:layout="@layout/fragment_shops" />
+    <fragment
+        android:id="@+id/stockFragment"
+        android:name="ke.co.ideagalore.olyxadmin.StockFragment"
+        android:label="fragment_stock"
+        tools:layout="@layout/fragment_stock" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="ke.co.ideagalore.olyxadmin.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

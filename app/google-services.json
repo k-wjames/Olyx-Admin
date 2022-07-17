@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "517800405253",
+    "project_id": "olyx-33199",
+    "storage_bucket": "olyx-33199.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517800405253:android:470b7890bfacfb398aef6c",
+        "android_client_info": {
+          "package_name": "ke.co.ideagalore.olyxadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517800405253-qbj879dd27em603qjf9f8pqkul9jfte9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7B3s9OtYPIOjCFEtQX2ZKa9hgMmS6YEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517800405253-qbj879dd27em603qjf9f8pqkul9jfte9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
