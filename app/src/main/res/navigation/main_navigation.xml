@@ -30,4 +30,14 @@
         android:name="ke.co.ideagalore.olyxadmin.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/staffFragment"
+        android:name="ke.co.ideagalore.olyxadmin.StaffFragment"
+        android:label="fragment_staff"
+        tools:layout="@layout/fragment_staff" />
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="ke.co.ideagalore.olyxadmin.StatisticsFragment"
+        android:label="fragment_statistics"
+        tools:layout="@layout/fragment_statistics" />
 </navigation>
