@@ -45,6 +45,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             Navigation.findNavController(view).navigate(R.id.salesFragment);
         } else if (view == binding.cvStock) {
             Navigation.findNavController(view).navigate(R.id.stockFragment);
+        }else if (view == binding.cvShops) {
+            Navigation.findNavController(view).navigate(R.id.shopsFragment);
         }
 
     }
