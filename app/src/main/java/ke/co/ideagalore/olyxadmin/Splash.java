@@ -37,13 +37,14 @@ public class Splash extends AppCompatActivity {
     }
 
     private void checkAuthenticationStatus() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        /*FirebaseAuth auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(getApplicationContext(), Onboard.class));
         }else   {
             startActivity(new Intent(getApplicationContext(), Home.class));
-        }
+        }*/
+        startActivity(new Intent(getApplicationContext(), Home.class));
         finish();
     }
 }
