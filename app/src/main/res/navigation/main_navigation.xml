@@ -40,4 +40,9 @@
         android:name="ke.co.ideagalore.olyxadmin.StatisticsFragment"
         android:label="fragment_statistics"
         tools:layout="@layout/fragment_statistics" />
+    <fragment
+        android:id="@+id/catalogueFragment"
+        android:name="ke.co.ideagalore.olyxadmin.CatalogueFragment"
+        android:label="fragment_catalogue"
+        tools:layout="@layout/fragment_catalogue" />
 </navigation>

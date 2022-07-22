@@ -4,11 +4,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import ke.co.ideagalore.olyxadmin.databinding.FragmentHomeBinding;
 
@@ -35,7 +45,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         binding.cvShops.setOnClickListener(this);
         binding.cvStaff.setOnClickListener(this);
         binding.cvStock.setOnClickListener(this);
-        binding.cvAccessories.setOnClickListener(this);
+        binding.cvCatalogue.setOnClickListener(this);
     }
 
     @Override
@@ -50,7 +60,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         } else if (view == binding.cvStatistics) {
             Navigation.findNavController(view).navigate(R.id.statisticsFragment);
         } else if (view == binding.cvStaff) {
-            Navigation.findNavController(view).navigate(R.id.staffFragment);
+           Navigation.findNavController(view).navigate(R.id.staffFragment);
+          /*  DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Test");
+            Map<String, String>map=new HashMap<>();
+            map.put("Test", "Kerush");
+            ref.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Toast.makeText(getActivity(), "Test Success", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });*/
+        }else if (view==binding.cvCatalogue){
+            Navigation.findNavController(view).navigate(R.id.catalogueFragment);
         }
 
     }

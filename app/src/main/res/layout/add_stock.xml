@@ -38,12 +38,12 @@
         android:fontFamily="@font/roboto"
         android:text="Quantity"
         android:textColor="@color/text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
 
     <EditText
-        android:id="@+id/edt_phone"
+        android:id="@+id/edt_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -53,6 +53,110 @@
         android:hint="Quantity"
         android:inputType="number"
         android:maxLength="10"
+        android:textColor="@color/text"
+        android:textColorHint="@color/text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:fontFamily="@font/roboto"
+        android:text="Brand"
+        android:textColor="@color/text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"/>
+
+
+    <EditText
+        android:id="@+id/edt_brand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/edt_background"
+        android:hint="Brand"
+        android:inputType="textCapSentences"
+        android:textColor="@color/text"
+        android:textColorHint="@color/text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:fontFamily="@font/roboto"
+        android:text="Capacity"
+        android:textColor="@color/text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"/>
+
+
+    <EditText
+        android:id="@+id/edt_capacity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/edt_background"
+        android:hint="Capacity"
+        android:inputType="number"
+        android:textColor="@color/text"
+        android:textColorHint="@color/text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:fontFamily="@font/roboto"
+        android:text="Buying price"
+        android:textColor="@color/text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"/>
+
+
+    <EditText
+        android:id="@+id/edt_buying_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/edt_background"
+        android:hint="Buying price"
+        android:inputType="number"
+        android:textColor="@color/text"
+        android:textColorHint="@color/text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:fontFamily="@font/roboto"
+        android:text="Selling price"
+        android:textColor="@color/text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"/>
+
+
+    <EditText
+        android:id="@+id/edt_selling_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/edt_background"
+        android:hint="Selling price"
+        android:inputType="number"
         android:textColor="@color/text"
         android:textColorHint="@color/text" />
 
@@ -78,12 +182,13 @@
 
 
         <Button
-            android:id="@+id/btn_next"
+            android:id="@+id/btn_add_catalogue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="right"
+            android:layout_marginRight="1dp"
             android:fontFamily="@font/roboto"
             android:padding="10dp"
             android:text="Add Item"
