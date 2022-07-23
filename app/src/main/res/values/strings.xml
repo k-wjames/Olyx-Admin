@@ -4,6 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="stockItems">
+        <item>Select category</item>
         <item>Gas</item>
         <item>Accessory</item>
     </string-array>

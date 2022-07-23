@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,8 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
     EditText edtProduct, edtDescription, edtQuantity, edtBuyingPrice, edtSellingPrice;
     Dialog dialog;
     ProgressBar progressBar;
+
+    String selectedCategory;
 
     ArrayList<Catalogue> catalogueArrayList;
 
@@ -76,6 +81,7 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Catalogue");
         binding.progressBar.setVisibility(View.VISIBLE);
+        catalogueArrayList.clear();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -85,6 +91,7 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
                     catalogueArrayList.add(catalogue);
 
                     if (catalogueArrayList.size() < 1) {
+
                         binding.animationView.setVisibility(View.VISIBLE);
                     }
 
@@ -95,6 +102,7 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
                 binding.rvCatalogue.setHasFixedSize(true);
                 CatalogueAdapter adapter = new CatalogueAdapter(getActivity(), catalogueArrayList);
                 binding.rvCatalogue.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
 
             }
 
@@ -124,6 +132,25 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
         edtBuyingPrice = dialog.findViewById(R.id.edt_buying_price);
         edtSellingPrice = dialog.findViewById(R.id.edt_selling_price);
 
+        Spinner spinner = dialog.findViewById(R.id.spinner_category);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.stockItems, R.layout.spinner_item);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedCategory = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinner.setAdapter(adapter);
+
         TextView cancel = dialog.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(view -> dialog.dismiss());
 
@@ -131,7 +158,11 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNewCatalogueItem();
+                if (!selectedCategory.equals("Select category")) {
+                    addNewCatalogueItem();
+                }else {
+                    Toast.makeText(getActivity(), "Please select product category", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -159,6 +190,7 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
             catalogue.setQuantity(quantity);
             catalogue.setBuyingPrice(buying);
             catalogue.setSellingPrice(selling);
+            catalogue.setCategory(selectedCategory);
 
             progressBar.setVisibility(View.VISIBLE);
 
@@ -168,6 +200,7 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
                 public void onComplete(@NonNull Task<Void> task) {
 
                     if (task.isSuccessful()) {
+                        getCatalogueData();
                         dialog.dismiss();
                     }
 

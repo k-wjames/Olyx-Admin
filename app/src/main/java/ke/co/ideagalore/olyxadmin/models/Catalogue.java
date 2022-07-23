@@ -2,10 +2,21 @@ package ke.co.ideagalore.olyxadmin.models;
 
 public class Catalogue {
 
-    String prodId, product, description;
+    String prodId, product, description, category;
     int quantity, buyingPrice, sellingPrice;
 
     public Catalogue() {
+    }
+
+    public Catalogue(String prodId, String product, String description, String category,
+                     int quantity, int buyingPrice, int sellingPrice) {
+        this.prodId = prodId;
+        this.product = product;
+        this.description = description;
+        this.category = category;
+        this.quantity = quantity;
+        this.buyingPrice = buyingPrice;
+        this.sellingPrice = sellingPrice;
     }
 
     public String getProdId() {
@@ -30,6 +41,14 @@ public class Catalogue {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getQuantity() {
