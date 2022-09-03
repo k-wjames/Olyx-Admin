@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import ke.co.ideagalore.olyxadmin.R;
+import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentSignUpBinding;
 import ke.co.ideagalore.olyxadmin.models.User;
@@ -26,6 +27,7 @@ import ke.co.ideagalore.olyxadmin.models.User;
 public class SignUpFragment extends Fragment implements View.OnClickListener {
     FragmentSignUpBinding binding;
     ValidateFields validator = new ValidateFields();
+    CustomDialogs dialogs = new CustomDialogs();
 
     public SignUpFragment() {
     }
@@ -69,13 +71,15 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 return;
             }
 
+            dialogs.showProgressDialog(getActivity(), "Setting up user account.");
+
             FirebaseAuth auth = FirebaseAuth.getInstance();
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (!task.isSuccessful()) {
-                        Toast.makeText(getActivity(), "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Could create user account. Please try again.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     String userId = auth.getUid();
@@ -92,9 +96,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         ref.child(userId).setValue(user).addOnCompleteListener(task -> {
 
             if (!task.isSuccessful()) {
+                dialogs.dismissProgressDialog();
                 Toast.makeText(getActivity(), "Oops! Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
                 return;
             }
+            dialogs.dismissProgressDialog();
             Navigation.findNavController(getView()).navigate(R.id.loginFragment);
 
         });

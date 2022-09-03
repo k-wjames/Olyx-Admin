@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.activities.Home;
+import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentLoginBinding;
 
@@ -23,6 +24,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     FragmentLoginBinding binding;
     ValidateFields validateFields = new ValidateFields();
+    CustomDialogs dialogs = new CustomDialogs();
 
     public LoginFragment() {
 
@@ -59,6 +61,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (validateFields.validateEmailAddress(getActivity(), binding.edtEmail)
                 && validateFields.validateEditTextFields(getActivity(), binding.edtPassword, "Password")) {
 
+            dialogs.showProgressDialog(getActivity(), "Signing in...");
             String email = binding.edtEmail.getText().toString().trim();
             String password = binding.edtPassword.getText().toString().trim();
 
@@ -67,8 +70,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 if (!task.isSuccessful()) {
                     Toast.makeText(getActivity(), "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                    dialogs.dismissProgressDialog();
                     return;
                 }
+                dialogs.dismissProgressDialog();
                 startActivity(new Intent(getActivity(), Home.class));
                 getActivity().finish();
 
