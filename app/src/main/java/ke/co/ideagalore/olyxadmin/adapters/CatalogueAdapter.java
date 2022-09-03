@@ -20,9 +20,6 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
     ArrayList<Catalogue> catalogueArrayList;
     Catalogue catalogue;
 
-    public CatalogueAdapter() {
-    }
-
     public CatalogueAdapter(Context context, ArrayList<Catalogue> catalogueArrayList) {
         this.context = context;
         this.catalogueArrayList = catalogueArrayList;

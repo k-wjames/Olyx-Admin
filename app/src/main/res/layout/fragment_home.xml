@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".HomeFragment">
+    tools:context=".fragments.HomeFragment">
 
 
     <TextView
@@ -517,7 +517,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/roboto"
-                    android:text="Stock"
+                    android:text="Gas Refill"
                     android:textColor="@color/text"
                     android:textSize="16sp"
                     android:textStyle="bold" />

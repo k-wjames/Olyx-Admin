@@ -1,138 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
-    tools:context=".LoginFragment">
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".fragments.LoginFragment">
 
     <TextView
-        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/roboto"
-        android:text="Login"
+        android:layout_marginTop="150dp"
+        android:fontFamily="@font/lato"
+        android:text="@string/welcome_back"
         android:textColor="@color/text"
-        android:textSize="20sp" />
-
-
-    <TextView
-        android:id="@+id/title_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="70dp"
-        android:fontFamily="@font/roboto"
-        android:text="Welcome back!"
-        android:textColor="@color/text"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/title_two"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title_one"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/roboto"
-        android:text="Let's get you started"
-        android:textColor="@color/text"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/title_three"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_two"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/roboto"
-        android:text="Phone number"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/lato"
+        android:text="@string/email_address"
         android:textColor="@color/text"
-        android:textSize="16sp"
         android:textStyle="bold" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_phone"
+    <EditText
+        android:id="@+id/edt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_three"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/background"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        app:cardUseCompatPadding="true">
-
-        <EditText
-            android:id="@+id/edt_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@null"
-            android:hint="Phone number"
-            android:inputType="phone"
-            android:textColor="@color/text"
-            android:textColorHint="@color/text"
-            android:maxLength="10"/>
-
-    </androidx.cardview.widget.CardView>
+        android:background="@drawable/refill_bg"
+        android:hint="@string/sample_email"
+        android:inputType="textEmailAddress"
+        android:textColorHint="@color/text"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/title_four"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cv_phone"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/roboto"
-        android:text="Access Code"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/lato"
+        android:text="@string/password"
         android:textColor="@color/text"
-        android:textSize="16sp"
         android:textStyle="bold" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_code"
+
+    <EditText
+        android:id="@+id/edt_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_four"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/background"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        app:cardUseCompatPadding="true">
-
-        <EditText
-            android:id="@+id/edt_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@null"
-            android:hint="Access code"
-            android:inputType="phone"
-            android:maxLength="4"
-            android:textColor="@color/text"
-            android:textColorHint="@color/text" />
-
-    </androidx.cardview.widget.CardView>
+        android:background="@drawable/refill_bg"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:textColorHint="@color/text"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <Button
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"
-        android:fontFamily="@font/roboto"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/lato"
         android:padding="10dp"
-        android:text="Next"
+        android:text="@string/sign_in"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:backgroundTint="@color/black" />
 
-</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:text="@string/don_t_have_an_account"
+            android:textColor="@color/text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/lato"
+            android:text="@string/sign_up_here"
+            android:textColor="@color/accent"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</LinearLayout>
