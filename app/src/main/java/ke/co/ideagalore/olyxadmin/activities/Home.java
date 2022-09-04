@@ -1,14 +1,20 @@
 package ke.co.ideagalore.olyxadmin.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 
 import ke.co.ideagalore.olyxadmin.R;
+import ke.co.ideagalore.olyxadmin.databinding.ActivityHomeBinding;
 
 public class Home extends AppCompatActivity {
+
+ActivityHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +24,11 @@ public class Home extends AppCompatActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        setContentView(R.layout.activity_home);
+
+        binding=ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_main);
+        NavigationUI.setupWithNavController(binding.btvMain, navController);
     }
 }

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/edt_background.xml" value="0.2055" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/ic_sales_bg.xml" value="0.154" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/progress.xml" value="0.1945" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/refill_bg.xml" value="0.1945" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/transaction_dialog_bg.xml" value="0.1945" />
@@ -19,6 +20,7 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_code_verification.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_home.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_login.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_main.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_sales.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_settings.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_shops.xml" value="0.29322916666666665" />
@@ -30,6 +32,7 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/refill_item.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/set_refill_dialog.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/spinner_item.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/menu/menu_bottom_nav.xml" value="0.29322916666666665" />
       </map>
     </option>
   </component>

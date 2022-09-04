@@ -1,5 +1,8 @@
 package ke.co.ideagalore.olyxadmin.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +31,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     FragmentSignUpBinding binding;
     ValidateFields validator = new ValidateFields();
     CustomDialogs dialogs = new CustomDialogs();
-    String businessName;
+    String businessName ,name, terminal;
 
     public SignUpFragment() {
     }
@@ -66,10 +69,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             String email = binding.edtEmail.getText().toString().trim();
             String password = binding.edtPassword.getText().toString().trim();
             String confirmPassword = binding.edtConfirmPassword.getText().toString().trim();
-            String name = binding.edtUsername.getText().toString().trim();
+            name = binding.edtUsername.getText().toString().trim();
 
             if (!password.equals(confirmPassword)) {
-                Toast.makeText(getActivity(), "Password mismatch.", Toast.LENGTH_SHORT).show();
+                dialogs.showSnackBar(getActivity(),"Password mismatch.");
                 return;
             }
 
@@ -85,6 +88,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         return;
                     }
                     String userId = auth.getUid();
+                    terminal=userId;
                     saveUserData(name, userId);
                 }
             });
@@ -104,6 +108,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 return;
             }
             dialogs.dismissProgressDialog();
+            savePreferencesData();
             Navigation.findNavController(getView()).navigate(R.id.loginFragment);
 
         });
@@ -115,6 +120,15 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         if (arguments != null) {
             businessName = arguments.get("business").toString();
         }
+    }
+
+    public void savePreferencesData(){
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name", name);
+        editor.putString("business", businessName);
+        editor.putString("terminal", terminal);
+        editor.commit();
     }
 
 }

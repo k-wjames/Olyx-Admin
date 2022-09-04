@@ -9,5 +9,9 @@
     <color name="accentThree">#FFC107</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="greenLight">#454CAF50</color>
+    <color name="cyanLight">#45E91E63</color>
+    <color name="blueLight">#452196F3</color>
+    <color name="yellowLight">#45FFC107</color>
 
 </resources>

@@ -19,6 +19,7 @@
     <string name="next">Continue</string>
     <string name="business_name">business name</string>
     <string name="user_account">User account</string>
+    <string name="dashboard">Dashboard</string>
 
     <string-array name="stockItems">
         <item>Select category</item>
