@@ -2,13 +2,15 @@ package ke.co.ideagalore.olyxadmin.models;
 
 public class Terminal {
     String terminal, terminalId;
+    Store store;
 
     public Terminal() {
     }
 
-    public Terminal(String terminal, String terminalId) {
+    public Terminal(String terminal, String terminalId, Store store) {
         this.terminal = terminal;
         this.terminalId = terminalId;
+        this.store = store;
     }
 
     public String getTerminal() {
@@ -25,5 +27,13 @@ public class Terminal {
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 }

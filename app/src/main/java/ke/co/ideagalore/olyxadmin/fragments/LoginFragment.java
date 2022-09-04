@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (view == binding.btnLogin) {
             loginUserWithEmailPassword();
         } else {
-            Navigation.findNavController(view).navigate(R.id.signUpFragment);
+            Navigation.findNavController(view).navigate(R.id.businessFragment);
         }
     }
 
@@ -69,7 +69,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
 
                 if (!task.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                    dialogs.showSnackBar(getActivity(),"Something went wrong. Please try again.");
                     dialogs.dismissProgressDialog();
                     return;
                 }

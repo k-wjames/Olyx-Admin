@@ -20,4 +20,10 @@
         android:name="ke.co.ideagalore.olyxadmin.fragments.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/businessFragment"
+        android:name="ke.co.ideagalore.olyxadmin.fragments.BusinessFragment"
+        android:label="fragment_business"
+        tools:layout="@layout/fragment_business" />
+
 </navigation>

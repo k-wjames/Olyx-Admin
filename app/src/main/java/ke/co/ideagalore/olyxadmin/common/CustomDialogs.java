@@ -1,9 +1,16 @@
 package ke.co.ideagalore.olyxadmin.common;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import ke.co.ideagalore.olyxadmin.R;
 
@@ -24,5 +31,23 @@ public class CustomDialogs {
 
     public void dismissProgressDialog(){
         myDialog.dismiss();
+    }
+
+    public void showSnackBar(Activity activity, String message) {
+
+        RelativeLayout view = (activity).findViewById(R.id.layout);
+        final Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(activity.getResources().getColor(R.color.accent));
+
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackBarView.getLayoutParams();
+        params.gravity = Gravity.TOP;
+        params.topMargin=100;
+        params.bottomMargin = 100;
+        params.leftMargin = 20;
+        params.rightMargin = 20;
+        snackBarView.setLayoutParams(params);
+        snackbar.show();
+
     }
 }

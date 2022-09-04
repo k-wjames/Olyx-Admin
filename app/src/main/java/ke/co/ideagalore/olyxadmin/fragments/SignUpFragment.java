@@ -28,6 +28,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     FragmentSignUpBinding binding;
     ValidateFields validator = new ValidateFields();
     CustomDialogs dialogs = new CustomDialogs();
+    String businessName;
 
     public SignUpFragment() {
     }
@@ -42,6 +43,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getBundleData();
         binding.btnSignup.setOnClickListener(this);
         binding.tvLogin.setOnClickListener(this);
     }
@@ -79,7 +81,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (!task.isSuccessful()) {
-                        Toast.makeText(getActivity(), "Could create user account. Please try again.", Toast.LENGTH_SHORT).show();
+                        dialogs.showSnackBar(getActivity(),"Could create user account. Please try again.");
                         return;
                     }
                     String userId = auth.getUid();
@@ -93,11 +95,12 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         User user = new User();
         user.setName(name);
+        user.setBusiness(businessName);
         ref.child(userId).setValue(user).addOnCompleteListener(task -> {
 
             if (!task.isSuccessful()) {
                 dialogs.dismissProgressDialog();
-                Toast.makeText(getActivity(), "Oops! Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                dialogs.showSnackBar(getActivity(),"Oops! Something went wrong. Please try again.");
                 return;
             }
             dialogs.dismissProgressDialog();
@@ -105,6 +108,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
         });
 
+    }
+
+    private void getBundleData() {
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            businessName = arguments.get("business").toString();
+        }
     }
 
 }
