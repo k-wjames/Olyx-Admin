@@ -7,12 +7,14 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/ic_sales_bg.xml" value="0.154" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/progress.xml" value="0.1945" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/refill_bg.xml" value="0.1945" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/square_background.xml" value="0.154" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/transaction_dialog_bg.xml" value="0.1945" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/activity_home.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/activity_main.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/activity_onboard.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/add_catalogue_dialog.xml" value="0.28958333333333336" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/add_shop.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/add_shop_dialog.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/add_stock.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/catalogue_item.xml" value="0.28854166666666664" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_business.xml" value="0.29322916666666665" />
@@ -32,6 +34,7 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/refill_item.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/set_refill_dialog.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/spinner_item.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/store_item.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/menu/menu_bottom_nav.xml" value="0.29322916666666665" />
       </map>
     </option>

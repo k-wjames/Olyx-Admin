@@ -6,6 +6,8 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ public class CustomDialogs {
         textView.setText(message);
         myDialog.show();
     }
+
 
     public void dismissProgressDialog(){
         myDialog.dismiss();

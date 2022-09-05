@@ -51,7 +51,7 @@ public class ShopsFragment extends Fragment implements View.OnClickListener {
     private void showAddStockDialog() {
 
         Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.add_shop);
+        dialog.setContentView(R.layout.add_shop_dialog);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
