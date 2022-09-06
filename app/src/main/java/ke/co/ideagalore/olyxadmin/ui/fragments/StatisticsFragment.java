@@ -1,4 +1,4 @@
-package ke.co.ideagalore.olyxadmin.fragments;
+package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

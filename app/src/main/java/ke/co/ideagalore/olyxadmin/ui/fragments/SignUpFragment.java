@@ -1,4 +1,4 @@
-package ke.co.ideagalore.olyxadmin.fragments;
+package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +31,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     FragmentSignUpBinding binding;
     ValidateFields validator = new ValidateFields();
     CustomDialogs dialogs = new CustomDialogs();
-    String businessName ,name, terminal;
+    String businessName, name, terminal;
 
     public SignUpFragment() {
     }
@@ -72,7 +72,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             name = binding.edtUsername.getText().toString().trim();
 
             if (!password.equals(confirmPassword)) {
-                dialogs.showSnackBar(getActivity(),"Password mismatch.");
+                dialogs.showSnackBar(getActivity(), "Password mismatch.");
                 return;
             }
 
@@ -83,13 +83,20 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if (!task.isSuccessful()) {
-                        dialogs.showSnackBar(getActivity(),"Could create user account. Please try again.");
-                        return;
+                    if (task.isSuccessful()) {
+
+                        String userId = auth.getUid();
+                        terminal = userId;
+                        saveUserData(name, userId);
                     }
-                    String userId = auth.getUid();
-                    terminal=userId;
-                    saveUserData(name, userId);
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    dialogs.dismissProgressDialog();
+                    dialogs.showSnackBar(getActivity(), e.getMessage());
+                    return;
                 }
             });
         }
@@ -104,7 +111,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
             if (!task.isSuccessful()) {
                 dialogs.dismissProgressDialog();
-                dialogs.showSnackBar(getActivity(),"Oops! Something went wrong. Please try again.");
+                dialogs.showSnackBar(getActivity(), "Oops! Something went wrong. Please try again.");
                 return;
             }
             dialogs.dismissProgressDialog();
@@ -122,7 +129,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void savePreferencesData(){
+    public void savePreferencesData() {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("name", name);

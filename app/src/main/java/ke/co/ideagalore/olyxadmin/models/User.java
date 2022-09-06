@@ -2,7 +2,6 @@ package ke.co.ideagalore.olyxadmin.models;
 
 public class User {
     String name, business;
-    Terminal terminal;
 
     public User() {
     }
@@ -10,7 +9,6 @@ public class User {
     public User(String name, String business, Terminal terminal) {
         this.name = name;
         this.business = business;
-        this.terminal = terminal;
     }
 
     public String getName() {
@@ -29,11 +27,4 @@ public class User {
         this.business = business;
     }
 
-    public Terminal getTerminal() {
-        return terminal;
-    }
-
-    public void setTerminal(Terminal terminal) {
-        this.terminal = terminal;
-    }
 }

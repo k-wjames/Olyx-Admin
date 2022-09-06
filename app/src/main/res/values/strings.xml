@@ -20,6 +20,7 @@
     <string name="business_name">business name</string>
     <string name="user_account">User account</string>
     <string name="dashboard">Dashboard</string>
+    <string name="sign_in_here">Sign in here</string>
 
     <string-array name="stockItems">
         <item>Select category</item>

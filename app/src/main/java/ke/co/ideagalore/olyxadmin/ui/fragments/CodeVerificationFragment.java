@@ -1,4 +1,4 @@
-package ke.co.ideagalore.olyxadmin.fragments;
+package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import ke.co.ideagalore.olyxadmin.activities.Home;
+import ke.co.ideagalore.olyxadmin.ui.activities.Home;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentCodeVerificationBinding;
 
 public class CodeVerificationFragment extends Fragment implements View.OnClickListener{

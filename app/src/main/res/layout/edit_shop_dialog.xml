@@ -20,22 +20,22 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/lato"
-            android:text="Add New Store"
+            android:text="Manage Store"
             android:textColor="@color/accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:indeterminateDrawable="@drawable/progress"
-            android:indeterminateOnly="true"
-            android:visibility="gone" />
-
+            android:background="@drawable/delete_ic_background"
+            android:src="@drawable/ic_delete"
+            android:visibility="visible"
+            app:tint="@color/white" />
 
     </RelativeLayout>
 
@@ -50,14 +50,12 @@
         android:textStyle="bold" />
 
 
-    <EditText
-        android:id="@+id/edt_store"
+    <TextView
+        android:id="@+id/tv_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/edt_background"
-        android:hint="store name"
-        android:inputType="textCapWords"
         android:textColorHint="@color/text"
         android:textCursorDrawable="@null"
         android:textSize="14sp" />
@@ -73,14 +71,12 @@
         android:textStyle="bold" />
 
 
-    <EditText
-        android:id="@+id/edt_location"
+    <TextView
+        android:id="@+id/tv_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/edt_background"
-        android:hint="store location"
-        android:inputType="textCapWords"
         android:textColorHint="@color/text"
         android:textCursorDrawable="@null"
         android:textSize="14sp" />
@@ -105,14 +101,14 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btn_add_store"
+            android:id="@+id/btn_edit_store"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:fontFamily="@font/lato"
             android:padding="10dp"
-            android:text="Add store"
+            android:text="Edit store"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:backgroundTint="@color/accent" />

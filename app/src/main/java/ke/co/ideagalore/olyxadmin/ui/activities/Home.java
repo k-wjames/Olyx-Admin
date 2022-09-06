@@ -1,20 +1,20 @@
-package ke.co.ideagalore.olyxadmin.activities;
+package ke.co.ideagalore.olyxadmin.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 
 import ke.co.ideagalore.olyxadmin.R;
-import ke.co.ideagalore.olyxadmin.databinding.ActivityOnboardBinding;
+import ke.co.ideagalore.olyxadmin.databinding.ActivityHomeBinding;
 
-public class Onboard extends AppCompatActivity {
+public class Home extends AppCompatActivity {
 
-    private NavController navController;
-    ActivityOnboardBinding binding;
+ActivityHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +25,10 @@ public class Onboard extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
 
-        binding=ActivityOnboardBinding.inflate(getLayoutInflater());
+        binding=ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        navController = Navigation.findNavController(this, R.id.navigation_host);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_main);
+        NavigationUI.setupWithNavController(binding.btvMain, navController);
     }
 }

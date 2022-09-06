@@ -7,7 +7,7 @@
     android:padding="10dp"
     android:background="@color/background"
     android:id="@+id/layout"
-    tools:context=".fragments.SignUpFragment">
+    tools:context=".ui.fragments.SignUpFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/refill_bg"
+                android:background="@drawable/edt_background"
                 android:hint="@string/hint_username"
                 android:inputType="textCapWords"
                 android:textColorHint="@color/text"
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/refill_bg"
+                android:background="@drawable/edt_background"
                 android:hint="@string/sample_email"
                 android:inputType="textEmailAddress"
                 android:textColorHint="@color/text"
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/refill_bg"
+                android:background="@drawable/edt_background"
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:textColorHint="@color/text"
@@ -118,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/refill_bg"
+                android:background="@drawable/edt_background"
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:textColorHint="@color/text"
@@ -159,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/lato"
-                    android:text="@string/sign_up_here"
+                    android:text="@string/sign_in_here"
                     android:textColor="@color/accent"
                     android:textStyle="bold" />
 

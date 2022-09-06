@@ -1,4 +1,4 @@
-package ke.co.ideagalore.olyxadmin.activities;
+package ke.co.ideagalore.olyxadmin.ui.activities;
 
 import android.content.Intent;
 import android.os.Build;

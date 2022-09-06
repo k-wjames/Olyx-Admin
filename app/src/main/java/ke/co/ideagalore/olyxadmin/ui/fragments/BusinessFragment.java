@@ -1,4 +1,4 @@
-package ke.co.ideagalore.olyxadmin.fragments;
+package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import javax.xml.namespace.NamespaceContext;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;

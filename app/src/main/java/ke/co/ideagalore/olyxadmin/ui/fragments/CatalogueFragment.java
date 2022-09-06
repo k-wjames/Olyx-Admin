@@ -1,4 +1,4 @@
-package ke.co.ideagalore.olyxadmin.fragments;
+package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;

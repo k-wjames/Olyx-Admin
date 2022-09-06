@@ -1,4 +1,4 @@
-package ke.co.ideagalore.olyxadmin.fragments;
+package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import android.os.Bundle;
 
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ke.co.ideagalore.olyxadmin.R;
-import ke.co.ideagalore.olyxadmin.databinding.FragmentHomeBinding;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentStaffBinding;
 
 public class StaffFragment extends Fragment implements View.OnClickListener{

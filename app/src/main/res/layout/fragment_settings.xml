@@ -6,67 +6,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="10dp"
-    tools:context=".fragments.SettingsFragment">
+    android:padding="20dp"
+    tools:context=".ui.fragments.SettingsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="35dp">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_back"
+                app:tint="@color/text"
+                android:background="@drawable/edt_background"/>
 
             <TextView
-                android:id="@+id/tv_dash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
-                android:text="Hi"
+                android:text="Account settings"
                 android:textColor="@color/text"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/lato"
-                android:text="Jason,"
-                android:textColor="@color/accent"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
-                android:text="Sunday,"
-                android:textColor="@color/text"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="@font/lato"
-                android:text="17 July 2022"
-                android:textColor="@color/text" />
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_business"
@@ -77,33 +51,55 @@
             android:text="Lynx Gas Point"
             android:textColor="@color/text"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/lato"
+            android:text="by"
+            android:textColor="@color/text"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_proprietor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/accent"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/lato"
-            android:text="Terminal ID"
+            android:text="TERMINAL ID"
             android:textColor="@color/text"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="12sp"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/edt_background"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <TextView
+                android:id="@+id/tv_terminal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/lato"
                 android:text="Terminal ID"
                 android:textColor="@color/text"
-                android:textSize="16sp" />
+                android:textStyle="bold"/>
 
             <ImageView
                 android:id="@+id/iv_copy"
@@ -114,54 +110,147 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="1dp"
+            app:cardCornerRadius="5dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/lato"
-                android:text="Stores"
-                android:textColor="@color/text"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_add_store"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_add"
-                app:tint="@color/accent" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
 
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:drawableStart="@drawable/ic_store"
+                        android:drawablePadding="5dp"
+                        android:fontFamily="@font/lato"
+                        android:text="Stores"
+                        android:textColor="@color/text"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:drawableTint="@color/accent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_stores"
+                    <ImageView
+                        android:id="@+id/iv_minimise"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_toStartOf="@+id/iv_add_store"
+                        android:src="@drawable/ic_minimise"
+                        android:visibility="gone"
+                        app:tint="@color/accent" />
+
+                    <ImageView
+                        android:id="@+id/iv_expand"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_expand"
+                        app:tint="@color/accent" />
+
+                    <ImageView
+                        android:id="@+id/iv_add_store"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_add"
+                        android:visibility="gone"
+                        app:tint="@color/accent" />
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_stores"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:visibility="gone"
+                    tools:listitem="@layout/store_item" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            tools:listitem="@layout/store_item" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/lato"
-            android:text="Store attendants"
-            android:textColor="@color/text"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="5dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_attendants"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/refill_item" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerHorizontal="true"
+                        android:drawableLeft="@drawable/ic_agents"
+                        android:drawablePadding="5dp"
+                        android:fontFamily="@font/lato"
+                        android:text="Store attendants"
+                        android:textColor="@color/text"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:drawableTint="@color/accent" />
+
+                    <ImageView
+                        android:id="@+id/iv_minimise_attendants"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_minimise"
+                        android:visibility="gone"
+                        app:tint="@color/accent" />
+
+                    <ImageView
+                        android:id="@+id/iv_expand_attendants"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_expand"
+                        app:tint="@color/accent" />
+
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_attendants"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:listitem="@layout/store_item" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

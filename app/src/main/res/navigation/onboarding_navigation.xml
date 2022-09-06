@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="ke.co.ideagalore.olyxadmin.fragments.LoginFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/codeVerificationFragment"
-        android:name="ke.co.ideagalore.olyxadmin.fragments.CodeVerificationFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.CodeVerificationFragment"
         android:label="fragment_code_verification"
         tools:layout="@layout/fragment_code_verification" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="ke.co.ideagalore.olyxadmin.fragments.SignUpFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/businessFragment"
-        android:name="ke.co.ideagalore.olyxadmin.fragments.BusinessFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.BusinessFragment"
         android:label="fragment_business"
         tools:layout="@layout/fragment_business" />
 

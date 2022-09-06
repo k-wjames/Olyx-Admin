@@ -1,4 +1,4 @@
-package ke.co.ideagalore.olyxadmin.fragments;
+package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -55,7 +55,8 @@ public class MainFragment extends Fragment {
     private void getPreferenceData() {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
         String business=sharedPreferences.getString("business", null);
-        binding.tvName.setText(sharedPreferences.getString("name", null));
-        binding.tvBusiness.setText(business+",");
+        String name=sharedPreferences.getString("name", null);
+        binding.tvName.setText(name+",");
+        binding.tvBusiness.setText(business+".");
     }
 }

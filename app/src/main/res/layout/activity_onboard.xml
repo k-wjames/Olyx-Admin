@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:padding="15dp"
-    tools:context=".activities.Onboard">
+    tools:context=".ui.activities.Onboard">
 
 
     <fragment

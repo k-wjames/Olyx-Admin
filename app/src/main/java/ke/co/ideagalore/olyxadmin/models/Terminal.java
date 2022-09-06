@@ -1,39 +1,48 @@
 package ke.co.ideagalore.olyxadmin.models;
 
 public class Terminal {
-    String terminal, terminalId;
-    Store store;
+    String business, businessId, proprietor;
+    Stores stores;
 
     public Terminal() {
     }
 
-    public Terminal(String terminal, String terminalId, Store store) {
-        this.terminal = terminal;
-        this.terminalId = terminalId;
-        this.store = store;
+    public Terminal(String business, String businessId, String proprietor, Stores store) {
+        this.business = business;
+        this.businessId = businessId;
+        this.proprietor = proprietor;
+        this.stores = store;
     }
 
-    public String getTerminal() {
-        return terminal;
+    public String getBusiness() {
+        return business;
     }
 
-    public void setTerminal(String terminal) {
-        this.terminal = terminal;
+    public void setBusiness(String business) {
+        this.business = business;
     }
 
-    public String getTerminalId() {
-        return terminalId;
+    public String getBusinessId() {
+        return businessId;
     }
 
-    public void setTerminalId(String terminalId) {
-        this.terminalId = terminalId;
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
     }
 
-    public Store getStore() {
-        return store;
+    public String getProprietor() {
+        return proprietor;
     }
 
-    public void setStore(Store store) {
-        this.store = store;
+    public void setProprietor(String proprietor) {
+        this.proprietor = proprietor;
+    }
+
+    public Stores getStore() {
+        return stores;
+    }
+
+    public void setStore(Stores store) {
+        this.stores = store;
     }
 }
