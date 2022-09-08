@@ -56,5 +56,25 @@
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.EditStoreFragment"
         android:label="fragment_edit_store"
         tools:layout="@layout/fragment_edit_store" />
+    <fragment
+        android:id="@+id/catalogueItemsFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.CatalogueItemsFragment"
+        android:label="fragment_catalogue_items"
+        tools:layout="@layout/fragment_catalogue_items" />
+    <fragment
+        android:id="@+id/gasRefillItemsFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.GasRefillItemsFragment"
+        android:label="fragment_gas_refill_items"
+        tools:layout="@layout/fragment_gas_refill_items" />
+    <fragment
+        android:id="@+id/newGasCylindersFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.NewGasCylindersFragment"
+        android:label="fragment_new_gas_cylinders"
+        tools:layout="@layout/fragment_new_gas_cylinders" />
+    <fragment
+        android:id="@+id/accessoriesFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.AccessoriesFragment"
+        android:label="fragment_accessories"
+        tools:layout="@layout/fragment_accessories" />
 
 </navigation>

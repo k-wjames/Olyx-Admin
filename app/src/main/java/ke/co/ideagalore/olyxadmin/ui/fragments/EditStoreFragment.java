@@ -97,7 +97,7 @@ public class EditStoreFragment extends Fragment implements View.OnClickListener 
             }
 
         } else {
-            Navigation.findNavController(view).navigate(R.id.settingsFragment);
+            Navigation.findNavController(view).popBackStack(R.id.settingsFragment, true);
         }
 
     }

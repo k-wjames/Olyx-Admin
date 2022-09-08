@@ -47,8 +47,8 @@ public class MainFragment extends Fragment {
 
         String dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
 
-        binding.tvDay.setText(dayOfWeek + ",");
-        binding.tvDate.setText(day + " " + month + " " + year);
+        binding.tvDay.setText(dayOfWeek.toUpperCase() + ",");
+        binding.tvDate.setText(day + " " + month.toUpperCase() + " " + year);
 
     }
 
@@ -57,6 +57,6 @@ public class MainFragment extends Fragment {
         String business=sharedPreferences.getString("business", null);
         String name=sharedPreferences.getString("name", null);
         binding.tvName.setText(name+",");
-        binding.tvBusiness.setText(business+".");
+        binding.tvBusiness.setText("Welcome to "+business+".");
     }
 }

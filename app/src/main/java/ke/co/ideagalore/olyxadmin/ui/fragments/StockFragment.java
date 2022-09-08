@@ -100,7 +100,7 @@ public class StockFragment extends Fragment implements View.OnClickListener {
 
                 binding.rvCatalogue.setLayoutManager(new LinearLayoutManager(getActivity()));
                 binding.rvCatalogue.setHasFixedSize(true);
-                RefillAdapter adapter = new RefillAdapter(getActivity(), catalogueRefillList);
+                RefillAdapter adapter = new RefillAdapter(catalogueRefillList);
                 binding.rvCatalogue.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
