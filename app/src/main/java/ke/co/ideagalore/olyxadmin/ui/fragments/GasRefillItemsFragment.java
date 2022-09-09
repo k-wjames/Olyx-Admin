@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -96,6 +97,8 @@ public class GasRefillItemsFragment extends Fragment implements View.OnClickList
         EditText buyingPrice = dialog.findViewById(R.id.edt_buying_price);
         EditText markedPrice = dialog.findViewById(R.id.edt_selling_price);
 
+        ProgressBar progressBar =dialog.findViewById(R.id.progress_bar);
+
         TextView cancel = dialog.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(view -> dialog.dismiss());
 
@@ -109,12 +112,12 @@ public class GasRefillItemsFragment extends Fragment implements View.OnClickList
                 int bPrice = Integer.parseInt(buyingPrice.getText().toString().trim());
                 int mPrice = Integer.parseInt(markedPrice.getText().toString().trim());
 
-                saveNewGasRefillItem(item, bPrice, mPrice, dialog);
+                saveNewGasRefillItem(item, bPrice, mPrice, dialog, progressBar);
             }
         });
     }
 
-    private void saveNewGasRefillItem(String item, int bPrice, int mPrice, Dialog dialog) {
+    private void saveNewGasRefillItem(String item, int bPrice, int mPrice, Dialog dialog, ProgressBar progress) {
 
         String itemId = reference.push().getKey();
 
@@ -124,11 +127,10 @@ public class GasRefillItemsFragment extends Fragment implements View.OnClickList
         refill.setMarkedPrice(mPrice);
         refill.setProduct(item);
 
-        customDialogs.showProgressDialog(getActivity(), "Adding product...");
+        progress.setVisibility(View.VISIBLE);
         reference.child(itemId).setValue(refill).addOnCompleteListener(task -> {
 
             if (task.isSuccessful()) {
-                customDialogs.dismissProgressDialog();
                 dialog.dismiss();
                 customDialogs.showSnackBar(getActivity(), "Products successfully added.");
                 getGasRefillItems();
@@ -147,9 +149,8 @@ public class GasRefillItemsFragment extends Fragment implements View.OnClickList
     }
 
     private void getGasRefillItems() {
-
-        customDialogs.showProgressDialog(getActivity(),"Fetching data");
-
+        binding.tvNotify.setText("Fetching data");
+        binding.progressBar.setVisibility(View.VISIBLE);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -166,7 +167,8 @@ public class GasRefillItemsFragment extends Fragment implements View.OnClickList
                 RefillAdapter adapter = new RefillAdapter(refillList);
                 binding.rvProducts.setLayoutManager(new LinearLayoutManager(getActivity()));
                 binding.rvProducts.setHasFixedSize(true);
-                customDialogs.dismissProgressDialog();
+                binding.tvNotify.setText("Products");
+                binding.progressBar.setVisibility(View.GONE);
                 binding.rvProducts.setAdapter(adapter);
                 binding.tvTotalItems.setText(refillList.size()+"");
             }

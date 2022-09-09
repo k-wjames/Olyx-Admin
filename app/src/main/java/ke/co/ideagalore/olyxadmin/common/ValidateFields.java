@@ -2,8 +2,12 @@ package ke.co.ideagalore.olyxadmin.common;
 
 import android.app.Activity;
 import android.util.Patterns;
+import android.widget.AbsListView;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.Toast;
+
+import ke.co.ideagalore.olyxadmin.R;
 
 public class ValidateFields {
 
@@ -14,8 +18,8 @@ public class ValidateFields {
         if (!input.isEmpty()) {
             return true;
         } else {
-
-            customDialogs.showSnackBar(activity,message + " field cannot be empty.");
+            editText.setHint("This field cannot be empty ");
+            editText.setHintTextColor(activity.getResources().getColor(R.color.accent));
             return false;
         }
     }
@@ -25,10 +29,12 @@ public class ValidateFields {
         if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return true;
         } else if (!email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            customDialogs.showSnackBar(activity,"Please use a valid email address.");
+            editText.setHint("Please use a valid email address");
+            editText.setHintTextColor(activity.getResources().getColor(R.color.accent));
             return false;
         } else {
-            customDialogs.showSnackBar(activity,"Email field cannot be empty.");
+            editText.setHint("This field cannot be empty");
+            editText.setHintTextColor(activity.getResources().getColor(R.color.accent));
             return false;
         }
     }

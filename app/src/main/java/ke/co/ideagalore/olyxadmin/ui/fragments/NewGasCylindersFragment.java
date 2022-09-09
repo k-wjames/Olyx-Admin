@@ -95,7 +95,7 @@ public class NewGasCylindersFragment extends Fragment implements View.OnClickLis
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TextView title=dialog.findViewById(R.id.tv_title);
-        title.setText("Add New Gas Product");
+        title.setText("Add New Gas Product Price");
         dialog.show();
 
         EditText productName = dialog.findViewById(R.id.edt_item);
@@ -131,12 +131,12 @@ public class NewGasCylindersFragment extends Fragment implements View.OnClickLis
         refill.setMarkedPrice(mPrice);
         refill.setProduct(item);
 
-        customDialogs.showProgressDialog(getActivity(), "Adding product...");
+        binding.progressBar.setVisibility(View.VISIBLE);
+
         reference.child(itemId).setValue(refill).addOnCompleteListener(task -> {
 
             if (task.isSuccessful()) {
-                customDialogs.dismissProgressDialog();
-                //dialog.dismiss();
+                dialog.dismiss();
                 customDialogs.showSnackBar(getActivity(), "Products successfully added.");
                 getNewGasData();
             }
@@ -146,8 +146,8 @@ public class NewGasCylindersFragment extends Fragment implements View.OnClickLis
     }
 
     private void getNewGasData() {
-        customDialogs.showProgressDialog(getActivity(),"Fetching data");
-
+        binding.tvNotify.setText("Fetching data");
+        binding.progressBar.setVisibility(View.VISIBLE);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -164,7 +164,8 @@ public class NewGasCylindersFragment extends Fragment implements View.OnClickLis
                 RefillAdapter adapter = new RefillAdapter(refillList);
                 binding.rvProducts.setLayoutManager(new LinearLayoutManager(getActivity()));
                 binding.rvProducts.setHasFixedSize(true);
-                customDialogs.dismissProgressDialog();
+                binding.tvNotify.setText("Products");
+                binding.progressBar.setVisibility(View.GONE);
                 binding.rvProducts.setAdapter(adapter);
                 binding.tvTotalItems.setText(refillList.size()+"");
             }

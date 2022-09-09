@@ -92,7 +92,7 @@ public class AccessoriesFragment extends Fragment implements View.OnClickListene
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TextView title=dialog.findViewById(R.id.tv_title);
-        title.setText("Add New Accessory");
+        title.setText("Add New Accessory Price");
         dialog.show();
 
         EditText productName = dialog.findViewById(R.id.edt_item);
@@ -114,12 +114,12 @@ public class AccessoriesFragment extends Fragment implements View.OnClickListene
                 int bPrice = Integer.parseInt(buyingPrice.getText().toString().trim());
                 int mPrice = Integer.parseInt(markedPrice.getText().toString().trim());
 
-                saveNewGasRefillItem(item, bPrice, mPrice, dialog);
+                saveNewGasRefillItem(item, bPrice, mPrice, dialog, progressBar);
             }
         });
     }
 
-    private void saveNewGasRefillItem(String item, int bPrice, int mPrice, Dialog dialog) {
+    private void saveNewGasRefillItem(String item, int bPrice, int mPrice, Dialog dialog, ProgressBar progress) {
 
         String itemId = reference.push().getKey();
 
@@ -129,12 +129,10 @@ public class AccessoriesFragment extends Fragment implements View.OnClickListene
         refill.setMarkedPrice(mPrice);
         refill.setProduct(item);
 
-        //customDialogs.showProgressDialog(getActivity(), "Adding accessory...");
-        progressBar.setVisibility(View.VISIBLE);
+        progress.setVisibility(View.VISIBLE);
         reference.child(itemId).setValue(refill).addOnCompleteListener(task -> {
 
             if (task.isSuccessful()) {
-                //customDialogs.dismissProgressDialog();
                 dialog.dismiss();
                 customDialogs.showSnackBar(getActivity(), "Accessory successfully added.");
                 getAccessoriesItems();
@@ -154,7 +152,8 @@ public class AccessoriesFragment extends Fragment implements View.OnClickListene
 
     private void getAccessoriesItems() {
 
-        customDialogs.showProgressDialog(getActivity(),"Fetching data");
+        binding.tvNotify.setText("Fetching data");
+        binding.progressBar.setVisibility(View.VISIBLE);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -172,7 +171,8 @@ public class AccessoriesFragment extends Fragment implements View.OnClickListene
                 RefillAdapter adapter = new RefillAdapter(accessoriesList);
                 binding.rvAccessories.setLayoutManager(new LinearLayoutManager(getActivity()));
                 binding.rvAccessories.setHasFixedSize(true);
-                customDialogs.dismissProgressDialog();
+                binding.tvNotify.setText("Accessories");
+                binding.progressBar.setVisibility(View.GONE);
                 binding.rvAccessories.setAdapter(adapter);
                 binding.tvTotalItems.setText(accessoriesList.size()+"");
             }
