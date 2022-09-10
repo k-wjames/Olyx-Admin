@@ -2,6 +2,7 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
-import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentCatalogueItemsBinding;
 import ke.co.ideagalore.olyxadmin.models.Refill;
 
@@ -57,11 +57,13 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         getGasRefillItems();
         getNewGasData();
         getAccessoriesItems();
+        //getAllShops();
 
         binding.ivBack.setOnClickListener(this);
         binding.tvViewRefillItems.setOnClickListener(this);
         binding.tvViewNewCylinders.setOnClickListener(this);
         binding.tvViewAccessories.setOnClickListener(this);
+        binding.btnAddStock.setOnClickListener(this);
     }
 
     @Override
@@ -79,6 +81,9 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
 
             Navigation.findNavController(view).navigate(R.id.accessoriesFragment);
 
+        } else if (view == binding.btnAddStock) {
+
+            showAddStockDialog();
         } else {
             Navigation.findNavController(view).navigate(R.id.mainFragment);
         }
@@ -178,4 +183,15 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         name = sharedPreferences.getString("name", null);
 
     }
+
+
+    private void showAddStockDialog() {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.add_stock_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+    }
+
 }

@@ -13,6 +13,7 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/ic_sales_bg.xml" value="0.154" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/progress.xml" value="0.1945" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/refill_bg.xml" value="0.1945" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/spinner_background.xml" value="0.17" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/square_background.xml" value="0.154" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/transaction_dialog_bg.xml" value="0.1945" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/activity_home.xml" value="0.2791666666666667" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/add_shop.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/add_shop_dialog.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/add_stock.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/add_stock_dialog.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/attendant_item.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/catalogue_item.xml" value="0.28854166666666664" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/edit_shop_dialog.xml" value="0.29322916666666665" />
