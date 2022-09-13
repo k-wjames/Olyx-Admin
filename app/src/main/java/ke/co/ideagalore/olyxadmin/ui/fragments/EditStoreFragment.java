@@ -48,6 +48,7 @@ public class EditStoreFragment extends Fragment implements View.OnClickListener 
         getPreferenceData();
         binding.btnEditStore.setOnClickListener(this);
         binding.ivBack.setOnClickListener(this);
+        binding.tvDeleteStore.setOnClickListener(this);
     }
 
     private void getBundleData() {
@@ -81,7 +82,7 @@ public class EditStoreFragment extends Fragment implements View.OnClickListener 
                 stores.setLocation(location);
                 stores.setStoreId(storeId);
 
-                binding.tvNotify.setText("Submitting updates...");
+                binding.tvNotify.setText("Updating store details");
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Stores");
                 reference.child(storeId).setValue(stores).addOnCompleteListener(task -> {
@@ -96,7 +97,21 @@ public class EditStoreFragment extends Fragment implements View.OnClickListener 
                 }).addOnFailureListener(e -> customDialogs.showSnackBar(getActivity(), e.getMessage()));
             }
 
-        } else {
+        }else if (view==binding.tvDeleteStore){
+            binding.tvNotify.setText("Removing store details");
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Stores");
+            reference.child(storeId).setValue(null).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+
+                    binding.edtStore.setText("");
+                    binding.edtLocation.setText("");
+                    binding.tvTitle.setText("Edit");
+                    binding.tvNotify.setText("");
+                    Navigation.findNavController(view).navigate(R.id.settingsFragment);
+                }
+            }).addOnFailureListener(e -> customDialogs.showSnackBar(getActivity(), e.getMessage()));
+        }
+        else {
             Navigation.findNavController(view).popBackStack(R.id.settingsFragment, true);
         }
 

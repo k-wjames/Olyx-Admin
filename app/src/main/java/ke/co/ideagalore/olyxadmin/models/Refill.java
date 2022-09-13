@@ -2,15 +2,16 @@ package ke.co.ideagalore.olyxadmin.models;
 
 public class Refill {
 
-    int buyingPrice, markedPrice;
+    int buyingPrice, markedPrice, numberStocked;
     String product, prodId;
 
     public Refill() {
     }
 
-    public Refill(int buyingPrice, int markedPrice, String product, String prodId) {
+    public Refill(int buyingPrice, int markedPrice, int numberStocked, String product, String prodId) {
         this.buyingPrice = buyingPrice;
         this.markedPrice = markedPrice;
+        this.numberStocked = numberStocked;
         this.product = product;
         this.prodId = prodId;
     }
@@ -29,6 +30,14 @@ public class Refill {
 
     public void setMarkedPrice(int markedPrice) {
         this.markedPrice = markedPrice;
+    }
+
+    public int getNumberStocked() {
+        return numberStocked;
+    }
+
+    public void setNumberStocked(int numberStocked) {
+        this.numberStocked = numberStocked;
     }
 
     public String getProduct() {
