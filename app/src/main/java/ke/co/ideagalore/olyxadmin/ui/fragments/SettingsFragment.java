@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,12 +41,13 @@ import ke.co.ideagalore.olyxadmin.databinding.FragmentSettingsBinding;
 import ke.co.ideagalore.olyxadmin.models.Attendant;
 import ke.co.ideagalore.olyxadmin.models.Stores;
 import ke.co.ideagalore.olyxadmin.models.Terminal;
+import ke.co.ideagalore.olyxadmin.ui.activities.Onboard;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     FragmentSettingsBinding binding;
     ValidateFields validator = new ValidateFields();
-    CustomDialogs customDialogs=new CustomDialogs();
+    CustomDialogs customDialogs = new CustomDialogs();
     String business, terminal, name;
     Dialog myDialog;
     List<Stores> storesList = new ArrayList<>();
@@ -75,6 +78,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         binding.ivMinimiseAttendants.setOnClickListener(this);
         binding.ivBack.setOnClickListener(this);
         binding.ivCopy.setOnClickListener(this);
+        binding.ivSignOut.setOnClickListener(this);
     }
 
     @Override
@@ -95,11 +99,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             binding.ivExpandAttendants.setVisibility(View.GONE);
             binding.ivMinimiseAttendants.setVisibility(View.VISIBLE);
             binding.rvAttendants.setVisibility(View.VISIBLE);
-        } else if (view==binding.ivMinimiseAttendants) {
+        } else if (view == binding.ivMinimiseAttendants) {
             binding.ivMinimiseAttendants.setVisibility(View.GONE);
             binding.ivExpandAttendants.setVisibility(View.VISIBLE);
             binding.rvAttendants.setVisibility(View.GONE);
-        }else if(view==binding.ivCopy){
+        } else if (view == binding.ivCopy) {
             String id = binding.tvTerminal.getText().toString();
             if (!id.isEmpty()) {
                 ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -109,9 +113,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
             }
 
+        } else if (view == binding.ivSignOut) {
+
+            signOut();
+
         } else {
             Navigation.findNavController(view).navigate(R.id.mainFragment);
         }
+    }
+
+    private void signOut() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signOut();
+        startActivity(new Intent(getActivity(), Onboard.class));
+        getActivity().finish();
     }
 
     public void showAddStoreDialog() {
@@ -124,7 +139,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         TextView cancel = myDialog.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(view -> myDialog.dismiss());
 
-        ProgressBar progressBar=myDialog.findViewById(R.id.progress_bar);
+        ProgressBar progressBar = myDialog.findViewById(R.id.progress_bar);
 
         EditText edtStore = myDialog.findViewById(R.id.edt_store);
         EditText edtLocation = myDialog.findViewById(R.id.edt_location);
@@ -186,7 +201,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     Stores store = storeSnapshot.getValue(Stores.class);
                     storesList.add(store);
 
-                    if (!(storesList.size() ==0)){
+                    if (!(storesList.size() == 0)) {
 
                         StoreAdapter adapter = new StoreAdapter(storesList);
                         binding.rvStores.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -194,7 +209,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                         binding.rvStores.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
 
-                    }else {
+                    } else {
                         return;
                     }
 

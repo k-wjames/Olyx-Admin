@@ -81,7 +81,7 @@
 
 
                 <TextView
-                    android:id="@+id/edt_category"
+                    android:id="@+id/tv_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -194,7 +194,7 @@
 
 
                 <Button
-                    android:id="@+id/btn_edit_store"
+                    android:id="@+id/btn_edit_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato"

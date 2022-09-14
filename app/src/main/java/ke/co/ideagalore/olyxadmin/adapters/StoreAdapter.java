@@ -52,16 +52,13 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         int pos=position+1;
         holder.store.setText(pos+". "+store.getStore()+",");
         holder.location.setText(store.getLocation()+".");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle=new Bundle();
-                bundle.putString("store", store.getStore());
-                bundle.putString("storeId", store.getStoreId());
-                bundle.putString("storeLocation", store.getLocation());
-                Navigation.findNavController(view).navigate(R.id.editStoreFragment,bundle);
+        holder.itemView.setOnClickListener(view -> {
+            Bundle bundle=new Bundle();
+            bundle.putString("store", store.getStore());
+            bundle.putString("storeId", store.getStoreId());
+            bundle.putString("storeLocation", store.getLocation());
+            Navigation.findNavController(view).navigate(R.id.editStoreFragment,bundle);
 
-            }
         });
     }
 

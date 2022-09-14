@@ -20,7 +20,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/lato"
-            android:text="Set Gas Refill Price"
+            android:text="Add Catalogue Item"
             android:textColor="@color/text"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -100,6 +100,27 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/edt_background"
         android:hint="amount"
+        android:inputType="number"
+        android:textColorHint="@color/text"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/lato"
+        android:text="Items Stoked"
+        android:textColor="@color/text"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edt_stoked_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edt_background"
+        android:hint="00"
         android:inputType="number"
         android:textColorHint="@color/text"
         android:textCursorDrawable="@null"

@@ -42,7 +42,8 @@ public class RefillAdapter extends RecyclerView.Adapter<RefillAdapter.ViewHolder
             bundle.putString("product", refill.getProduct());
             bundle.putInt("buyingPrice", refill.getBuyingPrice());
             bundle.putInt("sellingPrice", refill.getMarkedPrice());
-            bundle.putInt("stockedItems", refill.getNumberStocked());
+            bundle.putInt("stockedItems", 10);
+            //bundle.putInt("stockedItems", refill.getNumberStocked());
             bundle.putString("productId", refill.getProdId());
             Navigation.findNavController(view).navigate(R.id.editProductFragment, bundle);
         });
