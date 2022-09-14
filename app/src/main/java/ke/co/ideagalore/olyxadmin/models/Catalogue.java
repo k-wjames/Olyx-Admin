@@ -2,21 +2,19 @@ package ke.co.ideagalore.olyxadmin.models;
 
 public class Catalogue {
 
-    String prodId, product, description, category;
-    int quantity, buyingPrice, sellingPrice;
+    String prodId, product, category;
+    int stockedQuantity, buyingPrice, markedPrice;
 
     public Catalogue() {
     }
 
-    public Catalogue(String prodId, String product, String description, String category,
-                     int quantity, int buyingPrice, int sellingPrice) {
+    public Catalogue(String prodId, String product, String category, int stockedQuantity, int buyingPrice, int markedPrice) {
         this.prodId = prodId;
         this.product = product;
-        this.description = description;
         this.category = category;
-        this.quantity = quantity;
+        this.stockedQuantity = stockedQuantity;
         this.buyingPrice = buyingPrice;
-        this.sellingPrice = sellingPrice;
+        this.markedPrice = markedPrice;
     }
 
     public String getProdId() {
@@ -35,14 +33,6 @@ public class Catalogue {
         this.product = product;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -51,12 +41,12 @@ public class Catalogue {
         this.category = category;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getStockedQuantity() {
+        return stockedQuantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setStockedQuantity(int stockedQuantity) {
+        this.stockedQuantity = stockedQuantity;
     }
 
     public int getBuyingPrice() {
@@ -67,11 +57,11 @@ public class Catalogue {
         this.buyingPrice = buyingPrice;
     }
 
-    public int getSellingPrice() {
-        return sellingPrice;
+    public int getMarkedPrice() {
+        return markedPrice;
     }
 
-    public void setSellingPrice(int sellingPrice) {
-        this.sellingPrice = sellingPrice;
+    public void setMarkedPrice(int markedPrice) {
+        this.markedPrice = markedPrice;
     }
 }

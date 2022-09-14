@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/lato"
-                android:text="Catalogue"
+                android:text="@string/catalogue"
                 android:textColor="@color/text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -57,11 +57,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/edt_background"
+                    android:background="@color/greenLight"
                     android:fontFamily="@font/lato"
-                    android:text="Gas Refill"
+                    android:padding="10dp"
+                    android:text="@string/gas_refill"
                     android:textColor="@color/text"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -74,14 +73,6 @@
                     android:layout_marginBottom="5dp"
                     android:padding="10dp">
 
-                    <ProgressBar
-                        android:id="@+id/progress_bar_refill"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:indeterminateDrawable="@drawable/progress"
-                        android:indeterminateOnly="true" />
 
                     <TextView
                         android:id="@+id/tv_refill_items"
@@ -90,11 +81,10 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/lato"
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="@color/accent"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_refill"
@@ -116,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:text="view items"
+                        android:text="@string/view_items"
                         android:textColor="@color/accent"
                         android:textSize="16sp" />
 
@@ -144,11 +134,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/edt_background"
+                    android:background="@color/greenLight"
                     android:fontFamily="@font/lato"
-                    android:text="New Gas Cylinders"
+                    android:padding="10dp"
+                    android:text="@string/new_gas_cylinders"
                     android:textColor="@color/text"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -160,15 +149,6 @@
                     android:layout_marginBottom="5dp"
                     android:padding="10dp">
 
-                    <ProgressBar
-                        android:id="@+id/progress_bar_gas"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:indeterminateDrawable="@drawable/progress"
-                        android:indeterminateOnly="true" />
-
                     <TextView
                         android:id="@+id/tv_gas_items"
                         android:layout_width="wrap_content"
@@ -176,11 +156,10 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/lato"
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="@color/accent"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_gas"
@@ -202,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:text="view items"
+                        android:text="@string/view_items"
                         android:textColor="@color/accent"
                         android:textSize="16sp" />
 
@@ -229,11 +208,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/edt_background"
+                    android:background="@color/greenLight"
                     android:fontFamily="@font/lato"
-                    android:text="Accessories"
+                    android:padding="10dp"
+                    android:text="@string/accessories"
                     android:textColor="@color/text"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -245,15 +223,6 @@
                     android:layout_marginBottom="10dp"
                     android:padding="10dp">
 
-                    <ProgressBar
-                        android:id="@+id/progress_bar_accessories"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:indeterminateDrawable="@drawable/progress"
-                        android:indeterminateOnly="true" />
-
                     <TextView
                         android:id="@+id/tv_accessories_items"
                         android:layout_width="wrap_content"
@@ -261,11 +230,10 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/lato"
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="@color/accent"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_accessories"
@@ -274,9 +242,9 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:layout_marginStart="30dp"
-                        android:layout_toRightOf="@+id/tv_accessories_items"
+                        android:layout_toEndOf="@+id/tv_accessories_items"
                         android:fontFamily="@font/lato"
-                        android:text="total listed accessories"
+                        android:text="@string/total_listed_accessories"
                         android:textColor="@color/text"
                         android:textStyle="bold"
                         android:visibility="gone" />
@@ -287,10 +255,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:text="view items"
+                        android:text="@string/view_items"
                         android:textColor="@color/accent"
                         android:textSize="16sp" />
-
 
 
                 </RelativeLayout>
@@ -326,18 +293,18 @@
                     android:text="00"
                     android:textColor="@color/accent"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/tv_all"
+                    android:layout_toEndOf="@+id/tv_all"
                     android:background="@drawable/edt_background"
                     android:fontFamily="@font/lato"
-                    android:text="Total number of items in all categories"
+                    android:text="@string/total_number_of_items_in_all_categories"
                     android:textColor="@color/white"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
 
             </RelativeLayout>

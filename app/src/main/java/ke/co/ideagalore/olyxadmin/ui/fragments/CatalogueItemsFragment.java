@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,8 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
-import ke.co.ideagalore.olyxadmin.adapters.StoreAdapter;
+import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentCatalogueItemsBinding;
+import ke.co.ideagalore.olyxadmin.models.Catalogue;
 import ke.co.ideagalore.olyxadmin.models.Refill;
 import ke.co.ideagalore.olyxadmin.models.Stores;
 
@@ -44,14 +44,22 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
     List<Refill> refillList = new ArrayList<>();
     List<Refill> newGasList = new ArrayList<>();
 
+    List<Catalogue> refillCatalogueItems = new ArrayList<>();
+    List<Catalogue> newGasCylinderItems = new ArrayList<>();
+    List<Catalogue> accessories = new ArrayList<>();
+
+    List<Catalogue> catalogueList = new ArrayList<>();
+
     int refillItems, newGasItems, accessoriesItems, allItems;
 
-    List<String> storesList=new ArrayList<>();
-    List<String> productsList=new ArrayList<>();
+    List<String> storesList = new ArrayList<>();
+    List<String> productsList = new ArrayList<>();
 
     String name, business, terminal;
 
-    String selectedStore,selectedCategory, selectedProduct,myStore, myProduct, myCategory;
+    String selectedStore, myStore, myProduct;
+
+    CustomDialogs customDialogs = new CustomDialogs();
 
     public CatalogueItemsFragment() {
     }
@@ -67,10 +75,13 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
+
         getPreferenceData();
-        getGasRefillItems();
+        /*getGasRefillItems();
         getNewGasData();
-        getAccessoriesItems();
+        getAccessoriesItems();*/
+        getCatalogueData();
 
         binding.ivBack.setOnClickListener(this);
         binding.tvViewRefillItems.setOnClickListener(this);
@@ -81,113 +92,73 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View view) {
 
+        Bundle bundle = new Bundle();
+
         if (view == binding.tvViewRefillItems) {
 
-            Navigation.findNavController(view).navigate(R.id.gasRefillItemsFragment);
+            bundle.putString("category", "Gas Refill");
+            bundle.putString("title", "Gas Refill");
+            Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
 
         } else if (view == binding.tvViewNewCylinders) {
-
-            Navigation.findNavController(view).navigate(R.id.newGasCylindersFragment);
+            bundle.putString("category", "New Gas");
+            bundle.putString("title", "New Gas Cylinders");
+            Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
 
         } else if (view == binding.tvViewAccessories) {
+            bundle.putString("category", "Accessories");
+            bundle.putString("title", "Accessories");
+            Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
 
-            Navigation.findNavController(view).navigate(R.id.accessoriesFragment);
-
-        }  else {
+        } else {
             Navigation.findNavController(view).navigate(R.id.mainFragment);
         }
 
     }
 
-    private void getGasRefillItems() {
-
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("GasRefill");
+    private void getCatalogueData() {
+        catalogueList.clear();
+        refillCatalogueItems.clear();
+        newGasCylinderItems.clear();
+        accessories.clear();
+        customDialogs.showProgressDialog(getActivity(), "Fetching catalogue data");
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                refillList.clear();
-
-                for (DataSnapshot refillSnapshot : snapshot.getChildren()) {
-
-                    Refill refill = refillSnapshot.getValue(Refill.class);
-                    refillList.add(0, refill);
-                    refillItems=refillList.size();
-
-
+                for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
+                    Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
+                    catalogueList.add(0, catalogue);
+                    binding.tvAll.setText(catalogueList.size() + "");
+                    customDialogs.dismissProgressDialog();
                 }
-                binding.progressBarRefill.setVisibility(View.GONE);
-                binding.tvRefillItems.setText(refillItems + "");
-                binding.tvRefillItems.setVisibility(View.VISIBLE);
-                binding.tvRefill.setVisibility(View.VISIBLE);
+
+                for (int i = 0; i < catalogueList.size(); i++) {
+                    Catalogue catalogueProduct = catalogueList.get(i);
+                    if (catalogueProduct.getCategory().equals("Gas Refill")) {
+                        refillCatalogueItems.add(0, catalogueProduct);
+                        binding.tvRefillItems.setText(String.valueOf(refillCatalogueItems.size()));
+
+
+                    } else if (catalogueProduct.getCategory().equals("New Gas")) {
+                        newGasCylinderItems.add(0, catalogueProduct);
+                        int length=newGasCylinderItems.size();
+                        binding.tvGasItems.setText(String.valueOf(length));
+
+
+                    } else {
+                        accessories.add(0, catalogueProduct);
+                        binding.tvAccessoriesItems.setText(String.valueOf(accessories.size()));
+
+                    }
+                }
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
-    private void getAccessoriesItems() {
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Accessories");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                accessoriesList.clear();
-
-                for (DataSnapshot refillSnapshot : snapshot.getChildren()) {
-
-                    Refill refill = refillSnapshot.getValue(Refill.class);
-                    accessoriesList.add(0, refill);
-                    accessoriesItems=accessoriesList.size();
-
-                }
-
-                binding.progressBarAccessories.setVisibility(View.GONE);
-                binding.tvAccessoriesItems.setText(accessoriesItems + "");
-                binding.tvAccessoriesItems.setVisibility(View.VISIBLE);
-                binding.tvAccessories.setVisibility(View.VISIBLE);
-
-                allItems=refillItems+newGasItems+accessoriesItems;
-                binding.tvAll.setText(String.valueOf(allItems));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
-    private void getNewGasData() {
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("NewGas");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                newGasList.clear();
-
-                for (DataSnapshot refillSnapshot : snapshot.getChildren()) {
-
-                    Refill refill = refillSnapshot.getValue(Refill.class);
-                    newGasList.add(0, refill);
-                    newGasItems=newGasList.size();
-
-                }
-
-                binding.progressBarGas.setVisibility(View.GONE);
-                binding.tvGasItems.setText(newGasItems + "");
-                binding.tvGasItems.setVisibility(View.VISIBLE);
-                binding.tvGas.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+                customDialogs.showSnackBar(getActivity(), error.getMessage());
             }
         });
     }
@@ -199,79 +170,4 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         name = sharedPreferences.getString("name", null);
 
     }
-
-
-    private void showAddStockDialog() {
-        Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.add_stock_dialog);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.show();
-
-        Spinner spinnerShops = dialog.findViewById(R.id.spinner_shop);
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, storesList);
-        arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerShops.setAdapter(arrayAdapter);
-        spinnerShops.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                myStore=spinnerShops.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        spinnerShops.setAdapter(arrayAdapter);
-
-        Spinner spinnerProducts = dialog.findViewById(R.id.spinner_product);
-
-        ArrayAdapter<String> productsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, productsList);
-        arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerProducts.setAdapter(arrayAdapter);
-        spinnerProducts.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                myProduct=spinnerProducts.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        spinnerProducts.setAdapter(productsAdapter);
-
-        TextView cancel=dialog.findViewById(R.id.tv_cancel);
-        cancel.setOnClickListener(view -> dialog.dismiss());
-    }
-
-    private void getStoresData() {
-        storesList.clear();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Stores");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
-                    Stores store = storeSnapshot.getValue(Stores.class);
-                    selectedStore=store.getStore();
-                    storesList.add(selectedStore);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-
-    private void getProductsData() {
-    }
-
-
-
 }

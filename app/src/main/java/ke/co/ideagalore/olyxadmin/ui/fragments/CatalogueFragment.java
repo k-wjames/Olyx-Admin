@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.CatalogueAdapter;
@@ -46,7 +47,9 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
 
     String selectedCategory;
 
-    ArrayList<Catalogue> catalogueArrayList;
+   // List<Catalogue> catalogueArrayList;
+
+    List<Catalogue> catalogueList=new ArrayList<>();
 
     public CatalogueFragment() {
     }
@@ -62,7 +65,6 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        catalogueArrayList = new ArrayList<>();
 
         binding.fabCatalogue.setOnClickListener(this);
 
@@ -82,16 +84,16 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Catalogue");
         binding.progressBar.setVisibility(View.VISIBLE);
-        catalogueArrayList.clear();
+        catalogueList.clear();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
-                    catalogueArrayList.add(catalogue);
+                    catalogueList.add(catalogue);
 
-                    if (catalogueArrayList.size() < 1) {
+                    if (catalogueList.size() < 1) {
 
                         binding.animationView.setVisibility(View.VISIBLE);
                     }
@@ -101,7 +103,7 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
 
                 binding.rvCatalogue.setLayoutManager(new LinearLayoutManager(getActivity()));
                 binding.rvCatalogue.setHasFixedSize(true);
-                CatalogueAdapter adapter = new CatalogueAdapter(getActivity(), catalogueArrayList);
+                CatalogueAdapter adapter = new CatalogueAdapter(getActivity(), catalogueList);
                 binding.rvCatalogue.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
@@ -187,10 +189,10 @@ public class CatalogueFragment extends Fragment implements View.OnClickListener 
             Catalogue catalogue = new Catalogue();
             catalogue.setProdId(id);
             catalogue.setProduct(item);
-            catalogue.setDescription(description);
-            catalogue.setQuantity(quantity);
+           // catalogue.setDescription(description);
+            //catalogue.setQuantity(quantity);
             catalogue.setBuyingPrice(buying);
-            catalogue.setSellingPrice(selling);
+            //catalogue.setSellingPrice(selling);
             catalogue.setCategory(selectedCategory);
 
             progressBar.setVisibility(View.VISIBLE);

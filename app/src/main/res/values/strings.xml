@@ -23,6 +23,14 @@
     <string name="sign_in_here">Sign in here</string>
     <string name="delete_store">Delete Store</string>
     <string name="submit_changes">Submit changes</string>
+    <string name="accessories">Accessories</string>
+    <string name="gas_refill">Gas Refill</string>
+    <string name="new_gas_cylinders">New Gas Cylinders</string>
+    <string name="view_items">view items</string>
+    <string name="total_number_of_items_in_all_categories">Total number of items in all categories</string>
+    <string name="total_listed_accessories">total listed accessories</string>
+    <string name="zero">0</string>
+    <string name="catalogue">Catalogue</string>
 
     <string-array name="stockItems">
         <item>Select category</item>

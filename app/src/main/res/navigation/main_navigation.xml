@@ -81,5 +81,10 @@
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.EditProductFragment"
         android:label="fragment_edit_product"
         tools:layout="@layout/fragment_edit_product" />
+    <fragment
+        android:id="@+id/viewCategoryProductsFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.ViewCategoryProductsFragment"
+        android:label="fragment_view_category_products"
+        tools:layout="@layout/fragment_view_category_products" />
 
 </navigation>

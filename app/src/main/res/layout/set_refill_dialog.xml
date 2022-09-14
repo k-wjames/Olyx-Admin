@@ -30,15 +30,37 @@
             android:id="@+id/progress_bar"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
             android:indeterminateDrawable="@drawable/progress"
             android:indeterminateOnly="true"
-            android:layout_centerInParent="true"
-            android:layout_alignParentRight="true"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
     </RelativeLayout>
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/lato"
+        android:text="Category"
+        android:textColor="@color/text"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/edt_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edt_background"
+        android:hint="item name"
+        android:inputType="textCapWords"
+        android:textColorHint="@color/text"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,6 +83,7 @@
         android:textColorHint="@color/text"
         android:textCursorDrawable="@null"
         android:textSize="14sp" />
+
 
     <TextView
         android:layout_width="wrap_content"

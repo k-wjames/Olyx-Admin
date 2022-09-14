@@ -34,6 +34,7 @@ import ke.co.ideagalore.olyxadmin.adapters.RefillAdapter;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentGasRefillItemsBinding;
+import ke.co.ideagalore.olyxadmin.models.Catalogue;
 import ke.co.ideagalore.olyxadmin.models.Refill;
 
 public class GasRefillItemsFragment extends Fragment implements View.OnClickListener {
@@ -67,10 +68,25 @@ public class GasRefillItemsFragment extends Fragment implements View.OnClickList
         getPreferenceData();
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("GasRefill");
+        addCatalogueData();
         getGasRefillItems();
 
         binding.ivBack.setOnClickListener(this);
         binding.ivAdd.setOnClickListener(this);
+    }
+
+    private void addCatalogueData() {
+        reference=FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
+        String prodId=reference.push().getKey();
+        Catalogue catalogue=new Catalogue();
+        catalogue.setCategory("New Gas");
+        catalogue.setProduct("Pro Gas 6Kg");
+        catalogue.setBuyingPrice(2500);
+        catalogue.setMarkedPrice(3800);
+        catalogue.setStockedQuantity(30);
+        catalogue.setProdId(prodId);
+
+        reference.child(prodId).setValue(catalogue);
     }
 
     @Override

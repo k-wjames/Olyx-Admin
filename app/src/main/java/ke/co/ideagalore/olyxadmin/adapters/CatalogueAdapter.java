@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
@@ -17,50 +18,46 @@ import ke.co.ideagalore.olyxadmin.models.Catalogue;
 public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<Catalogue> catalogueArrayList;
+    //List<Catalogue> catalogueArrayList;
     Catalogue catalogue;
 
-    public CatalogueAdapter(Context context, ArrayList<Catalogue> catalogueArrayList) {
+   List<Catalogue>catalogueList;
+
+    public CatalogueAdapter(Context context, List<Catalogue> catalogueList) {
         this.context = context;
-        this.catalogueArrayList = catalogueArrayList;
+        this.catalogueList = catalogueList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.catalogue_item,parent,false);
+        View view= LayoutInflater.from(context).inflate(R.layout.product_item,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        catalogue=catalogueArrayList.get(position);
+        catalogue=catalogueList.get(position);
         holder.product.setText(catalogue.getProduct());
-        holder.description.setText(catalogue.getDescription());
-        holder.quantity.setText(catalogue.getQuantity()+"");
-        holder.buying.setText(catalogue.getBuyingPrice()+"");
-        holder.selling.setText(catalogue.getSellingPrice()+"");
+        holder.selling.setText(String.valueOf(catalogue.getMarkedPrice()));
 
     }
 
     @Override
     public int getItemCount() {
-        return catalogueArrayList.size();
+        return catalogueList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView product, description, quantity, buying, selling;
+        TextView product,selling;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             product=itemView.findViewById(R.id.tv_product);
-            description=itemView.findViewById(R.id.tv_description);
-            quantity=itemView.findViewById(R.id.tv_quantity);
-            buying=itemView.findViewById(R.id.tv_buying_price);
-            selling=itemView.findViewById(R.id.tv_selling_price);
+            selling=itemView.findViewById(R.id.tv_price);
         }
     }
 }
