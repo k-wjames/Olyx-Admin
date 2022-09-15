@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,16 +23,18 @@ import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentEditProductBinding;
+import ke.co.ideagalore.olyxadmin.models.Catalogue;
 import ke.co.ideagalore.olyxadmin.models.Refill;
 
 public class EditProductFragment extends Fragment implements View.OnClickListener {
     FragmentEditProductBinding binding;
-    String terminal, productCategory, product, productId;
+    String terminal, productCategory, product, productId,categoryTitle;
     int bPrice, sPrice, numberStoked;
     DatabaseReference reference;
 
     CustomDialogs customDialogs = new CustomDialogs();
     ValidateFields validator = new ValidateFields();
+    Bundle bundle;
 
     public EditProductFragment() {
 
@@ -48,10 +53,31 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         getPreferenceData();
         getBundleData();
 
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("GasRefill");
+        if (productCategory.equals("New Gas")) {
+            categoryTitle = "New Gas Cylinders";
+        } else {
+            categoryTitle = productCategory;
+        }
+        bundle = new Bundle();
+        bundle.putString("category", productCategory);
+        bundle.putString("title", categoryTitle);
+
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         binding.ivDelete.setOnClickListener(this);
         binding.ivBack.setOnClickListener(this);
         binding.btnEditItem.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        if (view == binding.ivDelete) {
+            deleteProduct(productId, view);
+        } else if (view == binding.ivBack) {
+            Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
+        } else {
+            updateItemData(productId);
+        }
     }
 
     private void getPreferenceData() {
@@ -75,31 +101,32 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
     private void setViews(String productCategory, String product, int bPrice, int sPrice, int numberStoked) {
         binding.tvCategory.setText(productCategory);
         binding.edtProduct.setText(product);
-        binding.edtBuyingPrice.setText(bPrice + "");
-        binding.edtMarkedPrice.setText(sPrice + "");
-        binding.edtStocked.setText(numberStoked + "");
+        binding.edtBuyingPrice.setText(String.valueOf(bPrice));
+        binding.edtMarkedPrice.setText(String.valueOf(sPrice));
+        binding.edtStocked.setText(String.valueOf(numberStoked));
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view == binding.ivDelete) {
-            deleteProduct(productId);
-        } else if (view == binding.ivBack) {
-            Navigation.findNavController(view).navigate(R.id.gasRefillItemsFragment);
-        } else {
-            updateItemData(productId);
-        }
-    }
-
-    private void deleteProduct(String productId) {
+    private void deleteProduct(String productId, View view) {
         reference.child(productId).setValue(null).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                customDialogs.showSnackBar(getActivity(), "Item successfully delete.");
-                resetViews();
+                customDialogs.showSnackBar(requireActivity(), "Item successfully deleted.");
+                Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
+                /*NavController navController = NavHostFragment.findNavController(this);
+                navController.navigate(
+                        R.id.catalogueItemsFragment,
+                        null,
+                        new NavOptions.Builder()
+                                .setEnterAnim(android.R.animator.fade_in)
+                                .setExitAnim(android.R.animator.fade_out)
+                                .setPopUpTo(R.id.catalogueItemsFragment,true)
+                                .build()
+                );
+
+               Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment,bundle);*/
             }
 
         }).addOnFailureListener(e -> {
-            customDialogs.showSnackBar(getActivity(), e.getMessage());
+            customDialogs.showSnackBar(requireActivity(), e.getMessage());
         });
     }
 
@@ -109,13 +136,14 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
                 && validator.validateEditTextFields(getActivity(), binding.edtBuyingPrice, "Buying price")
                 && validator.validateEditTextFields(getActivity(), binding.edtMarkedPrice, "Selling price")
                 && validator.validateEditTextFields(getActivity(), binding.edtStocked, "Items stocked")) {
-            Refill refill = new Refill();
-            refill.setProdId(productId);
-            refill.setBuyingPrice(Integer.valueOf(binding.edtBuyingPrice.getText().toString()));
-            refill.setMarkedPrice(Integer.valueOf(binding.edtMarkedPrice.getText().toString()));
-            refill.setProduct(binding.edtProduct.getText().toString());
-            refill.setNumberStocked(Integer.valueOf(binding.edtStocked.getText().toString()));
-            reference.child(productId).setValue(refill).addOnCompleteListener(task -> {
+            Catalogue catalogue = new Catalogue();
+            catalogue.setCategory(productCategory);
+            catalogue.setProdId(productId);
+            catalogue.setBuyingPrice(Integer.parseInt(binding.edtBuyingPrice.getText().toString()));
+            catalogue.setMarkedPrice(Integer.parseInt(binding.edtMarkedPrice.getText().toString()));
+            catalogue.setProduct(binding.edtProduct.getText().toString());
+            catalogue.setStockedQuantity(Integer.parseInt(binding.edtStocked.getText().toString()));
+            reference.child(productId).setValue(catalogue).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     customDialogs.showSnackBar(getActivity(), "Item successfully updated.");
                     resetViews();
@@ -134,4 +162,5 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         binding.edtStocked.setText(0 + "");
 
     }
+
 }

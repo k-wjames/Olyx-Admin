@@ -56,10 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/edt_background"
-        android:hint="@string/item_category"
-        android:textColorHint="@color/text"
-        android:textCursorDrawable="@null"
-        android:textSize="14sp" />
+        android:textColor="@color/accent"
+        android:textSize="14sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -83,49 +81,69 @@
         android:textCursorDrawable="@null"
         android:textSize="14sp" />
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/lato"
-        android:text="Buying price"
-        android:textColor="@color/text"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/edt_buying_price"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edt_background"
-        android:hint="amount"
-        android:inputType="number"
-        android:textColorHint="@color/text"
-        android:textCursorDrawable="@null"
-        android:textSize="14sp" />
+        android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/lato"
+                android:text="Buying price"
+                android:textColor="@color/text"
+                android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/lato"
-        android:text="Marked price"
-        android:textColor="@color/text"
-        android:textStyle="bold" />
+            <EditText
+                android:id="@+id/edt_buying_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edt_background"
+                android:hint="amount"
+                android:inputType="number"
+                android:textColorHint="@color/text"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/edt_selling_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edt_background"
-        android:hint="amount"
-        android:inputType="number"
-        android:textColorHint="@color/text"
-        android:textCursorDrawable="@null"
-        android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/lato"
+                android:text="Marked price"
+                android:textColor="@color/text"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edt_selling_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edt_background"
+                android:hint="amount"
+                android:inputType="number"
+                android:textColorHint="@color/text"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"

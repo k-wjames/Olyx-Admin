@@ -40,25 +40,13 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
 
     DatabaseReference reference;
 
-    List<Refill> accessoriesList = new ArrayList<>();
-    List<Refill> refillList = new ArrayList<>();
-    List<Refill> newGasList = new ArrayList<>();
-
     List<Catalogue> refillCatalogueItems = new ArrayList<>();
     List<Catalogue> newGasCylinderItems = new ArrayList<>();
     List<Catalogue> accessories = new ArrayList<>();
 
     List<Catalogue> catalogueList = new ArrayList<>();
 
-    int refillItems, newGasItems, accessoriesItems, allItems;
-
-    List<String> storesList = new ArrayList<>();
-    List<String> productsList = new ArrayList<>();
-
     String name, business, terminal;
-
-    String selectedStore, myStore, myProduct;
-
     CustomDialogs customDialogs = new CustomDialogs();
 
     public CatalogueItemsFragment() {
@@ -75,12 +63,9 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
+
 
         getPreferenceData();
-        /*getGasRefillItems();
-        getNewGasData();
-        getAccessoriesItems();*/
         getCatalogueData();
 
         binding.ivBack.setOnClickListener(this);

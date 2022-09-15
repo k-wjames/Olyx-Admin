@@ -19,9 +19,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +34,7 @@ import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentViewCategoryProductsBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
+import ke.co.ideagalore.olyxadmin.models.Stores;
 
 public class ViewCategoryProductsFragment extends Fragment implements View.OnClickListener {
 
@@ -49,6 +47,7 @@ public class ViewCategoryProductsFragment extends Fragment implements View.OnCli
 
     List<Catalogue> catalogueList = new ArrayList<>();
     List<Catalogue> categoryList = new ArrayList<>();
+    List<Stores> storesList = new ArrayList<>();
 
     DatabaseReference reference;
 
@@ -68,8 +67,8 @@ public class ViewCategoryProductsFragment extends Fragment implements View.OnCli
         super.onViewCreated(view, savedInstanceState);
         getPreferenceData();
         getBundleData();
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         getCategoryData();
+        getShopsData();
 
         binding.ivBack.setOnClickListener(this);
         binding.ivAdd.setOnClickListener(this);
@@ -99,6 +98,7 @@ public class ViewCategoryProductsFragment extends Fragment implements View.OnCli
         catalogueList.clear();
         categoryList.clear();
         customDialogs.showProgressDialog(getActivity(), "Fetching category data");
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -130,66 +130,82 @@ public class ViewCategoryProductsFragment extends Fragment implements View.OnCli
         });
     }
 
+    private void getShopsData() {
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Stores");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
+                    Stores stores = storeSnapshot.getValue(Stores.class);
+                    storesList.add(0, stores);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                customDialogs.showSnackBar(requireActivity(), error.getMessage());
+            }
+        });
+    }
 
     private void showAddNewCategoryItem() {
         Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.set_refill_dialog);
+        dialog.setContentView(R.layout.add_category_item_dialog);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.show();
 
-        EditText productCategory=dialog.findViewById(R.id.tv_category);
+        TextView productCategory = dialog.findViewById(R.id.tv_category);
         EditText productName = dialog.findViewById(R.id.edt_item);
         EditText buyingPrice = dialog.findViewById(R.id.edt_buying_price);
         EditText markedPrice = dialog.findViewById(R.id.edt_selling_price);
-        EditText stokedItems=dialog.findViewById(R.id.edt_stoked_items);
+        EditText stokedItems = dialog.findViewById(R.id.edt_stoked_items);
 
         productCategory.setText(category);
 
-        ProgressBar progressBar =dialog.findViewById(R.id.progress_bar);
+        ProgressBar progressBar = dialog.findViewById(R.id.progress_bar);
 
         TextView cancel = dialog.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(view -> dialog.dismiss());
 
-        Button add=dialog.findViewById(R.id.btn_add);
+        Button add = dialog.findViewById(R.id.btn_add);
         add.setOnClickListener(view -> {
-            if (validator.validateEditTextFields(getActivity(), productCategory, "Product category")
-            &&validator.validateEditTextFields(getActivity(),productName,"Product")
-            &&validator.validateEditTextFields(getActivity(),buyingPrice, "Buying price")
-            &&validator.validateEditTextFields(getActivity(), markedPrice, "Marked price")
-            &&validator.validateEditTextFields(getActivity(), stokedItems,"Items stoked")){
-                String category=productCategory.getText().toString();
-                String product=productName.getText().toString();
-                int buying=Integer.parseInt(buyingPrice.getText().toString());
-                int marked=Integer.parseInt(markedPrice.getText().toString());
-                int stock=Integer.parseInt(stokedItems.getText().toString());
+            if (validator.validateEditTextFields(getActivity(), productName, "Product")
+                    && validator.validateEditTextFields(getActivity(), buyingPrice, "Buying price")
+                    && validator.validateEditTextFields(getActivity(), markedPrice, "Marked price")
+                    && validator.validateEditTextFields(getActivity(), stokedItems, "Items stoked")) {
+                String product = productName.getText().toString();
+                int buying = Integer.parseInt(buyingPrice.getText().toString());
+                int marked = Integer.parseInt(markedPrice.getText().toString());
+                int stock = Integer.parseInt(stokedItems.getText().toString());
                 progressBar.setVisibility(View.VISIBLE);
-                saveNewCategoryItem(category,product,buying,marked,stock, dialog);
+                saveNewCategoryItem(category, product, buying, marked, stock, dialog);
             }
         });
     }
 
     private void saveNewCategoryItem(String category, String product, int buying, int marked, int stock, Dialog dialog) {
-
-        String prodId=reference.push().getKey();
-        Catalogue catalogue=new Catalogue();
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
+        String prodId = reference.push().getKey();
+        Catalogue catalogue = new Catalogue();
         catalogue.setProdId(prodId);
         catalogue.setCategory(category);
         catalogue.setProduct(product);
         catalogue.setBuyingPrice(buying);
         catalogue.setMarkedPrice(marked);
         catalogue.setStockedQuantity(stock);
-        reference.child(prodId).setValue(catalogue).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    dialog.dismiss();
-                    customDialogs.showSnackBar(getActivity(), "New "+product+" successfully added to your catalogue");
-                    getCategoryData();
-                }
-
+        assert prodId != null;
+        reference.child(prodId).setValue(catalogue).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                dialog.dismiss();
+                customDialogs.showSnackBar(getActivity(), "New " + product + " successfully added to your catalogue");
+                getCategoryData();
             }
+
         }).addOnFailureListener(e -> {
             customDialogs.showSnackBar(getActivity(), e.getMessage());
         });
