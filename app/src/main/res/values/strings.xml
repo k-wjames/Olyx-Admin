@@ -31,6 +31,7 @@
     <string name="total_listed_accessories">total listed accessories</string>
     <string name="zero">0</string>
     <string name="catalogue">Catalogue</string>
+    <string name="item_category">item category</string>
 
     <string-array name="stockItems">
         <item>Select category</item>

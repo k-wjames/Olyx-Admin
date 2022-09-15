@@ -292,7 +292,7 @@
                     android:fontFamily="@font/lato"
                     android:text="00"
                     android:textColor="@color/accent"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView

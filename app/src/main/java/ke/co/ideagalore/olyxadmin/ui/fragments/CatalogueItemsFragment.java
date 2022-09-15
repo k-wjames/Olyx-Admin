@@ -129,7 +129,11 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
                     catalogueList.add(0, catalogue);
-                    binding.tvAll.setText(catalogueList.size() + "");
+                    if (catalogueList.size()<10){
+                        binding.tvAll.setText(0+""+catalogueList.size());
+                    }else {
+                        binding.tvAll.setText(String.valueOf(catalogueList.size()));
+                    }
                     customDialogs.dismissProgressDialog();
                 }
 
@@ -149,7 +153,6 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
                     } else {
                         accessories.add(0, catalogueProduct);
                         binding.tvAccessoriesItems.setText(String.valueOf(accessories.size()));
-
                     }
                 }
 
