@@ -201,7 +201,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     Stores store = storeSnapshot.getValue(Stores.class);
                     storesList.add(store);
 
-                    if (!(storesList.size() == 0)) {
+                    if (storesList.size() >=1) {
 
                         StoreAdapter adapter = new StoreAdapter(storesList);
                         binding.rvStores.setLayoutManager(new LinearLayoutManager(getActivity()));

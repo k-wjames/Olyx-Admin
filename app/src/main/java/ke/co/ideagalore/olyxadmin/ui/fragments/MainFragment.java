@@ -57,6 +57,6 @@ public class MainFragment extends Fragment {
         String business=sharedPreferences.getString("business", null);
         String name=sharedPreferences.getString("name", null);
         binding.tvName.setText(name+",");
-        binding.tvBusiness.setText("Welcome to "+business+".");
+        //binding.tvBusiness.setText("Welcome to "+business+".");
     }
 }

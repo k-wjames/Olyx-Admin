@@ -16,41 +16,17 @@
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/salesFragment"
-        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.SalesFragment"
-        android:label="fragment_sales"
-        tools:layout="@layout/fragment_sales" />
-    <fragment
-        android:id="@+id/shopsFragment"
-        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.ShopsFragment"
-        android:label="fragment_shops"
-        tools:layout="@layout/fragment_shops" />
-    <fragment
-        android:id="@+id/stockFragment"
-        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.StockFragment"
-        android:label="fragment_stock"
-        tools:layout="@layout/fragment_stock" />
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/staffFragment"
-        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.StaffFragment"
-        android:label="fragment_staff"
-        tools:layout="@layout/fragment_staff" />
-    <fragment
-        android:id="@+id/statisticsFragment"
-        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.StatisticsFragment"
-        android:label="fragment_statistics"
-        tools:layout="@layout/fragment_statistics" />
-    <fragment
-        android:id="@+id/catalogueFragment"
-        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.CatalogueFragment"
-        android:label="fragment_catalogue"
-        tools:layout="@layout/fragment_catalogue" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_editStoreFragment"
+            app:destination="@id/editStoreFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/editStoreFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.EditStoreFragment"
@@ -60,31 +36,32 @@
         android:id="@+id/catalogueItemsFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.CatalogueItemsFragment"
         android:label="fragment_catalogue_items"
-        tools:layout="@layout/fragment_catalogue_items" />
-    <fragment
-        android:id="@+id/gasRefillItemsFragment"
-        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.GasRefillItemsFragment"
-        android:label="fragment_gas_refill_items"
-        tools:layout="@layout/fragment_gas_refill_items" />
-    <fragment
-        android:id="@+id/newGasCylindersFragment"
-        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.NewGasCylindersFragment"
-        android:label="fragment_new_gas_cylinders"
-        tools:layout="@layout/fragment_new_gas_cylinders" />
-    <fragment
-        android:id="@+id/accessoriesFragment"
-        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.AccessoriesFragment"
-        android:label="fragment_accessories"
-        tools:layout="@layout/fragment_accessories" />
+        tools:layout="@layout/fragment_catalogue_items" >
+        <action
+            android:id="@+id/action_catalogueItemsFragment_to_viewCategoryProductsFragment"
+            app:destination="@id/viewCategoryProductsFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/editProductFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.EditProductFragment"
         android:label="fragment_edit_product"
-        tools:layout="@layout/fragment_edit_product" />
+        tools:layout="@layout/fragment_edit_product" >
+        <action
+            android:id="@+id/action_editProductFragment_to_viewCategoryProductsFragment"
+            app:destination="@id/viewCategoryProductsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/viewCategoryProductsFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.ViewCategoryProductsFragment"
         android:label="fragment_view_category_products"
-        tools:layout="@layout/fragment_view_category_products" />
+        tools:layout="@layout/fragment_view_category_products" >
+        <action
+            android:id="@+id/action_viewCategoryProductsFragment_to_editProductFragment"
+            app:destination="@id/editProductFragment" />
+        <action
+            android:id="@+id/action_viewCategoryProductsFragment_to_catalogueItemsFragment"
+            app:destination="@id/catalogueItemsFragment" />
+    </fragment>
 
 </navigation>

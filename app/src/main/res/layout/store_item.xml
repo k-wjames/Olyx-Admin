@@ -34,11 +34,4 @@
         app:tint="@color/text"
         android:visibility="gone"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/tv_store"
-        android:layout_marginTop="5dp"
-        android:background="@color/light" />
-
 </RelativeLayout>

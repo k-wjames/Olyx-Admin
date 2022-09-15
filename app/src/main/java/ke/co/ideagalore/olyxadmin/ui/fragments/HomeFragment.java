@@ -42,20 +42,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        if (view == binding.cvSales) {
-            Navigation.findNavController(view).navigate(R.id.salesFragment);
-        } else if (view == binding.cvStock) {
-            Navigation.findNavController(view).navigate(R.id.stockFragment);
-        } else if (view == binding.cvShops) {
-            Navigation.findNavController(view).navigate(R.id.shopsFragment);
-        } else if (view == binding.cvStatistics) {
-            Navigation.findNavController(view).navigate(R.id.statisticsFragment);
-        } else if (view == binding.cvStaff) {
-           Navigation.findNavController(view).navigate(R.id.staffFragment);
-
-        }else if (view==binding.cvCatalogue){
-            Navigation.findNavController(view).navigate(R.id.catalogueFragment);
-        }
-
     }
 }
