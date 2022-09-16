@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
@@ -116,7 +118,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             }
             dialogs.dismissProgressDialog();
             savePreferencesData();
-            Navigation.findNavController(getView()).navigate(R.id.loginFragment);
+            Navigation.findNavController(requireView()).navigate(R.id.loginFragment);
 
         });
 

@@ -63,8 +63,6 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         getPreferenceData();
         getCatalogueData();
 
