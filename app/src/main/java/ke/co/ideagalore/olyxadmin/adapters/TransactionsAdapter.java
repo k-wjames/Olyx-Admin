@@ -36,7 +36,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         Transaction transaction=transactionList.get(position);
         holder.transactionId.setText(transaction.getTransactionId());
         holder.product.setText(transaction.getProduct()+ " *" + transaction.getQuantity());
-        holder.price.setText("KES "+transaction.getSellingPrice());
+        holder.price.setText("KES "+transaction.getTotalPrice());
+        holder.store.setText(transaction.getStore());
 
         if (getDate().equals(transaction.getDate())) {
             holder.time.setText(transaction.getTime());
@@ -62,13 +63,14 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView transactionId,time,product,price;
+        TextView transactionId,time,product,price, store;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             transactionId=itemView.findViewById(R.id.tv_transaction_id);
             time=itemView.findViewById(R.id.tv_time);
             product=itemView.findViewById(R.id.tv_product);
             price=itemView.findViewById(R.id.tv_price);
+            store=itemView.findViewById(R.id.tv_store);
         }
     }
 }

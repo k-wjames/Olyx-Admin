@@ -32,7 +32,8 @@ public class AttendantsAdapter extends RecyclerView.Adapter<AttendantsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Attendant attendant=attendants.get(position);
-        holder.attendant.setText(attendant.getAttendant());
+        int pos=position+1;
+        holder.attendant.setText(pos+". "+attendant.getAttendant());
         holder.store.setText(attendant.getStore());
 
     }

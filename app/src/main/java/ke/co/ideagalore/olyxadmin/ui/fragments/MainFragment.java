@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,8 +27,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import ke.co.ideagalore.olyxadmin.adapters.TransactionsAdapter;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentMainBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
+import ke.co.ideagalore.olyxadmin.models.Expense;
 import ke.co.ideagalore.olyxadmin.models.Stores;
 import ke.co.ideagalore.olyxadmin.models.Transaction;
 
@@ -35,7 +41,7 @@ public class MainFragment extends Fragment {
     List<Catalogue> catalogueList = new ArrayList<>();
     List<Transaction> transactionList = new ArrayList<>();
 
-    String terminal;
+    String terminal, name, businessName, terminalId;
 
     public MainFragment() {
 
@@ -53,14 +59,12 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getCurrentDate();
         getPreferenceData();
-        getCatalogueData();
-        getStoresData();
-        getTransactions();
+
     }
 
-    private void getCatalogueData() {
+    private void getCatalogueData(String myTerminal) {
         catalogueList.clear();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Catalogue");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -83,9 +87,9 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void getStoresData() {
+    private void getStoresData(String myTerminal) {
         storesList.clear();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Stores");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Stores");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -108,10 +112,10 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void getTransactions() {
+    private void getTransactions(String myTerminal) {
 
         transactionList.clear();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Sales");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -125,10 +129,39 @@ public class MainFragment extends Fragment {
                         binding.tvTransactions.setText(String.valueOf(transactionList.size()));
                     int sales = 0;
                     for (Transaction salesTransaction : transactionList) {
-                        sales = sales + salesTransaction.getSellingPrice();
+                        sales = sales + salesTransaction.getTotalPrice();
                         binding.tvSales.setText("KES " + sales);
                     }
+
+                    displayList(transactionList);
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getExpenditureData(String myTerminal) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot expenseSnapshot:snapshot.getChildren()){
+                    Expense expense=expenseSnapshot.getValue(Expense.class);
+                    List<Expense> expenseList=new ArrayList<>();
+                    expenseList.add(expense);
+                    for (int i=0; i<expenseList.size(); i++){
+                        int totalExpenses=0;
+                        int exp=expenseList.get(i).getPrice();
+                        totalExpenses=totalExpenses+exp;
+                        binding.tvExpenses.setText("KES "+(totalExpenses));
+                    }
+                }
+
             }
 
             @Override
@@ -151,11 +184,57 @@ public class MainFragment extends Fragment {
 
     }
 
+    private void getTerminalData(String terminalId) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(terminalId);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                businessName = snapshot.child("business").getValue(String.class);
+                name = snapshot.child("name").getValue(String.class);
+                savePreferencesData();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void displayList(List<Transaction> list) {
+        binding.rvTransactions.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.rvTransactions.setHasFixedSize(true);
+        TransactionsAdapter adapter = new TransactionsAdapter(list);
+        binding.rvTransactions.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
     private void getPreferenceData() {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
-        String business = sharedPreferences.getString("business", null);
         String name = sharedPreferences.getString("name", null);
         terminal = sharedPreferences.getString("terminal", null);
-        binding.tvName.setText(name + ",");
+
+        if (TextUtils.isEmpty(name) && TextUtils.isEmpty(terminal)) {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            terminalId = auth.getUid();
+            getTerminalData(terminalId);
+
+        } else {
+            binding.tvName.setText(name + ",");
+            getCatalogueData(terminal);
+            getStoresData(terminal);
+            getTransactions(terminal);
+            getExpenditureData(terminal);
+        }
+    }
+
+    public void savePreferencesData() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name", name);
+        editor.putString("business", businessName);
+        editor.putString("terminal", terminalId);
+        editor.commit();
+        getPreferenceData();
     }
 }

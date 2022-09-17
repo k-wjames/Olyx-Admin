@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
+import ke.co.ideagalore.olyxadmin.adapters.AttendantsAdapter;
 import ke.co.ideagalore.olyxadmin.adapters.StoreAdapter;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
@@ -70,6 +71,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         getPreferenceData();
         getStoresData();
         getAttendantsData();
+
 
         binding.ivExpand.setOnClickListener(this);
         binding.ivAddStore.setOnClickListener(this);
@@ -201,7 +203,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     Stores store = storeSnapshot.getValue(Stores.class);
                     storesList.add(store);
 
-                    if (storesList.size() >=1) {
+                    if (storesList.size() >= 1) {
 
                         StoreAdapter adapter = new StoreAdapter(storesList);
                         binding.rvStores.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -222,8 +224,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-
-
     private void getAttendantsData() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Attendants");
         reference.addValueEventListener(new ValueEventListener() {
@@ -234,11 +234,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     Attendant attendant = attendantsSnapshot.getValue(Attendant.class);
                     attendantList.add(attendant);
                 }
-                StoreAdapter adapter = new StoreAdapter(storesList);
-                binding.rvStores.setLayoutManager(new LinearLayoutManager(getActivity()));
-                binding.rvStores.setHasFixedSize(true);
-                binding.rvStores.setAdapter(adapter);
+                AttendantsAdapter adapter = new AttendantsAdapter(attendantList);
+                binding.rvAttendants.setLayoutManager(new LinearLayoutManager(getActivity()));
+                binding.rvAttendants.setHasFixedSize(true);
+                binding.rvAttendants.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+
             }
 
 

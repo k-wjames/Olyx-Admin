@@ -1,6 +1,9 @@
 package ke.co.ideagalore.olyxadmin.ui.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +17,18 @@ import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseAuth;
 
 import ke.co.ideagalore.olyxadmin.R;
-import ke.co.ideagalore.olyxadmin.ui.activities.Home;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentLoginBinding;
+import ke.co.ideagalore.olyxadmin.ui.activities.Home;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
     FragmentLoginBinding binding;
     ValidateFields validateFields = new ValidateFields();
     CustomDialogs dialogs = new CustomDialogs();
+
+    String terminal, businessName, name;
 
     public LoginFragment() {
 
@@ -41,6 +46,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        getPreferenceData();
 
         binding.btnLogin.setOnClickListener(this);
         binding.tvSignup.setOnClickListener(this);
@@ -68,7 +75,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
 
                 if (!task.isSuccessful()) {
-                    dialogs.showSnackBar(getActivity(),"Something went wrong. Please try again.");
+                    dialogs.showSnackBar(getActivity(), "Something went wrong. Please try again.");
                     dialogs.dismissProgressDialog();
                     return;
                 }
@@ -76,10 +83,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), Home.class));
                 getActivity().finish();
 
+
             });
 
 
         }
     }
 
+    private void getPreferenceData() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
+        name = sharedPreferences.getString("name", null);
+        terminal = sharedPreferences.getString("terminal", null);
+    }
 }

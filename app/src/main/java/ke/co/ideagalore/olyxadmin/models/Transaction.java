@@ -1,23 +1,26 @@
 package ke.co.ideagalore.olyxadmin.models;
 
 public class Transaction {
-    String transactionId, product, category, store,date,time;
-    int quantity, buyingPrice, sellingPrice, profit;
+
+    String transactionId,transactionType, product, store, date, time, attendant, terminalId;
+    int quantity, buyingPrice,totalPrice, profit;
 
     public Transaction() {
     }
 
-    public Transaction(String transactionId, String product, String category, String store, String date,
-                       String time, int quantity, int buyingPrice, int sellingPrice, int profit) {
+    public Transaction(String transactionId, String transactionType, String product, String store,
+                       String date, String time, String attendant, String terminalId, int quantity, int buyingPrice, int totalPrice, int profit) {
         this.transactionId = transactionId;
+        this.transactionType = transactionType;
         this.product = product;
-        this.category = category;
         this.store = store;
         this.date = date;
         this.time = time;
+        this.attendant = attendant;
+        this.terminalId = terminalId;
         this.quantity = quantity;
         this.buyingPrice = buyingPrice;
-        this.sellingPrice = sellingPrice;
+        this.totalPrice = totalPrice;
         this.profit = profit;
     }
 
@@ -29,20 +32,20 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
     public String getProduct() {
         return product;
     }
 
     public void setProduct(String product) {
         this.product = product;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getStore() {
@@ -69,6 +72,22 @@ public class Transaction {
         this.time = time;
     }
 
+    public String getAttendant() {
+        return attendant;
+    }
+
+    public void setAttendant(String attendant) {
+        this.attendant = attendant;
+    }
+
+    public String getTerminalId() {
+        return terminalId;
+    }
+
+    public void setTerminalId(String terminalId) {
+        this.terminalId = terminalId;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -85,12 +104,12 @@ public class Transaction {
         this.buyingPrice = buyingPrice;
     }
 
-    public int getSellingPrice() {
-        return sellingPrice;
+    public int getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setSellingPrice(int sellingPrice) {
-        this.sellingPrice = sellingPrice;
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getProfit() {
