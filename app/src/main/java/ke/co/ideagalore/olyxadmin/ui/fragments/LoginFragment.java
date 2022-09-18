@@ -2,12 +2,14 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,15 +53,31 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         binding.btnLogin.setOnClickListener(this);
         binding.tvSignup.setOnClickListener(this);
+        binding.tvForgotPass.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if (view == binding.btnLogin) {
             loginUserWithEmailPassword();
-        } else {
+        }else if (view==binding.tvForgotPass){
+            showForgotPasswordDialog();
+        }else {
             Navigation.findNavController(view).navigate(R.id.businessFragment);
         }
+    }
+
+    private void showForgotPasswordDialog() {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.password_reset_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+
+        TextView cancel = dialog.findViewById(R.id.tv_cancel);
+        TextView logout = dialog.findViewById(R.id.tv_logout);
+        cancel.setOnClickListener(view -> dialog.dismiss());
     }
 
     private void loginUserWithEmailPassword() {

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="20dp"
     tools:context=".ui.fragments.LoginFragment">
 
     <LinearLayout
@@ -68,6 +68,18 @@
             android:textColorHint="@color/text"
             android:textCursorDrawable="@null"
             android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/tv_forgot_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lato"
+            android:text="@string/forgot_password"
+            android:textColor="@color/accent"
+            android:textStyle="bold"
+            android:layout_gravity="end"/>
 
         <Button
             android:id="@+id/btn_login"
