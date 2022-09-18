@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,9 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
+import ke.co.ideagalore.olyxadmin.adapters.ExpenseAdapter;
 import ke.co.ideagalore.olyxadmin.adapters.TransactionsAdapter;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentTransactionsBinding;
+import ke.co.ideagalore.olyxadmin.models.Expense;
 import ke.co.ideagalore.olyxadmin.models.Transaction;
 
 public class TransactionsFragment extends Fragment implements View.OnClickListener {
@@ -51,6 +54,21 @@ public class TransactionsFragment extends Fragment implements View.OnClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getPreferenceData();
+
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchProduct(newText);
+                return true;
+            }
+        });
+
         binding.ivBack.setOnClickListener(this);
     }
 
@@ -98,5 +116,16 @@ public class TransactionsFragment extends Fragment implements View.OnClickListen
         TransactionsAdapter adapter = new TransactionsAdapter(list);
         binding.rvTransactions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    private void searchProduct(String newText) {
+
+        List<Transaction> filteredList = new ArrayList<>();
+        for (Transaction object : transactionList) {
+            if (object.getTransactionType().toLowerCase().contains(newText.toLowerCase())) {
+                filteredList.add(object);
+            }
+        }
+        displayList(filteredList);
     }
 }

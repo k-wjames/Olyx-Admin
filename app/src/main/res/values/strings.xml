@@ -33,7 +33,7 @@
     <string name="catalogue">Catalogue</string>
     <string name="item_category">item category</string>
     <string name="search_hint">search expenditure</string>
-    <string name="search_transaction">search transaction</string>
+    <string name="search_transaction">e.g gas refill, new gas or accessories</string>
     <string name="logout_from_the_app">Logout from the app?</string>
     <string name="logout">Logout</string>
     <string name="not_now">Not now</string>
