@@ -123,18 +123,18 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
                 for (int i = 0; i < catalogueList.size(); i++) {
                     Catalogue catalogueProduct = catalogueList.get(i);
                     if (catalogueProduct.getCategory().equals("Gas Refill")) {
-                        refillCatalogueItems.add(0, catalogueProduct);
+                        refillCatalogueItems.add(catalogueProduct);
                         binding.tvRefillItems.setText(String.valueOf(refillCatalogueItems.size()));
 
 
                     } else if (catalogueProduct.getCategory().equals("New Gas")) {
-                        newGasCylinderItems.add(0, catalogueProduct);
+                        newGasCylinderItems.add(catalogueProduct);
                         int length=newGasCylinderItems.size();
                         binding.tvGasItems.setText(String.valueOf(length));
 
 
                     } else {
-                        accessories.add(0, catalogueProduct);
+                        accessories.add(catalogueProduct);
                         binding.tvAccessoriesItems.setText(String.valueOf(accessories.size()));
                     }
                 }

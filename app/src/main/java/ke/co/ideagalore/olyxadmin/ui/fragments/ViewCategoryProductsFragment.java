@@ -104,14 +104,14 @@ public class ViewCategoryProductsFragment extends Fragment implements View.OnCli
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
-                    catalogueList.add(0, catalogue);
+                    catalogueList.add(catalogue);
                     customDialogs.dismissProgressDialog();
                 }
 
                 for (int i = 0; i < catalogueList.size(); i++) {
                     Catalogue catalogueProduct = catalogueList.get(i);
                     if (catalogueProduct.getCategory().equals(category)) {
-                        categoryList.add(0, catalogueProduct);
+                        categoryList.add(0,catalogueProduct);
                         binding.tvTotalItems.setText(String.valueOf(categoryList.size()));
                         CatalogueAdapter adapter = new CatalogueAdapter(getActivity(), categoryList);
                         binding.rvProducts.setLayoutManager(new LinearLayoutManager(getActivity()));

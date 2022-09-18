@@ -21,7 +21,7 @@
         android:id="@+id/settingsFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_editStoreFragment"
             app:destination="@id/editStoreFragment" />
@@ -36,7 +36,7 @@
         android:id="@+id/catalogueItemsFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.CatalogueItemsFragment"
         android:label="fragment_catalogue_items"
-        tools:layout="@layout/fragment_catalogue_items" >
+        tools:layout="@layout/fragment_catalogue_items">
         <action
             android:id="@+id/action_catalogueItemsFragment_to_viewCategoryProductsFragment"
             app:destination="@id/viewCategoryProductsFragment" />
@@ -46,7 +46,7 @@
         android:id="@+id/editProductFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.EditProductFragment"
         android:label="fragment_edit_product"
-        tools:layout="@layout/fragment_edit_product" >
+        tools:layout="@layout/fragment_edit_product">
         <action
             android:id="@+id/action_editProductFragment_to_viewCategoryProductsFragment"
             app:destination="@id/viewCategoryProductsFragment" />
@@ -55,7 +55,7 @@
         android:id="@+id/viewCategoryProductsFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.ViewCategoryProductsFragment"
         android:label="fragment_view_category_products"
-        tools:layout="@layout/fragment_view_category_products" >
+        tools:layout="@layout/fragment_view_category_products">
         <action
             android:id="@+id/action_viewCategoryProductsFragment_to_editProductFragment"
             app:destination="@id/editProductFragment" />
@@ -63,5 +63,15 @@
             android:id="@+id/action_viewCategoryProductsFragment_to_catalogueItemsFragment"
             app:destination="@id/catalogueItemsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/expensesFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.ExpensesFragment"
+        android:label="fragment_expenses"
+        tools:layout="@layout/fragment_expenses" />
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.TransactionsFragment"
+        android:label="fragment_transactions"
+        tools:layout="@layout/fragment_transactions" />
 
 </navigation>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +20,7 @@ import ke.co.ideagalore.olyxadmin.models.Catalogue;
 public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.ViewHolder> {
 
     Context context;
-    //List<Catalogue> catalogueArrayList;
     Catalogue catalogue;
-
     List<Catalogue> catalogueList;
 
     public CatalogueAdapter(Context context, List<Catalogue> catalogueList) {
@@ -42,20 +41,17 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
         catalogue = catalogueList.get(position);
         holder.product.setText(catalogue.getProduct());
         holder.selling.setText(String.valueOf(catalogue.getMarkedPrice()));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.layout.setOnClickListener(view -> {
 
-                Bundle bundle=new Bundle();
-                bundle.putString("category", catalogue.getCategory());
-                bundle.putString("product", catalogue.getProduct());
-                bundle.putInt("buyingPrice", catalogue.getBuyingPrice());
-                bundle.putInt("sellingPrice", catalogue.getMarkedPrice());
-                bundle.putInt("stockedItems", catalogue.getStockedQuantity());
-                bundle.putString("productId", catalogue.getProdId());
-                Navigation.findNavController(view).navigate(R.id.editProductFragment, bundle);
+            Bundle bundle=new Bundle();
+            bundle.putString("category", catalogue.getCategory());
+            bundle.putString("product", catalogue.getProduct());
+            bundle.putInt("buyingPrice", catalogue.getBuyingPrice());
+            bundle.putInt("sellingPrice", catalogue.getMarkedPrice());
+            bundle.putInt("stockedItems", catalogue.getStockedQuantity());
+            bundle.putString("productId", catalogue.getProdId());
+            Navigation.findNavController(view).navigate(R.id.editProductFragment, bundle);
 
-            }
         });
 
     }
@@ -68,12 +64,13 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView product, selling;
-
+        RelativeLayout layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             product = itemView.findViewById(R.id.tv_product);
             selling = itemView.findViewById(R.id.tv_price);
+            layout=itemView.findViewById(R.id.layout);
         }
     }
 }

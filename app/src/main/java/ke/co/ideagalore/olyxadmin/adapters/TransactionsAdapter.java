@@ -3,6 +3,7 @@ package ke.co.ideagalore.olyxadmin.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,7 +36,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
         Transaction transaction=transactionList.get(position);
         holder.transactionId.setText(transaction.getTransactionId());
-        holder.product.setText(transaction.getProduct()+ " *" + transaction.getQuantity());
+        holder.product.setText(transaction.getProduct()+ " *" + transaction.getQuantity()+ "@ "+transaction.getSellingPrice());
         holder.price.setText("KES "+transaction.getTotalPrice());
         holder.store.setText(transaction.getStore());
 

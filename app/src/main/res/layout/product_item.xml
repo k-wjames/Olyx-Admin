@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:layout_marginTop="2dp"
-    android:background="@drawable/edt_background">
+    android:background="@drawable/edt_background"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/tv_product"
@@ -19,8 +20,8 @@
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
         android:fontFamily="@font/lato"
         android:text="KES 2000"
         android:textColor="@color/accent" />

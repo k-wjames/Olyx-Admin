@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.ListAdapter;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.TransactionsAdapter;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentMainBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
@@ -34,14 +35,17 @@ import ke.co.ideagalore.olyxadmin.models.Expense;
 import ke.co.ideagalore.olyxadmin.models.Stores;
 import ke.co.ideagalore.olyxadmin.models.Transaction;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements View.OnClickListener {
 
     FragmentMainBinding binding;
     List<Stores> storesList = new ArrayList<>();
     List<Catalogue> catalogueList = new ArrayList<>();
     List<Transaction> transactionList = new ArrayList<>();
+    List<Expense> expenseList = new ArrayList<>();
 
     String terminal, name, businessName, terminalId;
+
+    int profits;
 
     public MainFragment() {
 
@@ -59,6 +63,16 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getCurrentDate();
         getPreferenceData();
+
+        binding.tvViewTransactions.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == binding.tvViewTransactions) {
+            Navigation.findNavController(view).navigate(R.id.transactionsFragment);
+        }
 
     }
 
@@ -112,29 +126,35 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void getTransactions(String myTerminal) {
-
+    private void getTransactionsData(String myTerminal) {
         transactionList.clear();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Sales");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
-                    Transaction transaction = storeSnapshot.getValue(Transaction.class);
-                    transactionList.add(transaction);
-                    if (catalogueList.size() < 10) {
-                        binding.tvTransactions.setText(0 + "" + transactionList.size());
-                    } else
-                        binding.tvTransactions.setText(String.valueOf(transactionList.size()));
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
+
+                    Transaction transaction = transactionSnapshot.getValue(Transaction.class);
+                    transactionList.add(0, transaction);
+                    if (transactionList.size() < 10) {
+                        binding.tvTransactions.setText("0" + transactionList.size());
+                    } else binding.tvTransactions.setText(transactionList.size());
                     int sales = 0;
-                    for (Transaction salesTransaction : transactionList) {
-                        sales = sales + salesTransaction.getTotalPrice();
+                    int totalProfit = 0;
+
+                    for (Transaction item : transactionList) {
+                        sales = sales + item.getTotalPrice();
                         binding.tvSales.setText("KES " + sales);
+                        totalProfit = totalProfit + item.getProfit();
+                        profits = totalProfit;
+                        binding.tvTotalProfits.setText("KES " + profits);
                     }
 
                     displayList(transactionList);
                 }
+
+
             }
 
             @Override
@@ -142,23 +162,25 @@ public class MainFragment extends Fragment {
 
             }
         });
+
     }
 
     private void getExpenditureData(String myTerminal) {
+        expenseList.clear();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot expenseSnapshot:snapshot.getChildren()){
-                    Expense expense=expenseSnapshot.getValue(Expense.class);
-                    List<Expense> expenseList=new ArrayList<>();
+                for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
+                    Expense expense = expenseSnapshot.getValue(Expense.class);
                     expenseList.add(expense);
-                    for (int i=0; i<expenseList.size(); i++){
-                        int totalExpenses=0;
-                        int exp=expenseList.get(i).getPrice();
-                        totalExpenses=totalExpenses+exp;
-                        binding.tvExpenses.setText("KES "+(totalExpenses));
+                    int totalExpenses = 0;
+                    for (Expense item : expenseList) {
+                        int exp = item.getPrice();
+                        totalExpenses = totalExpenses + exp;
+                        binding.tvExpenses.setText("KES " + (totalExpenses));
+                        binding.tvNetProfits.setText("KES " + (profits - totalExpenses));
                     }
                 }
 
@@ -223,7 +245,7 @@ public class MainFragment extends Fragment {
             binding.tvName.setText(name + ",");
             getCatalogueData(terminal);
             getStoresData(terminal);
-            getTransactions(terminal);
+            getTransactionsData(terminal);
             getExpenditureData(terminal);
         }
     }
@@ -237,4 +259,6 @@ public class MainFragment extends Fragment {
         editor.commit();
         getPreferenceData();
     }
+
+
 }
