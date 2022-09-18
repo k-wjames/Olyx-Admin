@@ -125,10 +125,26 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void signOut() {
+
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.sign_out_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+
+        TextView cancel = dialog.findViewById(R.id.tv_cancel);
+        TextView logout = dialog.findViewById(R.id.tv_logout);
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signOut();
-        startActivity(new Intent(getActivity(), Onboard.class));
-        getActivity().finish();
+
+        cancel.setOnClickListener(view -> dialog.dismiss());
+        logout.setOnClickListener(view -> {
+            auth.signOut();
+            startActivity(new Intent(getActivity(), Onboard.class));
+            getActivity().finish();
+        });
+
     }
 
     public void showAddStoreDialog() {
@@ -224,6 +240,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
+
     private void getAttendantsData() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Attendants");
         reference.addValueEventListener(new ValueEventListener() {
@@ -249,4 +266,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
+
+
 }
