@@ -2,8 +2,17 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,33 +21,32 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.ExpenseAdapter;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
+import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentExpensesBinding;
 import ke.co.ideagalore.olyxadmin.models.Expense;
 
-public class ExpensesFragment extends Fragment implements View.OnClickListener{
+public class ExpensesFragment extends Fragment implements View.OnClickListener {
     FragmentExpensesBinding binding;
-    CustomDialogs customDialogs=new CustomDialogs();
-    String terminal;
+    CustomDialogs customDialogs = new CustomDialogs();
+    ValidateFields validator = new ValidateFields();
+    String terminal, dateToday;
 
-    List<Expense>expenseList=new ArrayList<>();
+    List<Expense> expenseList = new ArrayList<>();
 
     public ExpensesFragment() {
     }
@@ -46,7 +54,7 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding=FragmentExpensesBinding.inflate(inflater, container, false);
+        binding = FragmentExpensesBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -54,6 +62,10 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getPreferenceData();
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        dateToday = formatter.format(date);
 
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -69,23 +81,29 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+
         binding.ivBack.setOnClickListener(this);
+        binding.ivAdd.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view==binding.ivBack){
+        if (view == binding.ivBack) {
             Navigation.findNavController(view).navigate(R.id.mainFragment);
+        } else if (view == binding.ivAdd) {
+            showAddExpenseDialog();
         }
     }
+
     private void getPreferenceData() {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
         terminal = sharedPreferences.getString("terminal", null);
         getExpenditureData(terminal);
 
     }
+
     private void getExpenditureData(String myTerminal) {
-        customDialogs.showProgressDialog(requireActivity(),"Fetching expenditure data");
+        customDialogs.showProgressDialog(requireActivity(), "Fetching expenditure data");
         expenseList.clear();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
         reference.addValueEventListener(new ValueEventListener() {
@@ -99,7 +117,7 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
                 }
                 binding.rvExpenditure.setLayoutManager(new LinearLayoutManager(getActivity()));
                 binding.rvExpenditure.setHasFixedSize(true);
-                ExpenseAdapter adapter=new ExpenseAdapter(expenseList);
+                ExpenseAdapter adapter = new ExpenseAdapter(expenseList);
                 binding.rvExpenditure.setAdapter(adapter);
 
             }
@@ -112,6 +130,78 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
         });
     }
 
+    private void showAddExpenseDialog() {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.add_expense_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+
+        TextView cancel = dialog.findViewById(R.id.tv_cancel);
+        cancel.setOnClickListener(view -> dialog.dismiss());
+
+        EditText expense, description, quantity, cost;
+        expense = dialog.findViewById(R.id.edt_expense);
+        description = dialog.findViewById(R.id.edt_description);
+        quantity = dialog.findViewById(R.id.edt_quantity);
+        cost = dialog.findViewById(R.id.edt_cost);
+
+        Button save = dialog.findViewById(R.id.btn_add_expense);
+        save.setOnClickListener(view -> {
+            String expenseQuantity, expenseItem, expenseDescription, totalCost;
+            expenseItem = expense.getText().toString();
+            expenseDescription = description.getText().toString();
+            expenseQuantity = quantity.getText().toString();
+            totalCost = cost.getText().toString();
+
+            if (validator.validateEditTextFields(requireActivity(), expense, "Expense")
+                    && validator.validateEditTextFields(requireActivity(), description, "Description")
+                    && validator.validateEditTextFields(requireActivity(), quantity, "Quantity")
+                    && validator.validateEditTextFields(requireActivity(), cost, "Amount")) {
+                addNewExpenditure(expenseItem, expenseDescription, expenseQuantity, totalCost, dialog);
+            }
+        });
+
+    }
+
+    private void addNewExpenditure(String expenseItem, String expenseDescription, String expenseQuantity, String totalCost, Dialog dialog) {
+
+        int unitsSold;
+        if (TextUtils.isEmpty(expenseQuantity)) {
+            unitsSold = 1;
+        } else {
+            unitsSold = Integer.parseInt(expenseQuantity);
+        }
+
+        DateFormat formatter = new SimpleDateFormat("hh:mm:ss a");
+        String time = formatter.format(new Date());
+        String expenseId;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Expenditure");
+        expenseId = ref.push().getKey();
+        Expense exp = new Expense();
+        exp.setExpenseId(expenseId);
+        exp.setExpense(expenseItem);
+        exp.setDescription(expenseDescription);
+        exp.setPrice(Integer.parseInt(totalCost));
+        exp.setDate(dateToday);
+        exp.setTime(time);
+        exp.setQuantity(unitsSold);
+
+        ref.child(expenseId).setValue(exp).addOnCompleteListener(task -> {
+
+            if (task.isSuccessful()) {
+                getExpenditureData(terminal);
+                dialog.dismiss();
+
+            } else {
+                Toast.makeText(getActivity(), "Failed to add expense. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+    }
+
     private void searchProduct(String newText) {
 
         List<Expense> filteredList = new ArrayList<>();
@@ -122,7 +212,7 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
         }
         binding.rvExpenditure.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvExpenditure.setHasFixedSize(true);
-        ExpenseAdapter adapter=new ExpenseAdapter(filteredList);
+        ExpenseAdapter adapter = new ExpenseAdapter(filteredList);
         binding.rvExpenditure.setAdapter(adapter);
     }
 }
