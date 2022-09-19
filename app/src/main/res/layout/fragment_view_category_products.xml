@@ -27,7 +27,7 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/edt_background"
                 android:src="@drawable/ic_back"
-                app:tint="@color/text" />
+                app:tint="@color/accent" />
 
             <TextView
                 android:id="@+id/title"
@@ -47,7 +47,7 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/edt_circular_background"
                 android:src="@drawable/ic_add"
-                app:tint="@color/text" />
+                app:tint="@color/accent" />
 
         </RelativeLayout>
 

@@ -36,7 +36,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         holder.expense.setText(expense.getExpense());
         holder.description.setText(expense.getDescription());
         holder.quantity.setText("Quantity : *" + expense.getQuantity());
-        holder.cost.setText("Total cost : KES " + expense.getPrice());
+        holder.cost.setText("Paid : KES " + expense.getPrice());
         holder.time.setText( expense.getDate()+":"+expense.getTime());
 
     }

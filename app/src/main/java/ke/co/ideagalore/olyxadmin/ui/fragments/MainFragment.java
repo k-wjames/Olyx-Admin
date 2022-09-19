@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 import ke.co.ideagalore.olyxadmin.R;
+import ke.co.ideagalore.olyxadmin.adapters.ExpenseAdapter;
 import ke.co.ideagalore.olyxadmin.adapters.TransactionsAdapter;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentMainBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
@@ -43,7 +44,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     List<Transaction> transactionList = new ArrayList<>();
     List<Expense> expenseList = new ArrayList<>();
 
-    String terminal, name, businessName, terminalId;
+    String terminal, name, businessName, terminalId, selectedItem;
 
     int profits;
 
@@ -65,6 +66,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         getPreferenceData();
 
         binding.tvViewTransactions.setOnClickListener(this);
+        binding.btnSales.setOnClickListener(this);
+        binding.btnExpenditure.setOnClickListener(this);
+        binding.cvTransactions.setOnClickListener(this);
+        binding.cvCatalogue.setOnClickListener(this);
 
     }
 
@@ -72,6 +77,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view == binding.tvViewTransactions) {
             Navigation.findNavController(view).navigate(R.id.transactionsFragment);
+        } else if (view == binding.btnSales) {
+            displayTransactionsList(transactionList);
+        } else if (view == binding.btnExpenditure) {
+            displayExpenditureList(expenseList);
+        } else if (view == binding.cvTransactions) {
+            Navigation.findNavController(view).navigate(R.id.transactionsFragment);
+        } else {
+            Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
         }
 
     }
@@ -151,7 +164,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         binding.tvTotalProfits.setText("KES " + profits);
                     }
 
-                    displayList(transactionList);
+                    displayTransactionsList(transactionList);
                 }
 
 
@@ -223,10 +236,18 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void displayList(List<Transaction> list) {
+    private void displayTransactionsList(List<Transaction> list) {
         binding.rvTransactions.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvTransactions.setHasFixedSize(true);
         TransactionsAdapter adapter = new TransactionsAdapter(list);
+        binding.rvTransactions.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void displayExpenditureList(List<Expense> expenseList) {
+        binding.rvTransactions.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.rvTransactions.setHasFixedSize(true);
+        ExpenseAdapter adapter = new ExpenseAdapter(expenseList);
         binding.rvTransactions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

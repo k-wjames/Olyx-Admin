@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:paddingTop="20dp"
     android:paddingStart="15dp"
+    android:paddingTop="20dp"
     android:paddingEnd="15dp"
     android:paddingBottom="2dp"
     tools:context=".ui.fragments.MainFragment">
@@ -18,10 +18,38 @@
         android:orientation="vertical">
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:id="@+id/tv_business"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="Dashboard"
+                android:textColor="@color/text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_filter"
+                app:tint="@color/text" />
+
+        </RelativeLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -73,37 +101,65 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_business"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/lato"
-            android:text="Dashboard"
-            android:textColor="@color/text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/tv_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="Today"
+                android:textColor="@color/text_light"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/text_light"
+                android:text="Listed stores:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_toStartOf="@+id/tv_stores"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:id="@+id/tv_stores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/accent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/accent"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/accent"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -113,8 +169,8 @@
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/lato"
                         android:text="Total sales"
-                        android:textColor="@color/text"
-                        android:textSize="16sp" />
+                        android:textColor="@color/text_light"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_sales"
@@ -124,8 +180,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/lato"
                         android:text="KES 00"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textColor="@color/text" />
 
                 </LinearLayout>
 
@@ -133,18 +188,17 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="1dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/accentThree"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/accentThree"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -154,8 +208,8 @@
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/lato"
                         android:text="Total expenses"
-                        android:textColor="@color/text"
-                        android:textSize="16sp" />
+                        android:textColor="@color/text_light"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_expenses"
@@ -165,8 +219,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/lato"
                         android:text="KES 00"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textColor="@color/text" />
 
                 </LinearLayout>
 
@@ -181,6 +234,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
+            android:visibility="gone"
             app:cardCornerRadius="5dp">
 
             <LinearLayout
@@ -201,8 +255,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/greenLight"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="5dp"
+                    android:background="@color/greenLight" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -243,14 +297,14 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_net_profits"
+                        android:id="@+id/tv_net_profit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/lato"
                         android:textColor="@color/accent"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -258,13 +312,51 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp"
+            app:cardCornerRadius="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="Net profit"
+                    android:textColor="@color/text_light"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"/>
+
+                <TextView
+                    android:id="@+id/tv_net_profits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:text="KES 00"
+                    android:textColor="@color/text"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_transactions"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="1dp"
@@ -277,50 +369,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/greenLight"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/lato"
-                        android:text="No. of stores"
-                        android:textColor="@color/text" />
-
-                    <TextView
-                        android:id="@+id/tv_stores"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/edt_light_circular_background"
-                        android:fontFamily="@font/lato"
-                        android:text="00"
-                        android:textColor="@color/text"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="1dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/cyanLight"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:background="@color/accentThree"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -342,11 +393,13 @@
                         android:textColor="@color/text"
                         android:textStyle="bold" />
 
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_catalogue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="1dp"
@@ -357,8 +410,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/blueLight"
+                    android:layout_height="match_parent"
+                    android:background="@color/accentTwo"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -391,7 +444,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -415,13 +469,52 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:text="Recent transactions"
+            android:textColor="@color/text_light"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_sales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cash in"
+                android:textColor="@color/white"
+                android:fontFamily="@font/lato"
+                android:textSize="12sp"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/accentOne"/>
+
+            <Button
+                android:id="@+id/btn_expenditure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cash out"
+                android:textColor="@color/white"
+                android:fontFamily="@font/lato"
+                android:textSize="12sp"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/black"
+                android:layout_toRightOf="@+id/btn_sales"
+                android:layout_marginStart="10dp"/>
+
+        </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_transactions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:visibility="visible"
-            tools:listitem="@layout/transaction_item" />
+            tools:listitem="@layout/transaction_item"/>
     </LinearLayout>
 
 </RelativeLayout>

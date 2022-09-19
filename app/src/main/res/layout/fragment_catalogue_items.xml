@@ -27,7 +27,7 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/edt_background"
                 android:src="@drawable/ic_back"
-                app:tint="@color/text" />
+                app:tint="@color/accent" />
 
             <TextView
                 android:layout_width="wrap_content"

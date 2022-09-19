@@ -37,7 +37,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         Transaction transaction=transactionList.get(position);
         holder.transactionId.setText(transaction.getTransactionId());
         holder.product.setText(transaction.getProduct()+ " *" + transaction.getQuantity()+ "@ "+transaction.getSellingPrice());
-        holder.price.setText("KES "+transaction.getTotalPrice());
+        holder.price.setText("Received : KES "+transaction.getTotalPrice());
         holder.store.setText(transaction.getStore());
 
         if (getDate().equals(transaction.getDate())) {

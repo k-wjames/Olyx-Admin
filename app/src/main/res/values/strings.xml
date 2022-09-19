@@ -51,4 +51,9 @@
         <item>Accessory</item>
     </string-array>
 
+    <string-array name="filter">
+        <item>Today</item>
+        <item>Custom</item>
+    </string-array>
+
 </resources>

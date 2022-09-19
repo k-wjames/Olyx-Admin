@@ -6,15 +6,15 @@
         android:icon="@drawable/ic_apps"
         android:title="Dashboard" />
 
-    <item
+<!--    <item
         android:id="@+id/catalogueItemsFragment"
         android:icon="@drawable/ic_products"
-        android:title="Products" />
+        android:title="Products" />-->
 
-    <item
+  <!--  <item
         android:id="@+id/transactionsFragment"
         android:icon="@drawable/ic_transactions"
-        android:title="Transactions" />
+        android:title="Transactions" />-->
 
     <item
         android:id="@+id/expensesFragment"
