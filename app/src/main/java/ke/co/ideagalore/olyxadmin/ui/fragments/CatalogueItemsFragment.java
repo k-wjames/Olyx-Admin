@@ -2,16 +2,11 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,8 +26,6 @@ import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentCatalogueItemsBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
-import ke.co.ideagalore.olyxadmin.models.Refill;
-import ke.co.ideagalore.olyxadmin.models.Stores;
 
 public class CatalogueItemsFragment extends Fragment implements View.OnClickListener {
 
@@ -67,9 +60,9 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         getCatalogueData();
 
         binding.ivBack.setOnClickListener(this);
-        binding.tvViewRefillItems.setOnClickListener(this);
-        binding.tvViewNewCylinders.setOnClickListener(this);
-        binding.tvViewAccessories.setOnClickListener(this);
+        binding.cvViewRefillItems.setOnClickListener(this);
+        binding.cvViewNewGasItems.setOnClickListener(this);
+        binding.cvViewAccessoriesItems.setOnClickListener(this);
     }
 
     @Override
@@ -77,18 +70,18 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
 
         Bundle bundle = new Bundle();
 
-        if (view == binding.tvViewRefillItems) {
+        if (view == binding.cvViewRefillItems) {
 
             bundle.putString("category", "Gas Refill");
             bundle.putString("title", "Gas Refill");
             Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
 
-        } else if (view == binding.tvViewNewCylinders) {
+        } else if (view == binding.cvViewNewGasItems) {
             bundle.putString("category", "New Gas");
             bundle.putString("title", "New Gas Cylinders");
             Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
 
-        } else if (view == binding.tvViewAccessories) {
+        } else if (view == binding.cvViewAccessoriesItems) {
             bundle.putString("category", "Accessories");
             bundle.putString("title", "Accessories");
             Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
@@ -112,9 +105,9 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
                     catalogueList.add(0, catalogue);
-                    if (catalogueList.size()<10){
-                        binding.tvAll.setText(0+""+catalogueList.size());
-                    }else {
+                    if (catalogueList.size() < 10) {
+                        binding.tvAll.setText(0 + "" + catalogueList.size());
+                    } else {
                         binding.tvAll.setText(String.valueOf(catalogueList.size()));
                     }
                     customDialogs.dismissProgressDialog();
@@ -124,18 +117,27 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
                     Catalogue catalogueProduct = catalogueList.get(i);
                     if (catalogueProduct.getCategory().equals("Gas Refill")) {
                         refillCatalogueItems.add(catalogueProduct);
-                        binding.tvRefillItems.setText(String.valueOf(refillCatalogueItems.size()));
+                        if (refillCatalogueItems.size() < 10) {
+                            binding.tvRefillItems.setText(0 + "" + refillCatalogueItems.size());
+                        } else
+                            binding.tvRefillItems.setText(String.valueOf(refillCatalogueItems.size()));
 
 
                     } else if (catalogueProduct.getCategory().equals("New Gas")) {
                         newGasCylinderItems.add(catalogueProduct);
-                        int length=newGasCylinderItems.size();
-                        binding.tvGasItems.setText(String.valueOf(length));
+                        int length = newGasCylinderItems.size();
+                        if (newGasCylinderItems.size() < 10) {
+                            binding.tvGasItems.setText(0 + "" + length);
+                        } else
+                            binding.tvGasItems.setText(String.valueOf(length));
 
 
                     } else {
                         accessories.add(catalogueProduct);
-                        binding.tvAccessoriesItems.setText(String.valueOf(accessories.size()));
+                        if (accessories.size() < 10) {
+                            binding.tvAccessoriesItems.setText(0 + "" + accessories.size());
+                        } else
+                            binding.tvAccessoriesItems.setText(String.valueOf(accessories.size()));
                     }
                 }
 

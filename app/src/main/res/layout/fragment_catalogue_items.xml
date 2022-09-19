@@ -34,243 +34,181 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/lato"
-                android:text="@string/catalogue"
+                android:text="@string/products"
                 android:textColor="@color/text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
             android:layout_marginTop="60dp"
-            android:layout_marginEnd="1dp"
-            app:cardCornerRadius="5dp">
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_view_refill_items"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="3dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="5dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/greenLight"
-                    android:fontFamily="@font/lato"
-                    android:padding="10dp"
-                    android:text="@string/gas_refill"
-                    android:textColor="@color/text"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_height="match_parent"
+                    android:background="@color/accentThree"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:padding="10dp"
+                        android:text="@string/gas_refill"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
 
-                <RelativeLayout
+                    <TextView
+                        android:id="@+id/tv_gas_items"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="@string/zero"
+                        android:background="@drawable/edt_light_circular_background"
+                        android:textColor="@color/accentThree"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/lato"
+                        android:text="Listed items"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_view_new_gas_items"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="3dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:padding="10dp">
+                    android:layout_height="match_parent"
+                    android:background="@color/accentTwo"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:padding="10dp"
+                        android:text="@string/new_gas_cylinders"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
 
 
                     <TextView
                         android:id="@+id/tv_refill_items"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
+                        android:background="@drawable/edt_light_circular_background"
                         android:fontFamily="@font/lato"
                         android:text="@string/zero"
-                        android:textColor="@color/accent"
+                        android:textColor="@color/accentTwo"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_refill"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="30dp"
-                        android:layout_toRightOf="@+id/tv_refill_items"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/lato"
-                        android:text="listed items"
-                        android:textColor="@color/text"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/tv_view_refill_items"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerInParent="true"
-                        android:text="@string/view_items"
-                        android:textColor="@color/accent"
-                        android:textSize="16sp" />
-
-
-                </RelativeLayout>
-
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="1dp"
-            app:cardCornerRadius="5dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/greenLight"
-                    android:fontFamily="@font/lato"
-                    android:padding="10dp"
-                    android:text="@string/new_gas_cylinders"
-                    android:textColor="@color/text"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tv_gas_items"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="@font/lato"
-                        android:text="@string/zero"
-                        android:textColor="@color/accent"
-                        android:textSize="16sp"
+                        android:text="Listed items"
+                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tv_gas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="30dp"
-                        android:layout_toRightOf="@+id/tv_gas_items"
-                        android:fontFamily="@font/lato"
-                        android:text="new listed cylinders"
-                        android:textColor="@color/text"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/tv_view_new_cylinders"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerInParent="true"
-                        android:text="@string/view_items"
-                        android:textColor="@color/accent"
-                        android:textSize="16sp" />
+                </LinearLayout>
 
-                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_view_accessories_items"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="3dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="5dp">
 
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="1dp"
-            app:cardCornerRadius="5dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/greenLight"
-                    android:fontFamily="@font/lato"
-                    android:padding="10dp"
-                    android:text="@string/accessories"
-                    android:textColor="@color/text"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/accentOne"
+                    android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:padding="10dp"
+                        android:text="@string/accessories"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
 
                     <TextView
                         android:id="@+id/tv_accessories_items"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
                         android:fontFamily="@font/lato"
+                        android:background="@drawable/edt_light_circular_background"
                         android:text="@string/zero"
-                        android:textColor="@color/accent"
+                        android:textColor="@color/accentOne"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_accessories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="30dp"
-                        android:layout_toEndOf="@+id/tv_accessories_items"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/lato"
-                        android:text="@string/total_listed_accessories"
-                        android:textColor="@color/text"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/tv_view_accessories"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerInParent="true"
-                        android:text="@string/view_items"
-                        android:textColor="@color/accent"
-                        android:textSize="16sp" />
+                        android:text="Listed items"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
 
-                </RelativeLayout>
+                </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="1dp"
             app:cardBackgroundColor="@color/accent"

@@ -25,7 +25,7 @@
     <string name="submit_changes">Submit changes</string>
     <string name="accessories">Accessories</string>
     <string name="gas_refill">Gas Refill</string>
-    <string name="new_gas_cylinders">New Gas Cylinders</string>
+    <string name="new_gas_cylinders">New Gas</string>
     <string name="view_items">view items</string>
     <string name="total_number_of_items_in_all_categories">Total number of items in all categories</string>
     <string name="total_listed_accessories">total listed accessories</string>
@@ -43,6 +43,7 @@
     <string name="cancel">Cancel</string>
     <string name="reset_password">Yes, I\'d like to reset it</string>
     <string name="password_reset_instructions">To reset your password, you are required to key in the email address used to create this account. Be sure to have it\'s access, otherwise you may not be able to recover your account.</string>
+    <string name="products">Products</string>
 
     <string-array name="stockItems">
         <item>Select category</item>
