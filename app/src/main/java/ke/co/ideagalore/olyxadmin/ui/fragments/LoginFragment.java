@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import ke.co.ideagalore.olyxadmin.R;
@@ -60,9 +62,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view == binding.btnLogin) {
             loginUserWithEmailPassword();
-        }else if (view==binding.tvForgotPass){
+        } else if (view == binding.tvForgotPass) {
             showForgotPasswordDialog();
-        }else {
+        } else {
             Navigation.findNavController(view).navigate(R.id.businessFragment);
         }
     }
@@ -75,9 +77,32 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.show();
 
+        EditText mail = dialog.findViewById(R.id.edt_email);
+
         TextView cancel = dialog.findViewById(R.id.tv_cancel);
         TextView logout = dialog.findViewById(R.id.tv_logout);
         cancel.setOnClickListener(view -> dialog.dismiss());
+        logout.setOnClickListener(view -> {
+
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            if (validateFields.validateEmailAddress(requireActivity(), mail)) {
+                dialogs.showProgressDialog(requireActivity(), "Sending password reset link");
+                String emailAddress =mail.getText().toString();
+                auth.sendPasswordResetEmail(emailAddress)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                dialog.dismiss();
+                                dialogs.dismissProgressDialog();
+                                dialogs.showSnackBar(requireActivity(), "Password reset link sent to " + emailAddress);
+                            }
+                        }).addOnFailureListener(e -> {
+                            dialog.dismiss();
+                            dialogs.dismissProgressDialog();
+                            dialogs.showSnackBar(requireActivity(), e.getMessage());
+                        });
+            }
+
+        });
     }
 
     private void loginUserWithEmailPassword() {

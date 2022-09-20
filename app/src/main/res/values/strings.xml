@@ -46,6 +46,7 @@
     <string name="products">Products</string>
     <string name="found_items">Items found :</string>
     <string name="add_catalogue_item">Add Catalogue Item</string>
+    <string name="search_expenses">search by category</string>
 
     <string-array name="stockItems">
         <item>Select category</item>

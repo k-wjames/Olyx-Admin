@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,13 +26,12 @@ import ke.co.ideagalore.olyxadmin.models.Catalogue;
 
 public class EditProductFragment extends Fragment implements View.OnClickListener {
     FragmentEditProductBinding binding;
-    String terminal, productCategory, product, productId, categoryTitle;
+    String terminal, productCategory, product, productId, selectedItem;
     int bPrice, sPrice, numberStoked;
     DatabaseReference reference;
 
     CustomDialogs customDialogs = new CustomDialogs();
     ValidateFields validator = new ValidateFields();
-    Bundle bundle;
 
     public EditProductFragment() {
 
@@ -48,15 +49,25 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         super.onViewCreated(view, savedInstanceState);
         getPreferenceData();
         getBundleData();
-/*
-        if (productCategory.equals("New Gas")) {
-            categoryTitle = "New Gas Cylinders";
-        } else {
-            categoryTitle = productCategory;
-        }
-        bundle = new Bundle();
-        bundle.putString("category", productCategory);
-        bundle.putString("title", categoryTitle);*/
+
+        String[] category = new String[]{"Gas Refill", "New Gas", "Accessories"};
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                category);
+        arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        binding.spinnerCategory.setAdapter(arrayAdapter);
+        binding.spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedItem = binding.spinnerCategory.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        binding.spinnerCategory.setAdapter(arrayAdapter);
+
         reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         binding.ivDelete.setOnClickListener(this);
         binding.ivBack.setOnClickListener(this);
@@ -89,12 +100,12 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
             sPrice = arguments.getInt("sellingPrice");
             numberStoked = arguments.getInt("stockedItems");
             productId = arguments.get("productId").toString();
-            setViews(productCategory, product, bPrice, sPrice, numberStoked);
+            setViews(product, bPrice, sPrice, numberStoked);
         }
     }
 
-    private void setViews(String productCategory, String product, int bPrice, int sPrice, int numberStoked) {
-        binding.tvCategory.setText(productCategory);
+    private void setViews(String product, int bPrice, int sPrice, int numberStoked) {
+        binding.spinnerCategory.setSelection(binding.spinnerCategory.getSelectedItemPosition());
         binding.edtProduct.setText(product);
         binding.edtBuyingPrice.setText(String.valueOf(bPrice));
         binding.edtMarkedPrice.setText(String.valueOf(sPrice));
@@ -120,7 +131,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
                 && validator.validateEditTextFields(getActivity(), binding.edtMarkedPrice, "Selling price")
                 && validator.validateEditTextFields(getActivity(), binding.edtStocked, "Items stocked")) {
             Catalogue catalogue = new Catalogue();
-            catalogue.setCategory(productCategory);
+            catalogue.setCategory(selectedItem);
             catalogue.setProdId(productId);
             catalogue.setBuyingPrice(Integer.parseInt(binding.edtBuyingPrice.getText().toString()));
             catalogue.setMarkedPrice(Integer.parseInt(binding.edtMarkedPrice.getText().toString()));
@@ -139,7 +150,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
 
     private void resetViews() {
 
-        binding.tvCategory.setText(null);
+        binding.spinnerCategory.setSelection(0);
         binding.edtProduct.setText(null);
         binding.edtBuyingPrice.setText(0 + "");
         binding.edtMarkedPrice.setText(0 + "");
