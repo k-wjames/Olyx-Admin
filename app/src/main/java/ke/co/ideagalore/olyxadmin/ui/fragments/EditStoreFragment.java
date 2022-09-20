@@ -111,7 +111,7 @@ public class EditStoreFragment extends Fragment implements View.OnClickListener 
                 }
             }).addOnFailureListener(e -> customDialogs.showSnackBar(getActivity(), e.getMessage()));
         }
-        else {
+        else if (view==binding.ivBack){
             Navigation.findNavController(view).popBackStack(R.id.settingsFragment, true);
         }
 
