@@ -18,32 +18,47 @@
         android:orientation="vertical">
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="35dp"
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/tv_business"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
                 android:text="Dashboard"
                 android:textColor="@color/text"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_weight="2"/>
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="5dp"
-                android:src="@drawable/ic_filter"
-                app:tint="@color/text" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="2dp"
+                app:cardCornerRadius="5dp"
+                android:layout_weight="1">
 
-        </RelativeLayout>
+                <Spinner
+                    android:id="@+id/spinner_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:spinnerMode="dropdown"
+                    tools:listitem="@layout/spinner_item"
+                    android:padding="8dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -119,13 +134,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
-                android:textColor="@color/text_light"
-                android:text="Listed stores:"
-                android:textSize="14sp"
-                android:textStyle="bold"
+                android:layout_marginEnd="5dp"
                 android:layout_toStartOf="@+id/tv_stores"
-                android:layout_marginEnd="5dp"/>
+                android:fontFamily="@font/lato"
+                android:text="Listed stores:"
+                android:textColor="@color/text_light"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_stores"
@@ -135,7 +150,8 @@
                 android:textColor="@color/accent"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_alignParentEnd="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="5dp"/>
 
         </RelativeLayout>
 

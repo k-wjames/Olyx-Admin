@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,8 +24,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,7 +48,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     List<Transaction> transactionList = new ArrayList<>();
     List<Expense> expenseList = new ArrayList<>();
 
-    String terminal, name, businessName, terminalId, selectedItem;
+    String terminal, name, businessName, terminalId, selectedItem, dateToday;
 
     int profits;
 
@@ -65,12 +69,50 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         getCurrentDate();
         getPreferenceData();
 
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        dateToday = formatter.format(date);
+
+        String[] category = new String[]{"Today", "Custom", "All time"};
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                category);
+        arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        binding.spinnerCategory.setAdapter(arrayAdapter);
+        binding.spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedItem = binding.spinnerCategory.getSelectedItem().toString();
+                binding.tvPeriod.setText(selectedItem);
+                String selectedPeriod;
+                if (selectedItem.equals("Today")){
+                    filterTodayData(dateToday);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        binding.spinnerCategory.setAdapter(arrayAdapter);
+
         binding.tvViewTransactions.setOnClickListener(this);
         binding.btnSales.setOnClickListener(this);
         binding.btnExpenditure.setOnClickListener(this);
         binding.cvTransactions.setOnClickListener(this);
         binding.cvCatalogue.setOnClickListener(this);
 
+    }
+
+    private void filterTodayData(String dateToday) {
+        for (Transaction transaction:transactionList){
+            String date=transaction.getDate();
+            List<Transaction> todayTransactions=new ArrayList<>();
+            if (date.equals(dateToday)){
+                todayTransactions.add(0,transaction);
+            }
+            displayTransactionsList(todayTransactions);
+        }
     }
 
     @Override
