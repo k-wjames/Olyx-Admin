@@ -70,6 +70,7 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         binding.btnGasRefill.setOnClickListener(this);
         binding.btnNewGas.setOnClickListener(this);
         binding.btnAccessories.setOnClickListener(this);
+        binding.ivAdd.setOnClickListener(this);
     }
 
     @Override
@@ -91,7 +92,9 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
 
             displayCatalogueList(accessories);
 
-        } else {
+        }else if (view==binding.ivAdd){
+            Navigation.findNavController(view).navigate(R.id.addCatalogueFragment);
+        }else {
             Navigation.findNavController(view).navigate(R.id.mainFragment);
         }
 

@@ -73,5 +73,10 @@
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.TransactionsFragment"
         android:label="fragment_transactions"
         tools:layout="@layout/fragment_transactions" />
+    <fragment
+        android:id="@+id/addCatalogueFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.AddCatalogueFragment"
+        android:label="fragment_add_catalogue"
+        tools:layout="@layout/fragment_add_catalogue" />
 
 </navigation>

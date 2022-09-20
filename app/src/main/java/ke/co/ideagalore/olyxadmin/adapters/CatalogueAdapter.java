@@ -61,7 +61,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
         }
 
         public void bind(final Catalogue catalogue, final OnItemClickListener listener) {
-            product.setText(catalogue.getCategory());
+            product.setText(catalogue.getProduct());
             stock.setText(String.valueOf(catalogue.getStockedQuantity()));
             itemView.setOnClickListener(v -> listener.onItemClick(catalogue));
         }

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="20dp"
+    tools:context=".ui.fragments.SettingsFragment">
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/edt_background"
+                android:src="@drawable/ic_back"
+                app:tint="@color/accent" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/lato"
+                android:text="@string/add_catalogue_item"
+                android:textColor="@color/text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            android:layout_marginTop="20dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/lato"
+                    android:text="Product Category"
+                    android:textColor="@color/text"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/spinner_background">
+
+                    <Spinner
+                        android:id="@+id/spinner_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:spinnerMode="dialog"
+                        tools:listitem="@layout/spinner_item" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/lato"
+                    android:text="Product"
+                    android:textColor="@color/text"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/edt_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edt_background"
+                    android:hint="product"
+                    android:inputType="textCapWords"
+                    android:textColorHint="@color/text"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp"
+                    android:layout_gravity="start"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/lato"
+                    android:text="Buying Price"
+                    android:textColor="@color/text"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/edt_buying_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edt_background"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:textColorHint="@color/text"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp"
+                    android:layout_gravity="start"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/lato"
+                    android:text="Marked Price"
+                    android:textColor="@color/text"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/edt_marked_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edt_background"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:textColorHint="@color/text"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp"
+                    android:layout_gravity="start"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/lato"
+                    android:text="Items In Stock"
+                    android:textColor="@color/text"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_stocked"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edt_background"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:textColorHint="@color/text"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp"
+                    android:layout_gravity="start"/>
+
+
+                <Button
+                    android:id="@+id/btn_add_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
+                    android:padding="10dp"
+                    android:text="@string/add_catalogue_item"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/accent"
+                    android:layout_marginTop="20dp"/>
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</RelativeLayout>
