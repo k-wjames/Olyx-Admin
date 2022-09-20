@@ -2,16 +2,22 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
+import ke.co.ideagalore.olyxadmin.adapters.CatalogueAdapter;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentCatalogueItemsBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
@@ -36,7 +43,6 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
     List<Catalogue> refillCatalogueItems = new ArrayList<>();
     List<Catalogue> newGasCylinderItems = new ArrayList<>();
     List<Catalogue> accessories = new ArrayList<>();
-
     List<Catalogue> catalogueList = new ArrayList<>();
 
     String name, business, terminal;
@@ -60,31 +66,30 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         getCatalogueData();
 
         binding.ivBack.setOnClickListener(this);
-        binding.cvViewRefillItems.setOnClickListener(this);
-        binding.cvViewNewGasItems.setOnClickListener(this);
-        binding.cvViewAccessoriesItems.setOnClickListener(this);
+        binding.btnAll.setOnClickListener(this);
+        binding.btnGasRefill.setOnClickListener(this);
+        binding.btnNewGas.setOnClickListener(this);
+        binding.btnAccessories.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
 
-        Bundle bundle = new Bundle();
+        if (view == binding.btnAll) {
 
-        if (view == binding.cvViewRefillItems) {
+            displayCatalogueList(catalogueList);
 
-            bundle.putString("category", "Gas Refill");
-            bundle.putString("title", "Gas Refill");
-            Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
+        } else if (view == binding.btnGasRefill) {
 
-        } else if (view == binding.cvViewNewGasItems) {
-            bundle.putString("category", "New Gas");
-            bundle.putString("title", "New Gas Cylinders");
-            Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
+            displayCatalogueList(refillCatalogueItems);
 
-        } else if (view == binding.cvViewAccessoriesItems) {
-            bundle.putString("category", "Accessories");
-            bundle.putString("title", "Accessories");
-            Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
+        } else if (view == binding.btnNewGas) {
+
+            displayCatalogueList(newGasCylinderItems);
+
+        } else if (view == binding.btnAccessories) {
+
+            displayCatalogueList(accessories);
 
         } else {
             Navigation.findNavController(view).navigate(R.id.mainFragment);
@@ -105,39 +110,21 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
                     catalogueList.add(0, catalogue);
-                    if (catalogueList.size() < 10) {
-                        binding.tvAll.setText(0 + "" + catalogueList.size());
-                    } else {
-                        binding.tvAll.setText(String.valueOf(catalogueList.size()));
-                    }
                     customDialogs.dismissProgressDialog();
+                    displayCatalogueList(catalogueList);
                 }
 
                 for (int i = 0; i < catalogueList.size(); i++) {
                     Catalogue catalogueProduct = catalogueList.get(i);
                     if (catalogueProduct.getCategory().equals("Gas Refill")) {
-                        refillCatalogueItems.add(catalogueProduct);
-                        if (refillCatalogueItems.size() < 10) {
-                            binding.tvRefillItems.setText(0 + "" + refillCatalogueItems.size());
-                        } else
-                            binding.tvRefillItems.setText(String.valueOf(refillCatalogueItems.size()));
-
+                        refillCatalogueItems.add(0, catalogueProduct);
 
                     } else if (catalogueProduct.getCategory().equals("New Gas")) {
-                        newGasCylinderItems.add(catalogueProduct);
-                        int length = newGasCylinderItems.size();
-                        if (newGasCylinderItems.size() < 10) {
-                            binding.tvGasItems.setText(0 + "" + length);
-                        } else
-                            binding.tvGasItems.setText(String.valueOf(length));
+                        newGasCylinderItems.add(0, catalogueProduct);
 
 
                     } else {
-                        accessories.add(catalogueProduct);
-                        if (accessories.size() < 10) {
-                            binding.tvAccessoriesItems.setText(0 + "" + accessories.size());
-                        } else
-                            binding.tvAccessoriesItems.setText(String.valueOf(accessories.size()));
+                        accessories.add(0, catalogueProduct);
                     }
                 }
 
@@ -157,5 +144,28 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         terminal = sharedPreferences.getString("terminal", null);
         name = sharedPreferences.getString("name", null);
 
+    }
+
+    private void displayCatalogueList(List<Catalogue> catalogues) {
+        if (catalogues.size() < 10) {
+            binding.tvFound.setText(0 + "" + catalogues.size());
+        } else {
+            binding.tvFound.setText(String.valueOf(catalogues.size()));
+        }
+        binding.rvCatalogue.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.rvCatalogue.setHasFixedSize(true);
+        CatalogueAdapter adapter = new CatalogueAdapter(catalogues, item -> {
+
+            Bundle bundle = new Bundle();
+            bundle.putString("productId", item.getProdId());
+            bundle.putString("product", item.getProduct());
+            bundle.putString("category", item.getCategory());
+            bundle.putInt("stockedItems", item.getStockedQuantity());
+            bundle.putInt("buyingPrice", item.getBuyingPrice());
+            bundle.putInt("sellingPrice", item.getMarkedPrice());
+            Navigation.findNavController(requireView()).navigate(R.id.editProductFragment, bundle);
+        });
+        binding.rvCatalogue.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

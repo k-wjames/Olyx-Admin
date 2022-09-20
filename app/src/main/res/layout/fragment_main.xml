@@ -487,12 +487,12 @@
                 android:id="@+id/btn_sales"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cash in"
-                android:textColor="@color/white"
+                android:backgroundTint="@color/accentOne"
                 android:fontFamily="@font/lato"
-                android:textSize="12sp"
+                android:text="Cash in"
                 android:textAllCaps="false"
-                android:backgroundTint="@color/accentOne"/>
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btn_expenditure"

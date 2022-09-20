@@ -17,13 +17,24 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/lato"
+        android:text="In stock :"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_toStartOf="@+id/tv_stocked"/>
+
+    <TextView
+        android:id="@+id/tv_stocked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/lato"
         android:text="KES 2000"
-        android:textColor="@color/accent" />
+        android:textColor="@color/text_light"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

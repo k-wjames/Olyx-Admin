@@ -111,9 +111,20 @@ public class ViewCategoryProductsFragment extends Fragment implements View.OnCli
                 for (int i = 0; i < catalogueList.size(); i++) {
                     Catalogue catalogueProduct = catalogueList.get(i);
                     if (catalogueProduct.getCategory().equals(category)) {
-                        categoryList.add(0,catalogueProduct);
+                        categoryList.add(0, catalogueProduct);
                         binding.tvTotalItems.setText(String.valueOf(categoryList.size()));
-                        CatalogueAdapter adapter = new CatalogueAdapter(getActivity(), categoryList);
+                        CatalogueAdapter adapter = new CatalogueAdapter(categoryList, item -> {
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString("productId", item.getProdId());
+                            bundle.putString("product", item.getProduct());
+                            bundle.putString("category", item.getCategory());
+                            bundle.putInt("stockedItems", item.getStockedQuantity());
+                            bundle.putInt("buyingPrice", item.getBuyingPrice());
+                            bundle.putInt("sellingPrice", item.getMarkedPrice());
+                            Navigation.findNavController(requireView()).navigate(R.id.editProductFragment, bundle);
+
+                        });
                         binding.rvProducts.setLayoutManager(new LinearLayoutManager(getActivity()));
                         binding.rvProducts.setHasFixedSize(true);
                         binding.rvProducts.setAdapter(adapter);

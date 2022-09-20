@@ -44,6 +44,7 @@
     <string name="reset_password">Yes, I\'d like to reset it</string>
     <string name="password_reset_instructions">To reset your password, you are required to key in the email address used to create this account. Be sure to have it\'s access, otherwise you may not be able to recover your account.</string>
     <string name="products">Products</string>
+    <string name="found_items">Items found :</string>
 
     <string-array name="stockItems">
         <item>Select category</item>

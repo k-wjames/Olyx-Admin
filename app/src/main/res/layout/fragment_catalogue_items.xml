@@ -39,216 +39,117 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/edt_circular_background"
+                android:src="@drawable/ic_add"
+                app:tint="@color/accent" />
+
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_view_refill_items"
+            <Button
+                android:id="@+id/btn_all"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="1dp"
                 android:layout_marginEnd="3dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="5dp">
+                android:backgroundTint="@color/accent"
+                android:fontFamily="@font/lato"
+                android:text="All"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/accentThree"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:padding="10dp"
-                        android:text="@string/gas_refill"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-
-                    <TextView
-                        android:id="@+id/tv_gas_items"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:text="@string/zero"
-                        android:background="@drawable/edt_light_circular_background"
-                        android:textColor="@color/accentThree"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/lato"
-                        android:text="Listed items"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_view_new_gas_items"
+            <Button
+                android:id="@+id/btn_gas_refill"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="1dp"
                 android:layout_marginEnd="3dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="5dp">
+                android:backgroundTint="@color/accentThree"
+                android:fontFamily="@font/lato"
+                android:text="Refill"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/accentTwo"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:padding="10dp"
-                        android:text="@string/new_gas_cylinders"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:gravity="center"/>
-
-
-                    <TextView
-                        android:id="@+id/tv_refill_items"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edt_light_circular_background"
-                        android:fontFamily="@font/lato"
-                        android:text="@string/zero"
-                        android:textColor="@color/accentTwo"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/lato"
-                        android:text="Listed items"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_view_accessories_items"
+            <Button
+                android:id="@+id/btn_new_gas"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="1dp"
                 android:layout_marginEnd="3dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/accentOne"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:padding="10dp"
-                        android:text="@string/accessories"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
+                android:backgroundTint="@color/accentTwo"
+                android:fontFamily="@font/lato"
+                android:text="New Gas"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
 
-                    <TextView
-                        android:id="@+id/tv_accessories_items"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:background="@drawable/edt_light_circular_background"
-                        android:text="@string/zero"
-                        android:textColor="@color/accentOne"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_accessories"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/accentOne"
+                android:fontFamily="@font/lato"
+                android:text="Accessories"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/lato"
-                        android:text="Listed items"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="1dp"
-            app:cardBackgroundColor="@color/accent"
-            app:cardCornerRadius="5dp">
+            android:layout_marginTop="10dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_main"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="10dp">
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/lato"
+                android:text="@string/found_items"
+                android:textColor="@color/text_light"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_all"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/edt_light_circular_background"
-                    android:fontFamily="@font/lato"
-                    android:text="00"
-                    android:textColor="@color/accent"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/tv_main"
+                android:fontFamily="@font/lato"
+                android:text="@string/zero"
+                android:textColor="@color/text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_toEndOf="@+id/tv_all"
-                    android:background="@drawable/edt_background"
-                    android:fontFamily="@font/lato"
-                    android:text="@string/total_number_of_items_in_all_categories"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+        </RelativeLayout>
 
-
-            </RelativeLayout>
-
-
-        </androidx.cardview.widget.CardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_catalogue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            tools:listitem="@layout/transaction_item" />
 
     </LinearLayout>
 

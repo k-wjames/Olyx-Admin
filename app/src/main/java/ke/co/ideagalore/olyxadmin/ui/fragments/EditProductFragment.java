@@ -11,10 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,11 +21,10 @@ import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentEditProductBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
-import ke.co.ideagalore.olyxadmin.models.Refill;
 
 public class EditProductFragment extends Fragment implements View.OnClickListener {
     FragmentEditProductBinding binding;
-    String terminal, productCategory, product, productId,categoryTitle;
+    String terminal, productCategory, product, productId, categoryTitle;
     int bPrice, sPrice, numberStoked;
     DatabaseReference reference;
 
@@ -52,7 +48,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         super.onViewCreated(view, savedInstanceState);
         getPreferenceData();
         getBundleData();
-
+/*
         if (productCategory.equals("New Gas")) {
             categoryTitle = "New Gas Cylinders";
         } else {
@@ -60,8 +56,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         }
         bundle = new Bundle();
         bundle.putString("category", productCategory);
-        bundle.putString("title", categoryTitle);
-
+        bundle.putString("title", categoryTitle);*/
         reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         binding.ivDelete.setOnClickListener(this);
         binding.ivBack.setOnClickListener(this);
@@ -74,7 +69,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         if (view == binding.ivDelete) {
             deleteProduct(productId, view);
         } else if (view == binding.ivBack) {
-            Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
+            Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
         } else {
             updateItemData(productId);
         }
@@ -110,19 +105,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         reference.child(productId).setValue(null).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 customDialogs.showSnackBar(requireActivity(), "Item successfully deleted.");
-                Navigation.findNavController(view).navigate(R.id.viewCategoryProductsFragment, bundle);
-                /*NavController navController = NavHostFragment.findNavController(this);
-                navController.navigate(
-                        R.id.catalogueItemsFragment,
-                        null,
-                        new NavOptions.Builder()
-                                .setEnterAnim(android.R.animator.fade_in)
-                                .setExitAnim(android.R.animator.fade_out)
-                                .setPopUpTo(R.id.catalogueItemsFragment,true)
-                                .build()
-                );
-
-               Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment,bundle);*/
+                Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
             }
 
         }).addOnFailureListener(e -> {
@@ -147,6 +130,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
                 if (task.isSuccessful()) {
                     customDialogs.showSnackBar(getActivity(), "Item successfully updated.");
                     resetViews();
+                    Navigation.findNavController(requireView()).navigate(R.id.catalogueItemsFragment);
                 }
 
             }).addOnFailureListener(e -> customDialogs.showSnackBar(getActivity(), e.getMessage()));
