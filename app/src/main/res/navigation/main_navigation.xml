@@ -14,6 +14,10 @@
             android:id="@+id/action_mainFragment_to_transactionsFragment"
             app:destination="@id/transactionsFragment"
             app:popUpTo="@id/transactionsFragment"/>
+        <action
+            android:id="@+id/action_mainFragment_to_catalogueItemsFragment"
+            app:destination="@id/catalogueItemsFragment"
+            app:popUpTo="@id/catalogueItemsFragment" />
     </fragment>
 
     <fragment
@@ -25,6 +29,9 @@
             android:id="@+id/action_settingsFragment_to_editStoreFragment"
             app:destination="@id/editStoreFragment"
             app:popUpTo="@id/editStoreFragment"/>
+        <action
+            android:id="@+id/action_settingsFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment
@@ -36,6 +43,10 @@
             android:id="@+id/action_editStoreFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
             app:popUpTo="@id/settingsFragment"/>
+        <action
+            android:id="@+id/action_editStoreFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"/>
     </fragment>
     <fragment
         android:id="@+id/catalogueItemsFragment"
@@ -51,6 +62,10 @@
             android:id="@+id/action_catalogueItemsFragment_to_addCatalogueFragment"
             app:destination="@id/addCatalogueFragment"
             app:popUpTo="@id/addCatalogueFragment"/>
+        <action
+            android:id="@+id/action_catalogueItemsFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"/>
     </fragment>
 
     <fragment
@@ -69,7 +84,11 @@
         android:id="@+id/expensesFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.ExpensesFragment"
         android:label="fragment_expenses"
-        tools:layout="@layout/fragment_expenses" />
+        tools:layout="@layout/fragment_expenses" >
+        <action
+            android:id="@+id/action_expensesFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/transactionsFragment"

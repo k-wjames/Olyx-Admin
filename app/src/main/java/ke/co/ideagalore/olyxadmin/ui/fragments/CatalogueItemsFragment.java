@@ -78,19 +78,19 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
 
         if (view == binding.btnAll) {
 
-            displayCatalogueList(catalogueList);
+            displayCatalogueList(catalogueList,"All items");
 
         } else if (view == binding.btnGasRefill) {
 
-            displayCatalogueList(refillCatalogueItems);
+            displayCatalogueList(refillCatalogueItems,"Gas refill items");
 
         } else if (view == binding.btnNewGas) {
 
-            displayCatalogueList(newGasCylinderItems);
+            displayCatalogueList(newGasCylinderItems, "New gas items");
 
         } else if (view == binding.btnAccessories) {
 
-            displayCatalogueList(accessories);
+            displayCatalogueList(accessories,"Accessory items");
 
         }else if (view==binding.ivAdd){
             Navigation.findNavController(view).navigate(R.id.addCatalogueFragment);
@@ -105,7 +105,7 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         refillCatalogueItems.clear();
         newGasCylinderItems.clear();
         accessories.clear();
-        customDialogs.showProgressDialog(getActivity(), "Fetching catalogue data");
+        binding.progressBar.setVisibility(View.VISIBLE);
         reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -113,8 +113,8 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
                     catalogueList.add(0, catalogue);
-                    customDialogs.dismissProgressDialog();
-                    displayCatalogueList(catalogueList);
+                    binding.progressBar.setVisibility(View.GONE);
+                    displayCatalogueList(catalogueList,"All items");
                 }
 
                 for (int i = 0; i < catalogueList.size(); i++) {
@@ -149,7 +149,8 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
 
     }
 
-    private void displayCatalogueList(List<Catalogue> catalogues) {
+    private void displayCatalogueList(List<Catalogue> catalogues, String category) {
+        binding.tvMain.setText(category+" :");
         if (catalogues.size() < 10) {
             binding.tvFound.setText(0 + "" + catalogues.size());
         } else {
