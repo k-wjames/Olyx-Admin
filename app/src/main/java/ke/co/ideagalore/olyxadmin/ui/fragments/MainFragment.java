@@ -2,21 +2,23 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +54,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     int profits;
 
+    SimpleDateFormat formatter;
+
     public MainFragment() {
 
     }
@@ -70,31 +74,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         getPreferenceData();
 
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        formatter = new SimpleDateFormat("dd/MM/yyyy");
         dateToday = formatter.format(date);
-
-        String[] category = new String[]{"Today", "Custom", "All time"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item,
-                category);
-        arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        binding.spinnerCategory.setAdapter(arrayAdapter);
-        binding.spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedItem = binding.spinnerCategory.getSelectedItem().toString();
-                binding.tvPeriod.setText(selectedItem);
-                String selectedPeriod;
-                if (selectedItem.equals("Today")){
-                    filterTodayData(dateToday);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        binding.spinnerCategory.setAdapter(arrayAdapter);
 
         binding.tvViewTransactions.setOnClickListener(this);
         binding.btnSales.setOnClickListener(this);
@@ -102,17 +83,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         binding.cvTransactions.setOnClickListener(this);
         binding.cvCatalogue.setOnClickListener(this);
 
-    }
+        binding.ivFilter.setOnClickListener(this);
 
-    private void filterTodayData(String dateToday) {
-        for (Transaction transaction:transactionList){
-            String date=transaction.getDate();
-            List<Transaction> todayTransactions=new ArrayList<>();
-            if (date.equals(dateToday)){
-                todayTransactions.add(0,transaction);
-            }
-            displayTransactionsList(todayTransactions);
-        }
     }
 
     @Override
@@ -125,9 +97,122 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             displayExpenditureList(expenseList);
         } else if (view == binding.cvTransactions) {
             Navigation.findNavController(view).navigate(R.id.transactionsFragment);
+        } else if (view == binding.ivFilter) {
+            showFilterPeriodDialog();
         } else {
             Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
         }
+
+    }
+
+    private void filterTodayData(String day) {
+        for (Transaction transaction : transactionList) {
+            String date = transaction.getDate();
+            List<Transaction> todayTransactions = new ArrayList<>();
+            if (date.equals(day)) {
+                todayTransactions.add(0, transaction);
+            }
+            displayTransactionsList(todayTransactions);
+        }
+    }
+
+    private void showFilterPeriodDialog() {
+        Dialog myDialog = new Dialog(getActivity());
+        myDialog.setContentView(R.layout.period_filter_dialog);
+        myDialog.setCanceledOnTouchOutside(false);
+        myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        myDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        myDialog.show();
+        TextView currentDate = myDialog.findViewById(R.id.tv_today);
+        TextView specificDate = myDialog.findViewById(R.id.tv_specific_date);
+        TextView selectedPeriod = myDialog.findViewById(R.id.tv_period);
+        TextView noFilter = myDialog.findViewById(R.id.tv_all);
+
+        currentDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
+                filterDataByCurrentDate();
+            }
+        });
+
+        specificDate.setOnClickListener(view -> {
+            myDialog.dismiss();
+            showDatePickerDialog();
+        });
+
+        selectedPeriod.setOnClickListener(view -> {
+            myDialog.dismiss();
+            showRangePickerDialog();
+        });
+
+        noFilter.setOnClickListener(view -> {
+            myDialog.dismiss();
+            binding.tvPeriod.setText("All Time");
+            displayTransactionsList(transactionList);
+        });
+
+    }
+
+    private void showDatePickerDialog() {
+        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("Select range");
+        MaterialDatePicker materialDatePicker = builder.build();
+        materialDatePicker.show(requireActivity().getSupportFragmentManager(), "Range Picker");
+        materialDatePicker.addOnPositiveButtonClickListener(selection -> {
+
+
+            String selectedDate = formatter.format(selection);
+            if (selectedDate.equals(dateToday)) {
+                binding.tvPeriod.setText("Today");
+            } else {
+                binding.tvPeriod.setText("Date : " + selectedDate);
+            }
+            filterDataBySpecificDate(selectedDate);
+        });
+
+    }
+
+    private void filterDataByCurrentDate() {
+        List<Transaction> todayList = new ArrayList<>();
+        for (Transaction transaction : transactionList) {
+            if (transaction.getDate().equals(dateToday)) {
+
+                todayList.add(0, transaction);
+
+            }
+            binding.tvPeriod.setText("Today");
+            displayTransactionsList(todayList);
+        }
+    }
+
+    private void filterDataBySpecificDate(String selectedDate) {
+        List<Transaction> list = new ArrayList<>();
+        for (Transaction transaction : transactionList) {
+            if (selectedDate.equals(transaction.getDate())) {
+
+                list.add(0, transaction);
+
+            }
+            displayTransactionsList(list);
+        }
+    }
+
+    private void showRangePickerDialog() {
+        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
+        builder.setTitleText("Select range");
+        MaterialDatePicker<Pair<Long, Long>> materialDatePicker = builder.build();
+        materialDatePicker.show(requireActivity().getSupportFragmentManager(), "Range Picker");
+        materialDatePicker.addOnPositiveButtonClickListener(selection -> {
+            if (selection.first != null && selection.second != null) {
+
+                Long start = selection.first;
+                Long end = selection.second;
+                binding.tvPeriod.setText(start + " to " + end);
+
+
+            }
+        });
 
     }
 
@@ -194,7 +279,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                     transactionList.add(0, transaction);
                     if (transactionList.size() < 10) {
                         binding.tvTransactions.setText("0" + transactionList.size());
-                    } else binding.tvTransactions.setText(transactionList.size());
+                    } else binding.tvTransactions.setText(String.valueOf(transactionList.size()));
                     int sales = 0;
                     int totalProfit = 0;
 
