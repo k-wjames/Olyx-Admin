@@ -52,7 +52,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     String terminal, name, businessName, terminalId, selectedItem, dateToday;
 
-    int profits;
+    int profits,totalExpenses = 0;
 
     SimpleDateFormat formatter;
 
@@ -277,21 +277,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
                     Transaction transaction = transactionSnapshot.getValue(Transaction.class);
                     transactionList.add(0, transaction);
-                    if (transactionList.size() < 10) {
-                        binding.tvTransactions.setText("0" + transactionList.size());
-                    } else {
-                        binding.tvTransactions.setText(String.valueOf(transactionList.size()));
-                    }
-                    int sales = 0;
-                    int totalProfit = 0;
-
-                    for (Transaction item : transactionList) {
-                        sales = sales + item.getTotalPrice();
-                        binding.tvSales.setText("KES " + sales);
-                        totalProfit = totalProfit + item.getProfit();
-                        profits = totalProfit;
-                        binding.tvTotalProfits.setText("KES " + profits);
-                    }
 
                     displayTransactionsList(transactionList);
                 }
@@ -317,12 +302,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
                     Expense expense = expenseSnapshot.getValue(Expense.class);
                     expenseList.add(expense);
-                    int totalExpenses = 0;
                     for (Expense item : expenseList) {
                         int exp = item.getPrice();
                         totalExpenses = totalExpenses + exp;
-                        binding.tvExpenses.setText("KES " + (totalExpenses));
-                        binding.tvNetProfits.setText("KES " + (profits - totalExpenses));
+                        binding.tvExpenses.setText("KES " + totalExpenses);
+
                     }
                 }
 
@@ -366,6 +350,26 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void displayTransactionsList(List<Transaction> list) {
+
+        int sales = 0;
+        int totalProfit = 0;
+
+        if (list.size() < 10) {
+            binding.tvTransactions.setText("0" + list.size());
+        } else {
+            binding.tvTransactions.setText(String.valueOf(list.size()));
+        }
+
+        for (Transaction item : list) {
+            sales = sales + item.getTotalPrice();
+            binding.tvSales.setText("KES " + sales);
+            totalProfit = totalProfit + item.getProfit();
+            profits = totalProfit;
+            binding.tvTotalProfits.setText("KES " + profits);
+        }
+
+        binding.tvNetProfits.setText("KES " + (profits - totalExpenses));
+
         binding.rvTransactions.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvTransactions.setHasFixedSize(true);
         TransactionsAdapter adapter = new TransactionsAdapter(list);
