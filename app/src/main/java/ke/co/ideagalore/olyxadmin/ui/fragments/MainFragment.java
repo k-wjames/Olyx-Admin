@@ -279,7 +279,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                     transactionList.add(0, transaction);
                     if (transactionList.size() < 10) {
                         binding.tvTransactions.setText("0" + transactionList.size());
-                    } else binding.tvTransactions.setText(String.valueOf(transactionList.size()));
+                    } else {
+                        binding.tvTransactions.setText(String.valueOf(transactionList.size()));
+                    }
                     int sales = 0;
                     int totalProfit = 0;
 
