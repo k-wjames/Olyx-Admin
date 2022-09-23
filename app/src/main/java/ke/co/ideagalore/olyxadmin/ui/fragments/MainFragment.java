@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,9 +51,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     List<Transaction> transactionList = new ArrayList<>();
     List<Expense> expenseList = new ArrayList<>();
 
-    String terminal, name, businessName, terminalId, selectedItem, dateToday;
+    String terminal, name, businessName, terminalId, dateToday;
 
-    int profits,totalExpenses = 0;
+    int profits = 0;
 
     SimpleDateFormat formatter;
 
@@ -103,17 +104,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
         }
 
-    }
-
-    private void filterTodayData(String day) {
-        for (Transaction transaction : transactionList) {
-            String date = transaction.getDate();
-            List<Transaction> todayTransactions = new ArrayList<>();
-            if (date.equals(day)) {
-                todayTransactions.add(0, transaction);
-            }
-            displayTransactionsList(todayTransactions);
-        }
     }
 
     private void showFilterPeriodDialog() {
@@ -180,9 +170,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
                 todayList.add(0, transaction);
 
+                binding.tvPeriod.setText("Today");
+                displayTransactionsList(todayList);
+
             }
-            binding.tvPeriod.setText("Today");
-            displayTransactionsList(todayList);
         }
     }
 
@@ -192,9 +183,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             if (selectedDate.equals(transaction.getDate())) {
 
                 list.add(0, transaction);
+                displayTransactionsList(list);
 
             }
-            displayTransactionsList(list);
         }
     }
 
@@ -267,20 +258,46 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getTransactionsData(String myTerminal) {
-        transactionList.clear();
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Sales");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                transactionList.clear();
 
                 for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
 
                     Transaction transaction = transactionSnapshot.getValue(Transaction.class);
                     transactionList.add(0, transaction);
 
+                    if (transactionList.size() < 10) {
+                        binding.tvTransactions.setText("0" + transactionList.size());
+                    } else {
+                        binding.tvTransactions.setText(String.valueOf(transactionList.size()));
+                    }
+
+                    int sales = 0;
+                    int totalProfit = 0;
+
+                    if (transactionList.size() < 10) {
+                        binding.tvTransactions.setText("0" + transactionList.size());
+                    } else {
+                        binding.tvTransactions.setText(String.valueOf(transactionList.size()));
+                    }
+
+                    for (Transaction item : transactionList) {
+                        sales = sales + item.getTotalPrice();
+                        binding.tvSales.setText("KES " + sales);
+                        totalProfit = totalProfit + item.getProfit();
+                        profits = totalProfit;
+                        binding.tvTotalProfits.setText("KES " + profits);
+
+                    }
+
+
                     displayTransactionsList(transactionList);
                 }
-
 
             }
 
@@ -293,12 +310,43 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getExpenditureData(String myTerminal) {
-        expenseList.clear();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                expenseList.clear();
 
+                if (snapshot.exists()){
+                    for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
+                        Expense expense = expenseSnapshot.getValue(Expense.class);
+                        expenseList.add(0, expense);
+                        int exp = 0;
+                        for (Expense myExpense : expenseList) {
+                            exp = exp + myExpense.getPrice();
+                            binding.tvExpenses.setText("KES " + exp);
+
+                            int netProfit = profits - exp;
+                            binding.tvNetProfits.setText("KES " + netProfit);
+                        }
+
+                    }
+                }else binding.tvNetProfits.setText("KES "+profits);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    /*private void getExpenditureData(String myTerminal) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                expenseList.clear();
                 for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
                     Expense expense = expenseSnapshot.getValue(Expense.class);
                     expenseList.add(expense);
@@ -306,7 +354,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         int exp = item.getPrice();
                         totalExpenses = totalExpenses + exp;
                         binding.tvExpenses.setText("KES " + totalExpenses);
-
+                        binding.tvNetProfits.setText("KES " + (profits - totalExpenses));
                     }
                 }
 
@@ -317,7 +365,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-    }
+    }*/
 
     private void getCurrentDate() {
         Calendar calendar = Calendar.getInstance();
@@ -350,25 +398,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void displayTransactionsList(List<Transaction> list) {
-
-        int sales = 0;
-        int totalProfit = 0;
-
-        if (list.size() < 10) {
-            binding.tvTransactions.setText("0" + list.size());
-        } else {
-            binding.tvTransactions.setText(String.valueOf(list.size()));
-        }
-
-        for (Transaction item : list) {
-            sales = sales + item.getTotalPrice();
-            binding.tvSales.setText("KES " + sales);
-            totalProfit = totalProfit + item.getProfit();
-            profits = totalProfit;
-            binding.tvTotalProfits.setText("KES " + profits);
-        }
-
-        binding.tvNetProfits.setText("KES " + (profits - totalExpenses));
 
         binding.rvTransactions.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvTransactions.setHasFixedSize(true);
@@ -413,6 +442,4 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         editor.commit();
         getPreferenceData();
     }
-
-
 }

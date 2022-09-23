@@ -166,7 +166,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/lato"
                         android:text="KES 00"
-                        android:textColor="@color/text"/>
+                        android:textColor="@color/text" />
 
                 </RelativeLayout>
 
@@ -201,13 +201,14 @@
                         android:id="@+id/tv_expenses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
                         android:layout_marginTop="5dp"
+                        android:layout_marginEnd="9dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/lato"
                         android:text="KES 00"
-                        android:textColor="@color/text"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentEnd="true" />
+                        android:textColor="@color/text" />
 
                 </RelativeLayout>
 

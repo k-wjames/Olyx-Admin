@@ -22,6 +22,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
     public TransactionsAdapter(List<Transaction> transactionList) {
         this.transactionList = transactionList;
+        notifyDataSetChanged();
     }
 
     @NonNull
