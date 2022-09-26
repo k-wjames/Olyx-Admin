@@ -209,12 +209,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getStoresData() {
-        storesList.clear();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Stores");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                storesList.clear();
                 for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
                     Stores store = storeSnapshot.getValue(Stores.class);
                     storesList.add(store);

@@ -208,12 +208,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getCatalogueData(String myTerminal) {
-        catalogueList.clear();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Catalogue");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                catalogueList.clear();
                 for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = storeSnapshot.getValue(Catalogue.class);
                     catalogueList.add(catalogue);
@@ -233,12 +232,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getStoresData(String myTerminal) {
-        storesList.clear();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Stores");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                storesList.clear();
                 for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
                     Stores store = storeSnapshot.getValue(Stores.class);
                     storesList.add(store);
@@ -340,33 +338,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-    /*private void getExpenditureData(String myTerminal) {
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                expenseList.clear();
-                for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
-                    Expense expense = expenseSnapshot.getValue(Expense.class);
-                    expenseList.add(expense);
-                    for (Expense item : expenseList) {
-                        int exp = item.getPrice();
-                        totalExpenses = totalExpenses + exp;
-                        binding.tvExpenses.setText("KES " + totalExpenses);
-                        binding.tvNetProfits.setText("KES " + (profits - totalExpenses));
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
-
     private void getCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -440,6 +411,12 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         editor.putString("business", businessName);
         editor.putString("terminal", terminalId);
         editor.commit();
+        getPreferenceData();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         getPreferenceData();
     }
 }

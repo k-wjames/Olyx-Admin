@@ -64,7 +64,7 @@
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="45dp"
                 app:defaultQueryHint="@string/search_expenses"
                 app:iconifiedByDefault="false"
                 app:queryBackground="@android:color/transparent" />
@@ -89,7 +89,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:visibility="visible"
-            tools:listitem="@layout/store_item" />
+            tools:listitem="@layout/expense_item" />
 
     </LinearLayout>
 </RelativeLayout>

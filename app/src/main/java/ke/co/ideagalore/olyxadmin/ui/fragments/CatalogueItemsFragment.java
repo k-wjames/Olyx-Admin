@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -71,6 +72,15 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         binding.btnNewGas.setOnClickListener(this);
         binding.btnAccessories.setOnClickListener(this);
         binding.ivAdd.setOnClickListener(this);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(requireView()).navigate(R.id.mainFragment);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
+
     }
 
     @Override
