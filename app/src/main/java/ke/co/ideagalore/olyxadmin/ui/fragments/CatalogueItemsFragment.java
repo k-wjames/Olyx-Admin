@@ -73,13 +73,6 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         binding.btnAccessories.setOnClickListener(this);
         binding.ivAdd.setOnClickListener(this);
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Navigation.findNavController(requireView()).navigate(R.id.mainFragment);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
 
     }
 
