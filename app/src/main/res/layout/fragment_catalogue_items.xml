@@ -59,55 +59,59 @@
 
             <Button
                 android:id="@+id/btn_all"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="3dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/accent"
                 android:fontFamily="@font/lato"
                 android:text="All"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textColor="@color/accent"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/accent"
+                app:strokeWidth="1dp"/>
 
             <Button
                 android:id="@+id/btn_gas_refill"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="3dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/accentThree"
                 android:fontFamily="@font/lato"
                 android:text="Refill"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textColor="@color/accentThree"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/accentThree"
+                app:strokeWidth="1dp"/>
 
             <Button
                 android:id="@+id/btn_new_gas"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="3dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/accentTwo"
                 android:fontFamily="@font/lato"
                 android:text="New Gas"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textColor="@color/accentTwo"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/accentTwo"
+                app:strokeWidth="1dp"/>
 
 
             <Button
                 android:id="@+id/btn_accessories"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/accentOne"
                 android:fontFamily="@font/lato"
                 android:text="Accessories"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textColor="@color/accentOne"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/accentOne"
+                app:strokeWidth="1dp"/>
 
 
         </LinearLayout>

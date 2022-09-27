@@ -530,7 +530,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_sales"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
@@ -538,6 +537,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/accentOne"
                 android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:strokeColor="@color/accentOne"
                 app:strokeWidth="1dp" />
 
