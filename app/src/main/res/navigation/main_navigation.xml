@@ -111,5 +111,16 @@
             app:destination="@id/catalogueItemsFragment"
             app:popUpTo="@id/catalogueItemsFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/sellFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.SellFragment"
+        android:label="fragment_sell"
+        tools:layout="@layout/fragment_sell" />
+    <fragment
+        android:id="@+id/creditFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.CreditFragment"
+        android:label="fragment_credit"
+        tools:layout="@layout/fragment_credit" />
+
 
 </navigation>

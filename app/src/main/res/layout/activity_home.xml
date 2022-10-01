@@ -13,10 +13,10 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:defaultNavHost="true"
+        android:layout_above="@+id/btv_main"
         android:paddingTop="0dp"
-        app:navGraph="@navigation/main_navigation"
-        android:layout_above="@+id/btv_main"/>
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/main_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/btv_main"
@@ -25,7 +25,8 @@
         android:layout_alignParentBottom="true"
         android:background="@color/background"
         android:paddingTop="1dp"
-        android:paddingBottom="50dp"
+        app:itemPaddingTop="15dp"
+        android:paddingBottom="40dp"
         app:itemIconTint="@color/bottom_navigation_state"
         app:itemTextColor="@color/bottom_navigation_state"
         app:menu="@menu/menu_bottom_nav" />

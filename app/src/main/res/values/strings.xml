@@ -47,6 +47,13 @@
     <string name="found_items">Items found :</string>
     <string name="add_catalogue_item">Add Catalogue Item</string>
     <string name="search_expenses">search by category</string>
+    <string name="brand">GasTrack</string>
+    <string name="check_out">Check out</string>
+    <string name="total_spend_kes">Total in KES</string>
+    <string name="transact">Transact</string>
+    <string name="total_credit_balance">Total credit balance</string>
+    <string name="transaction_in_progress">Transaction in progress...</string>
+    <string name="debtors">Lending list</string>
 
     <string-array name="stockItems">
         <item>Select category</item>

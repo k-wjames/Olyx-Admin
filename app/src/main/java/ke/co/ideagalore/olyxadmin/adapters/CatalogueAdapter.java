@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,7 +51,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView product, stock;
-        RelativeLayout layout;
+        LinearLayout layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -62,7 +63,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
 
         public void bind(final Catalogue catalogue, final OnItemClickListener listener) {
             product.setText(catalogue.getProduct());
-            stock.setText(String.valueOf(catalogue.getStockedQuantity()));
+            stock.setText("KES "+catalogue.getMarkedPrice());
             itemView.setOnClickListener(v -> listener.onItemClick(catalogue));
         }
     }

@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.database.DataSnapshot;
@@ -159,7 +160,7 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         } else {
             binding.tvFound.setText(String.valueOf(catalogues.size()));
         }
-        binding.rvCatalogue.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.rvCatalogue.setLayoutManager(new GridLayoutManager(getActivity(),2));
         binding.rvCatalogue.setHasFixedSize(true);
         CatalogueAdapter adapter = new CatalogueAdapter(catalogues, item -> {
 

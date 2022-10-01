@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,8 +80,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         binding.tvViewTransactions.setOnClickListener(this);
         binding.btnSales.setOnClickListener(this);
         binding.btnExpenditure.setOnClickListener(this);
-        binding.cvTransactions.setOnClickListener(this);
+        binding.cvTransact.setOnClickListener(this);
         binding.cvCatalogue.setOnClickListener(this);
+        binding.cvDebt.setOnClickListener(this);
+        binding.cvExpenses.setOnClickListener(this);
 
         binding.ivFilter.setOnClickListener(this);
 
@@ -96,10 +97,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             displayTransactionsList(transactionList);
         } else if (view == binding.btnExpenditure) {
             displayExpenditureList(expenseList);
-        } else if (view == binding.cvTransactions) {
-            Navigation.findNavController(view).navigate(R.id.transactionsFragment);
+        } else if (view == binding.cvTransact) {
+            Navigation.findNavController(view).navigate(R.id.sellFragment);
         } else if (view == binding.ivFilter) {
             showFilterPeriodDialog();
+        } else if (view==binding.cvExpenses) {
+            Navigation.findNavController(view).navigate(R.id.expensesFragment);
+        } else if (view==binding.cvDebt) {
+            Navigation.findNavController(view).navigate(R.id.creditFragment);
         } else {
             Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
         }
@@ -289,7 +294,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         binding.tvSales.setText("KES " + sales);
                         totalProfit = totalProfit + item.getProfit();
                         profits = totalProfit;
-                        binding.tvTotalProfits.setText("KES " + profits);
 
                     }
 
@@ -314,7 +318,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 expenseList.clear();
 
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
                         Expense expense = expenseSnapshot.getValue(Expense.class);
                         expenseList.add(0, expense);
@@ -328,7 +332,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         }
 
                     }
-                }else binding.tvNetProfits.setText("KES "+profits);
+                } else binding.tvNetProfits.setText("KES " + profits);
 
             }
 
@@ -338,6 +342,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
+
     private void getCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -347,7 +352,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         String dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
 
         binding.tvDay.setText(dayOfWeek.toUpperCase() + ",");
-        binding.tvDate.setText(day + " " + month.toUpperCase() + " " + year);
+        binding.tvDate.setText(day + "  " + month.toUpperCase() + " " + year);
 
     }
 
@@ -389,6 +394,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
         String name = sharedPreferences.getString("name", null);
         terminal = sharedPreferences.getString("terminal", null);
+        businessName = sharedPreferences.getString("business", null);
 
         if (TextUtils.isEmpty(name) && TextUtils.isEmpty(terminal)) {
             FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -397,6 +403,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         } else {
             binding.tvName.setText(name + ",");
+            binding.tvBusiness.setText(businessName);
             getCatalogueData(terminal);
             getStoresData(terminal);
             getTransactionsData(terminal);
