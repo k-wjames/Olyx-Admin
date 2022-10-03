@@ -56,4 +56,6 @@ dependencies {
     def lottieVersion = "5.0.3"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
+    implementation group: 'org.quanqi', name: 'android-holo-graph', version: '0.1.0'
+
 }

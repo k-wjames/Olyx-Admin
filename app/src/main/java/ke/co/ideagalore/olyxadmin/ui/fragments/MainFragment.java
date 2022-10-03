@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.echo.holographlibrary.PieSlice;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -50,9 +51,17 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     List<Transaction> transactionList = new ArrayList<>();
     List<Expense> expenseList = new ArrayList<>();
 
+    List<Transaction> refillList = new ArrayList<>();
+    List<Transaction> gasSales = new ArrayList<>();
+    List<Transaction> accessories = new ArrayList<>();
+
     String terminal, name, businessName, terminalId, dateToday;
 
     int profits = 0;
+    int netProfit = 0;
+    int totalAccessoriesSales = 0;
+    int totalNewGasSales = 0;
+    int totalRefillGasSales = 0;
 
     SimpleDateFormat formatter;
 
@@ -101,9 +110,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             Navigation.findNavController(view).navigate(R.id.sellFragment);
         } else if (view == binding.ivFilter) {
             showFilterPeriodDialog();
-        } else if (view==binding.cvExpenses) {
+        } else if (view == binding.cvExpenses) {
             Navigation.findNavController(view).navigate(R.id.expensesFragment);
-        } else if (view==binding.cvDebt) {
+        } else if (view == binding.cvDebt) {
             Navigation.findNavController(view).navigate(R.id.creditFragment);
         } else {
             Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
@@ -221,10 +230,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = storeSnapshot.getValue(Catalogue.class);
                     catalogueList.add(catalogue);
-                    if (catalogueList.size() < 10) {
+                    /*if (catalogueList.size() < 10) {
                         binding.tvCatalogueItems.setText(0 + "" + catalogueList.size());
                     } else
-                        binding.tvCatalogueItems.setText(String.valueOf(catalogueList.size()));
+                        binding.tvCatalogueItems.setText(String.valueOf(catalogueList.size()));*/
 
                 }
             }
@@ -245,10 +254,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
                     Stores store = storeSnapshot.getValue(Stores.class);
                     storesList.add(store);
-                    if (storesList.size() < 10) {
+                    /*if (storesList.size() < 10) {
                         binding.tvStores.setText(0 + "" + storesList.size());
                     } else
-                        binding.tvStores.setText(String.valueOf(storesList.size()));
+                        binding.tvStores.setText(String.valueOf(storesList.size()));*/
 
                 }
             }
@@ -266,39 +275,38 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                transactionList.clear();
-
                 for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
 
+                    transactionList.clear();
                     Transaction transaction = transactionSnapshot.getValue(Transaction.class);
-                    transactionList.add(0, transaction);
 
-                    if (transactionList.size() < 10) {
-                        binding.tvTransactions.setText("0" + transactionList.size());
-                    } else {
-                        binding.tvTransactions.setText(String.valueOf(transactionList.size()));
+                    if (transaction.getDate().equals(dateToday)) {
+
+                        transactionList.add(0, transaction);
+
+                        if (transactionList.size() < 10) {
+                            binding.tvTransactions.setText("0" + transactionList.size());
+                        } else {
+                            binding.tvTransactions.setText(String.valueOf(transactionList.size()));
+                        }
+
+                        int sales = 0;
+                        int totalProfit = 0;
+
+                        for (Transaction item : transactionList) {
+                            sales = sales + item.getTotalPrice();
+                            binding.tvSales.setText("KES " + sales);
+                            totalProfit = totalProfit + item.getProfit();
+                            profits = totalProfit;
+
+                        }
+                        getRefillData(terminal);
+                        getNewGasSalesData(terminal);
+                        getAccessorySalesData(terminal);
+                        showPieChart(totalAccessoriesSales, totalNewGasSales, totalRefillGasSales);
+
                     }
 
-                    int sales = 0;
-                    int totalProfit = 0;
-
-                    if (transactionList.size() < 10) {
-                        binding.tvTransactions.setText("0" + transactionList.size());
-                    } else {
-                        binding.tvTransactions.setText(String.valueOf(transactionList.size()));
-                    }
-
-                    for (Transaction item : transactionList) {
-                        sales = sales + item.getTotalPrice();
-                        binding.tvSales.setText("KES " + sales);
-                        totalProfit = totalProfit + item.getProfit();
-                        profits = totalProfit;
-
-                    }
-
-
-                    displayTransactionsList(transactionList);
                 }
 
             }
@@ -311,6 +319,23 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     }
 
+
+    private void showPieChart(int accessories, int newGas, int refill) {
+        binding.graph.removeSlices();
+        PieSlice slice = new PieSlice();
+        slice.setColor(getResources().getColor(R.color.accent));
+        slice.setValue(refill);
+        binding.graph.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(getResources().getColor(R.color.accentTwo));
+        slice.setValue(newGas);
+        binding.graph.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(getResources().getColor(R.color.accentThree));
+        slice.setValue(accessories);
+        binding.graph.addSlice(slice);
+    }
+
     private void getExpenditureData(String myTerminal) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
         reference.addValueEventListener(new ValueEventListener() {
@@ -318,21 +343,27 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 expenseList.clear();
 
-                if (snapshot.exists()) {
-                    for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
-                        Expense expense = expenseSnapshot.getValue(Expense.class);
+                for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
+                    Expense expense = expenseSnapshot.getValue(Expense.class);
+
+                    if (expense.getDate().equals(dateToday)) {
                         expenseList.add(0, expense);
+
                         int exp = 0;
                         for (Expense myExpense : expenseList) {
                             exp = exp + myExpense.getPrice();
                             binding.tvExpenses.setText("KES " + exp);
 
-                            int netProfit = profits - exp;
+                            netProfit = profits - exp;
                             binding.tvNetProfits.setText("KES " + netProfit);
                         }
 
+                    } else {
+                        binding.tvExpenses.setText("KES " + 00);
+                        binding.tvNetProfits.setText("KES " + profits);
                     }
-                } else binding.tvNetProfits.setText("KES " + profits);
+
+                }
 
             }
 
@@ -403,12 +434,105 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         } else {
             binding.tvName.setText(name + ",");
-            binding.tvBusiness.setText(businessName);
             getCatalogueData(terminal);
             getStoresData(terminal);
             getTransactionsData(terminal);
+            getRefillData(terminal);
+            getNewGasSalesData(terminal);
+            getAccessorySalesData(terminal);
             getExpenditureData(terminal);
         }
+    }
+
+    private void getRefillData(String myTerminal) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Sales");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                refillList.clear();
+                for (DataSnapshot refillSnapshot : snapshot.getChildren()) {
+                    Transaction transaction = refillSnapshot.getValue(Transaction.class);
+                    if (transaction.getDate().equals(dateToday) && transaction.getTransactionType().equals("Gas refill")) {
+                        refillList.add(0, transaction);
+                        int totalRefills = 0;
+                        for (Transaction refill : refillList) {
+                            int refillPrice = refill.getTotalPrice();
+                            totalRefills = totalRefills + refillPrice;
+                            totalRefillGasSales = totalRefills;
+                            binding.tvRefillTotals.setText("KES " + totalRefillGasSales);
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getNewGasSalesData(String terminal) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Sales");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                gasSales.clear();
+
+                for (DataSnapshot gasSnapshot : snapshot.getChildren()) {
+
+                    Transaction transaction = gasSnapshot.getValue(Transaction.class);
+                    if (transaction.getDate().equals(dateToday) && transaction.getTransactionType().equals("Gas sale")) {
+                        gasSales.add(0, transaction);
+                        int myGasSales = 0;
+                        for (Transaction gasSale : gasSales) {
+                            int newGasSale = gasSale.getTotalPrice();
+                            myGasSales = myGasSales + newGasSale;
+                            totalNewGasSales = myGasSales;
+                            binding.tvNewGasTotals.setText("KES " + totalNewGasSales);
+                        }
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getAccessorySalesData(String terminal) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Sales");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                accessories.clear();
+                for (DataSnapshot accessorySnapshot : snapshot.getChildren()) {
+                    Transaction transaction = accessorySnapshot.getValue(Transaction.class);
+                    if (transaction.getDate().equals(dateToday) && transaction.getTransactionType().equals("Accessory sale")) {
+                        accessories.add(0, transaction);
+                        int accessorySales = 0;
+                        for (Transaction accessorySale : accessories) {
+                            int accessoryPrice = accessorySale.getTotalPrice();
+                            accessorySales = accessorySales + accessoryPrice;
+                            totalAccessoriesSales = accessorySales;
+                            binding.tvTotalAccessoriesSales.setText("KES " + totalAccessoriesSales);
+
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void savePreferencesData() {
