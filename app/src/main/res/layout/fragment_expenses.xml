@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="10dp"
+    android:padding="15dp"
     tools:context=".ui.fragments.ExpensesFragment">
 
     <LinearLayout
@@ -21,13 +21,13 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
-                android:background="@drawable/edt_background"
+                android:background="@drawable/iv_back_background"
                 android:src="@drawable/ic_back"
-                app:tint="@color/accent" />
+                app:tint="@color/yellow" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,13 +41,13 @@
 
             <ImageView
                 android:id="@+id/iv_add"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:background="@drawable/edt_circular_background"
+                android:background="@drawable/iv_back_background"
                 android:src="@drawable/ic_add"
-                app:tint="@color/accent" />
+                app:tint="@color/yellow" />
 
         </RelativeLayout>
 

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     app:cardCornerRadius="5dp"
     android:layout_margin="2dp"
-    app:cardBackgroundColor="@color/background">
+    app:cardBackgroundColor="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -22,13 +22,13 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
-                android:background="@drawable/edt_background"
+                android:background="@drawable/iv_back_background"
                 android:src="@drawable/ic_back"
-                app:tint="@color/text" />
+                app:tint="@color/yellow" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -120,11 +120,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="-1dp"
                     android:fontFamily="@font/lato"
                     android:padding="10dp"
                     android:text="@string/delete_store"
-                    android:textColor="@color/accent"
+                    android:textColor="@color/text"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -132,27 +133,26 @@
                     android:id="@+id/btn_edit_store"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
                     android:fontFamily="@font/lato"
                     android:padding="10dp"
                     android:text="@string/submit_changes"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    app:backgroundTint="@color/accent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"/>
+                    android:textColor="@color/yellow"
+                    app:backgroundTint="@color/text" />
 
             </RelativeLayout>
-
 
             <TextView
                 android:id="@+id/tv_notify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/lato"
-                android:textColor="@color/accent"
+                android:textColor="@color/text"
                 android:textStyle="bold" />
 
         </LinearLayout>

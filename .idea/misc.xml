@@ -9,12 +9,15 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/edt_background.xml" value="0.2055" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/edt_circular_background.xml" value="0.154" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/edt_circular_background.xml.xml" value="0.1795" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/edt_circular_dark_background.xml" value="0.2495" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/edt_light_background.xml" value="0.1795" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/edt_light_circular_background.xml" value="0.1795" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/ic_copy.xml" value="0.1825" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/ic_expense.xml" value="0.1825" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/ic_home.xml" value="0.154" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/ic_sales_bg.xml" value="0.154" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/ic_whatshot.xml" value="0.2495" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/iv_back_background.xml" value="0.2495" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/progress.xml" value="0.1945" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/refill_bg.xml" value="0.1945" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/spinner_background.xml" value="0.17" />
@@ -51,7 +54,7 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_gas_refill_items.xml" value="0.18" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_home.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_login.xml" value="0.29322916666666665" />
-        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_main.xml" value="0.22" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_main.xml" value="0.33" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_new_gas_cylinders.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_sales.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/fragment_sell.xml" value="0.24074074074074073" />

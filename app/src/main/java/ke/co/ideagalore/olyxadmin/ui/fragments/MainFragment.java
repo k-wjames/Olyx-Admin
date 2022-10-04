@@ -81,7 +81,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         getCurrentDate();
         getPreferenceData();
-
         Date date = new Date();
         formatter = new SimpleDateFormat("dd/MM/yyyy");
         dateToday = formatter.format(date);
@@ -91,8 +90,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         binding.btnExpenditure.setOnClickListener(this);
         binding.cvTransact.setOnClickListener(this);
         binding.cvCatalogue.setOnClickListener(this);
-        binding.cvDebt.setOnClickListener(this);
-        binding.cvExpenses.setOnClickListener(this);
+        binding.btnAddExpense.setOnClickListener(this);
+        binding.btnAddCredit.setOnClickListener(this);
 
         binding.ivFilter.setOnClickListener(this);
 
@@ -110,9 +109,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             Navigation.findNavController(view).navigate(R.id.sellFragment);
         } else if (view == binding.ivFilter) {
             showFilterPeriodDialog();
-        } else if (view == binding.cvExpenses) {
+        } else if (view == binding.btnAddExpense) {
             Navigation.findNavController(view).navigate(R.id.expensesFragment);
-        } else if (view == binding.cvDebt) {
+        } else if (view == binding.btnAddCredit) {
             Navigation.findNavController(view).navigate(R.id.creditFragment);
         } else {
             Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
@@ -275,20 +274,15 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
 
-                    transactionList.clear();
+                transactionList.clear();
+
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
                     Transaction transaction = transactionSnapshot.getValue(Transaction.class);
 
                     if (transaction.getDate().equals(dateToday)) {
 
-                        transactionList.add(0, transaction);
-
-                        if (transactionList.size() < 10) {
-                            binding.tvTransactions.setText("0" + transactionList.size());
-                        } else {
-                            binding.tvTransactions.setText(String.valueOf(transactionList.size()));
-                        }
+                        transactionList.add(transaction);
 
                         int sales = 0;
                         int totalProfit = 0;
@@ -300,11 +294,17 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                             profits = totalProfit;
 
                         }
+
+                        if (transactionList.size() < 10) {
+                            binding.tvTransactions.setText("0" + transactionList.size());
+                        } else {
+                            binding.tvTransactions.setText(String.valueOf(transactionList.size()));
+                        }
+
                         getRefillData(terminal);
                         getNewGasSalesData(terminal);
                         getAccessorySalesData(terminal);
-                        showPieChart(totalAccessoriesSales, totalNewGasSales, totalRefillGasSales);
-
+                        //showPieChart(totalAccessoriesSales, totalNewGasSales, totalRefillGasSales);
                     }
 
                 }
@@ -319,22 +319,21 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     }
 
-
-    private void showPieChart(int accessories, int newGas, int refill) {
+   /* private void showPieChart(int accessories, int newGas, int refill) {
         binding.graph.removeSlices();
-        PieSlice slice = new PieSlice();
-        slice.setColor(getResources().getColor(R.color.accent));
-        slice.setValue(refill);
-        binding.graph.addSlice(slice);
-        slice = new PieSlice();
-        slice.setColor(getResources().getColor(R.color.accentTwo));
-        slice.setValue(newGas);
-        binding.graph.addSlice(slice);
-        slice = new PieSlice();
-        slice.setColor(getResources().getColor(R.color.accentThree));
-        slice.setValue(accessories);
-        binding.graph.addSlice(slice);
-    }
+        PieSlice sliceRefill = new PieSlice();
+        sliceRefill.setColor(requireActivity().getResources().getColor(R.color.accent));
+        sliceRefill.setValue(refill);
+        binding.graph.addSlice(sliceRefill);
+        PieSlice sliceNewGas = new PieSlice();
+        sliceNewGas.setColor(requireActivity().getResources().getColor(R.color.accentTwo));
+        sliceNewGas.setValue(newGas);
+        binding.graph.addSlice(sliceNewGas);
+        PieSlice sliceAccessories = new PieSlice();
+        sliceAccessories.setColor(requireActivity().getResources().getColor(R.color.accentThree));
+        sliceAccessories.setValue(accessories);
+        binding.graph.addSlice(sliceAccessories);
+    }*/
 
     private void getExpenditureData(String myTerminal) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
@@ -352,15 +351,23 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         int exp = 0;
                         for (Expense myExpense : expenseList) {
                             exp = exp + myExpense.getPrice();
-                            binding.tvExpenses.setText("KES " + exp);
 
+                            if (exp < 10) {
+
+                                binding.tvExpenses.setText("KES 00");
+
+                            } else if (exp>0 && exp < 10) {
+
+                                binding.tvExpenses.setText("KES 0" + exp);
+
+                            } else {
+                                binding.tvExpenses.setText("KES " + exp);
+                                binding.tvNetProfits.setText("KES " + netProfit);
+                            }
                             netProfit = profits - exp;
-                            binding.tvNetProfits.setText("KES " + netProfit);
+
                         }
 
-                    } else {
-                        binding.tvExpenses.setText("KES " + 00);
-                        binding.tvNetProfits.setText("KES " + profits);
                     }
 
                 }
@@ -437,9 +444,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             getCatalogueData(terminal);
             getStoresData(terminal);
             getTransactionsData(terminal);
-            getRefillData(terminal);
-            getNewGasSalesData(terminal);
-            getAccessorySalesData(terminal);
             getExpenditureData(terminal);
         }
     }

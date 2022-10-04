@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,7 +52,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView product, stock;
-        LinearLayout layout;
+        CardView layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
