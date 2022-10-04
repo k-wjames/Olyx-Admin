@@ -495,7 +495,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Navigation.findNavController(weakReference.get().requireView()).navigate(R.id.mainFragment);
+                            dialogs.dismissProgressDialog();
                         }
                     }
                 });
@@ -511,9 +511,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             SellFragment fragment = weakReference.get();
             if (fragment == null || fragment.isRemoving()) return;
 
-            dialogs.dismissProgressDialog();
-            fragment.myTransactionArray.clear();
-            fragment.binding.tvTotalSpend.setText("0.00");
+            Navigation.findNavController(weakReference.get().requireView()).navigate(R.id.mainFragment);
         }
     }
 

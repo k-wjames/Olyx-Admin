@@ -1,129 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
-    android:background="@drawable/transaction_dialog_bg"
-    android:orientation="vertical"
-    android:padding="20dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/lato"
-        android:text="Sell new gas cylinder"
-        android:textColor="@color/text"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/lato"
-        android:text="Select product"
-        android:textColor="@color/text"
-        android:textStyle="bold" />
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/spinner_background">
-
-        <Spinner
-            android:id="@+id/spinner_product"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:spinnerMode="dialog"
-            tools:listitem="@layout/spinner_item" />
-
-    </LinearLayout>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/lato"
-        android:text="Quantity"
-        android:textColor="@color/text"
-        android:textStyle="bold" />
-
-
-    <EditText
-        android:id="@+id/edt_quantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edt_background"
-        android:hint="1"
-        android:inputType="number"
-        android:textColorHint="@color/text"
-        android:textCursorDrawable="@null"
-        android:textSize="14sp" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/lato"
-        android:text="Selling price"
-        android:textColor="@color/text"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/edt_selling_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edt_background"
-        android:hint="Amount"
-        android:inputType="number"
-        android:textColorHint="@color/text"
-        android:textCursorDrawable="@null"
-        android:textSize="14sp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <TextView
-            android:id="@+id/tv_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/lato"
-            android:text="Cancel"
+            android:text="Sell new gas cylinder"
             android:textColor="@color/text"
             android:textSize="16sp"
             android:textStyle="bold" />
 
-
-        <Button
-            android:id="@+id/btn_add"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/lato"
-            android:padding="10dp"
-            android:text="Add"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            app:backgroundTint="@color/accent" />
+            android:text="Select product"
+            android:textColor="@color/text"
+            android:textStyle="bold" />
 
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/spinner_background">
 
-</LinearLayout>
+            <Spinner
+                android:id="@+id/spinner_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:spinnerMode="dialog"
+                tools:listitem="@layout/spinner_item" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lato"
+            android:text="Quantity"
+            android:textColor="@color/text"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edt_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edt_background"
+            android:hint="1"
+            android:inputType="number"
+            android:textColorHint="@color/text"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lato"
+            android:text="Selling price"
+            android:textColor="@color/text"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edt_selling_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edt_background"
+            android:hint="Amount"
+            android:inputType="number"
+            android:textColorHint="@color/text"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/lato"
+                android:text="Cancel"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/lato"
+                android:padding="10dp"
+                android:text="Add"
+                android:textAllCaps="false"
+                android:textColor="@color/text"
+                android:textStyle="bold"
+                app:backgroundTint="@color/accent" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

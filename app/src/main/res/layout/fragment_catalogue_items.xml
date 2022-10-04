@@ -65,7 +65,8 @@
                 android:fontFamily="@font/lato"
                 android:text="All"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/text"
+                android:textStyle="bold"
                 android:textSize="12sp" />
 
             <Button
@@ -76,7 +77,8 @@
                 android:fontFamily="@font/lato"
                 android:text="Refill"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/text"
+                android:textStyle="bold"
                 android:textSize="12sp"/>
 
             <Button
@@ -87,7 +89,8 @@
                 android:fontFamily="@font/lato"
                 android:text="New Gas"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/text"
+                android:textStyle="bold"
                 android:textSize="12sp"/>
 
 
@@ -98,7 +101,8 @@
                 android:fontFamily="@font/lato"
                 android:text="Accessories"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/text"
+                android:textStyle="bold"
                 android:textSize="12sp"/>
 
 

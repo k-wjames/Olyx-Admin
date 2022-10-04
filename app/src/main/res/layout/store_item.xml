@@ -22,7 +22,8 @@
         android:layout_toRightOf="@+id/tv_store"
         android:fontFamily="@font/lato"
         android:text="Location"
-        android:textColor="@color/accent" />
+        android:textStyle="bold"
+        android:textColor="@color/text" />
 
     <ImageView
         android:id="@+id/iv_more"

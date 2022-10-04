@@ -41,7 +41,7 @@ public class CustomDialogs {
         RelativeLayout view = (activity).findViewById(R.id.layout);
         final Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(activity.getResources().getColor(R.color.accent));
+        snackBarView.setBackgroundColor(activity.getResources().getColor(R.color.text));
 
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackBarView.getLayoutParams();
         params.gravity = Gravity.TOP;

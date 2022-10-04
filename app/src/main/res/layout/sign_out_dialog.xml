@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="20dp"
     android:background="@drawable/transaction_dialog_bg"
     android:orientation="vertical"
@@ -29,8 +30,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
         <TextView
@@ -45,7 +46,7 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <TextView
+        <Button
             android:id="@+id/tv_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,8 +55,9 @@
             android:fontFamily="@font/lato"
             android:text="@string/yes"
             android:textColor="@color/accent"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/text"/>
 
     </RelativeLayout>
 

@@ -20,7 +20,8 @@
         android:layout_marginStart="5dp"
         android:fontFamily="@font/lato"
         android:text="Store"
-        android:textColor="@color/accent"
+        android:textColor="@color/text"
+        android:textStyle="bold"
         android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

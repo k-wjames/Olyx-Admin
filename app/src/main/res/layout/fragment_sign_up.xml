@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="@color/background"
     android:id="@+id/layout"
     tools:context=".ui.fragments.SignUpFragment">
 
@@ -134,7 +133,8 @@
                 android:padding="10dp"
                 android:text="@string/create_user_account"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/text"
+                android:textStyle="bold"
                 app:backgroundTint="@color/accent" />
 
 
@@ -160,7 +160,8 @@
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/lato"
                     android:text="@string/sign_in_here"
-                    android:textColor="@color/accent"
+                    android:textColor="@color/text"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
             </LinearLayout>

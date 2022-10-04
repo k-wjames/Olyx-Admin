@@ -72,7 +72,7 @@
                 android:fontFamily="@font/lato"
                 android:gravity="start"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/accent"/>
+                android:textColor="@color/text"/>
 
             <ImageView
                 android:id="@+id/iv_call"
@@ -81,7 +81,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_call"
-                app:tint="@color/accent"
+                app:tint="@color/text"
                 android:layout_alignParentEnd="true"/>
 
         </LinearLayout>

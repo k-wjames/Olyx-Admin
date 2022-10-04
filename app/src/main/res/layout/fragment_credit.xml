@@ -107,7 +107,7 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/accent"
-        app:tint="@color/white"
-        app:elevation="0dp"/>
+        app:elevation="0dp"
+        app:tint="@color/text" />
 
 </RelativeLayout>

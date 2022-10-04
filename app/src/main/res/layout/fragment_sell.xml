@@ -19,11 +19,11 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:background="@drawable/edt_background"
+            android:background="@drawable/edt_circular_dark_background"
             android:src="@drawable/ic_back"
             app:tint="@color/accent" />
 
@@ -61,8 +61,9 @@
             android:fontFamily="@font/lato"
             android:text="Gas refill"
             android:textAllCaps="false"
-            android:textColor="@color/accent"
-            app:strokeColor="@color/accent"
+            android:textColor="@color/text"
+            android:textStyle="bold"
+            app:strokeColor="@color/text"
             app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
@@ -75,6 +76,7 @@
             android:text="New Gas"
             android:textAllCaps="false"
             android:textColor="@color/accentTwo"
+            android:textStyle="bold"
             app:strokeColor="@color/accentTwo"
             app:strokeWidth="1dp" />
 
@@ -89,6 +91,7 @@
             android:text="Accessories"
             android:textAllCaps="false"
             android:textColor="@color/accentThree"
+            android:textStyle="bold"
             app:strokeColor="@color/accentThree"
             app:strokeWidth="1dp" />
 
@@ -99,8 +102,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layer_two"
-        android:layout_marginTop="20dp"
-        android:background="@color/greenLight" />
+        android:layout_marginTop="20dp"/>
 
     <RelativeLayout
         android:id="@+id/layer_bottom"
@@ -149,7 +151,8 @@
             android:padding="10dp"
             android:text="@string/check_out"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/text"
+            android:textStyle="bold"
             app:backgroundTint="@color/accent" />
 
     </RelativeLayout>
