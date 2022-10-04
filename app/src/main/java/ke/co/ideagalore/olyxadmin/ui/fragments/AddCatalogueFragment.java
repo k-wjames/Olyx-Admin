@@ -100,6 +100,7 @@ public class AddCatalogueFragment extends Fragment implements View.OnClickListen
             reference.child(prodId).setValue(catalogue).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     customDialogs.showSnackBar(requireActivity(), "New " + binding.edtProduct.getText().toString().trim() + " successfully added to your catalogue");
+                    resetFields();
                 }
 
             }).addOnFailureListener(e -> {
@@ -107,6 +108,14 @@ public class AddCatalogueFragment extends Fragment implements View.OnClickListen
             });
 
         }
+    }
+
+    private void resetFields() {
+        binding.spinnerCategory.setSelection(0);
+        binding.edtProduct.setText("");
+        binding.edtBuyingPrice.setText("");
+        binding.edtMarkedPrice.setText("");
+        binding.edtStocked.setText("00");
     }
 
 }
