@@ -156,7 +156,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/lato"
                     android:gravity="end|center"
-                    android:text="KES 25000"
+                    android:text="KES 00"
                     android:textColor="@color/yellow"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -210,7 +210,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:fontFamily="@font/lato"
-                            android:text="KES 150000"
+                            android:text="KES 00"
                             android:textColor="@color/text"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -318,7 +318,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:fontFamily="@font/lato"
-                            android:text="KES 150000"
                             android:textColor="@color/text"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -391,11 +390,12 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_credit_sales"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:fontFamily="@font/lato"
-                            android:text="KES 150000"
+                            android:text="KES 00"
                             android:textColor="@color/text"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -539,6 +539,7 @@
                             android:fontFamily="@font/lato"
                             android:text="KES 00"
                             android:textColor="@color/text"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -597,7 +598,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_add"
+                        android:src="@drawable/ic_sell"
                         app:tint="@color/text" />
 
                     <TextView

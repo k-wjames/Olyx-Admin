@@ -6,20 +6,15 @@
         android:icon="@drawable/ic_home"
         android:title="" />
 
-<!--    <item
-        android:id="@+id/catalogueItemsFragment"
-        android:icon="@drawable/ic_products"
-        android:title="Products" />-->
-
     <item
         android:id="@+id/transactionsFragment"
-        android:icon="@drawable/ic_arrows_repeat"
+        android:icon="@drawable/ic_list"
         android:title="" />
 
-   <!-- <item
-        android:id="@+id/expensesFragment"
-        android:icon="@drawable/ic_expense"
-        android:title="" />-->
+    <item
+        android:id="@+id/statisticsFragment"
+        android:icon="@drawable/ic_stats"
+        android:title="" />
 
     <item
         android:id="@+id/settingsFragment"

@@ -1,23 +1,24 @@
 package ke.co.ideagalore.olyxadmin.models;
 
 public class Credit {
-    String product, quantity, name, amount, phone, creditId, date, time, attendant, store;
+    String product,name, phone, creditId, date, time, attendant, store;
+    int amount, quantity;
 
     public Credit() {
     }
 
-    public Credit(String product, String quantity, String name, String amount,
-                  String phone, String creditId, String date, String time, String attendant, String store) {
+    public Credit(String product, String name, String phone, String creditId, String date, String time,
+                  String attendant, String store, int amount, int quantity) {
         this.product = product;
-        this.quantity = quantity;
         this.name = name;
-        this.amount = amount;
         this.phone = phone;
         this.creditId = creditId;
         this.date = date;
         this.time = time;
         this.attendant = attendant;
         this.store = store;
+        this.amount = amount;
+        this.quantity = quantity;
     }
 
     public String getProduct() {
@@ -28,28 +29,12 @@ public class Credit {
         this.product = product;
     }
 
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
     }
 
     public String getPhone() {
@@ -98,5 +83,21 @@ public class Credit {
 
     public void setStore(String store) {
         this.store = store;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

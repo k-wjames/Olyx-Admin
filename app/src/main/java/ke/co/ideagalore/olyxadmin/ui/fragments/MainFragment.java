@@ -13,12 +13,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.echo.holographlibrary.PieSlice;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,18 +36,16 @@ import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.ExpenseAdapter;
 import ke.co.ideagalore.olyxadmin.adapters.TransactionsAdapter;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentMainBinding;
-import ke.co.ideagalore.olyxadmin.models.Catalogue;
+import ke.co.ideagalore.olyxadmin.models.Credit;
 import ke.co.ideagalore.olyxadmin.models.Expense;
-import ke.co.ideagalore.olyxadmin.models.Stores;
 import ke.co.ideagalore.olyxadmin.models.Transaction;
 
 public class MainFragment extends Fragment implements View.OnClickListener {
 
     FragmentMainBinding binding;
-    List<Stores> storesList = new ArrayList<>();
-    List<Catalogue> catalogueList = new ArrayList<>();
     List<Transaction> transactionList = new ArrayList<>();
     List<Expense> expenseList = new ArrayList<>();
+    List<Credit> creditList = new ArrayList<>();
 
     List<Transaction> refillList = new ArrayList<>();
     List<Transaction> gasSales = new ArrayList<>();
@@ -80,10 +76,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getCurrentDate();
-        getPreferenceData();
         Date date = new Date();
         formatter = new SimpleDateFormat("dd/MM/yyyy");
         dateToday = formatter.format(date);
+        getPreferenceData();
 
         binding.tvViewTransactions.setOnClickListener(this);
         binding.btnSales.setOnClickListener(this);
@@ -146,7 +142,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         selectedPeriod.setOnClickListener(view -> {
             myDialog.dismiss();
-            showRangePickerDialog();
         });
 
         noFilter.setOnClickListener(view -> {
@@ -202,72 +197,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void showRangePickerDialog() {
-        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
-        builder.setTitleText("Select range");
-        MaterialDatePicker<Pair<Long, Long>> materialDatePicker = builder.build();
-        materialDatePicker.show(requireActivity().getSupportFragmentManager(), "Range Picker");
-        materialDatePicker.addOnPositiveButtonClickListener(selection -> {
-            if (selection.first != null && selection.second != null) {
-
-                Long start = selection.first;
-                Long end = selection.second;
-                binding.tvPeriod.setText(start + " to " + end);
-
-
-            }
-        });
-
-    }
-
-    private void getCatalogueData(String myTerminal) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Catalogue");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                catalogueList.clear();
-                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
-                    Catalogue catalogue = storeSnapshot.getValue(Catalogue.class);
-                    catalogueList.add(catalogue);
-                    /*if (catalogueList.size() < 10) {
-                        binding.tvCatalogueItems.setText(0 + "" + catalogueList.size());
-                    } else
-                        binding.tvCatalogueItems.setText(String.valueOf(catalogueList.size()));*/
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void getStoresData(String myTerminal) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Stores");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                storesList.clear();
-                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
-                    Stores store = storeSnapshot.getValue(Stores.class);
-                    storesList.add(store);
-                    /*if (storesList.size() < 10) {
-                        binding.tvStores.setText(0 + "" + storesList.size());
-                    } else
-                        binding.tvStores.setText(String.valueOf(storesList.size()));*/
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
     private void getTransactionsData(String myTerminal) {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Sales");
@@ -304,7 +233,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         getRefillData(terminal);
                         getNewGasSalesData(terminal);
                         getAccessorySalesData(terminal);
-                        //showPieChart(totalAccessoriesSales, totalNewGasSales, totalRefillGasSales);
                     }
 
                 }
@@ -319,58 +247,40 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     }
 
-   /* private void showPieChart(int accessories, int newGas, int refill) {
-        binding.graph.removeSlices();
-        PieSlice sliceRefill = new PieSlice();
-        sliceRefill.setColor(requireActivity().getResources().getColor(R.color.accent));
-        sliceRefill.setValue(refill);
-        binding.graph.addSlice(sliceRefill);
-        PieSlice sliceNewGas = new PieSlice();
-        sliceNewGas.setColor(requireActivity().getResources().getColor(R.color.accentTwo));
-        sliceNewGas.setValue(newGas);
-        binding.graph.addSlice(sliceNewGas);
-        PieSlice sliceAccessories = new PieSlice();
-        sliceAccessories.setColor(requireActivity().getResources().getColor(R.color.accentThree));
-        sliceAccessories.setValue(accessories);
-        binding.graph.addSlice(sliceAccessories);
-    }*/
-
     private void getExpenditureData(String myTerminal) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
         reference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 expenseList.clear();
 
-                for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
-                    Expense expense = expenseSnapshot.getValue(Expense.class);
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
+                    Expense expense = transactionSnapshot.getValue(Expense.class);
+                    String date = expense.getDate();
 
-                    if (expense.getDate().equals(dateToday)) {
-                        expenseList.add(0, expense);
-
-                        int exp = 0;
+                    if (date.equals(dateToday)) {
+                        expenseList.add(expense);
+                        int totalExpenses = 0;
                         for (Expense myExpense : expenseList) {
-                            exp = exp + myExpense.getPrice();
-
-                            if (exp < 10) {
-
-                                binding.tvExpenses.setText("KES 00");
-
-                            } else if (exp>0 && exp < 10) {
-
-                                binding.tvExpenses.setText("KES 0" + exp);
-
-                            } else {
-                                binding.tvExpenses.setText("KES " + exp);
-                                binding.tvNetProfits.setText("KES " + netProfit);
-                            }
-                            netProfit = profits - exp;
+                            int currentExpense = myExpense.getPrice();
+                            totalExpenses = totalExpenses + currentExpense;
+                            netProfit = profits - totalExpenses;
+                            binding.tvExpenses.setText("KES " + totalExpenses);
+                            binding.tvNetProfits.setText("KES " + netProfit);
 
                         }
 
-                    }
+                    } else {
 
+                        binding.tvExpenses.setText("KES 00");
+                        int expenses = 0;
+                        netProfit = profits - expenses;
+                        binding.tvNetProfits.setText("KES " + netProfit);
+                    }
                 }
+
 
             }
 
@@ -441,11 +351,44 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         } else {
             binding.tvName.setText(name + ",");
-            getCatalogueData(terminal);
-            getStoresData(terminal);
             getTransactionsData(terminal);
             getExpenditureData(terminal);
+            getCreditSalesData(terminal);
         }
+    }
+
+    private void getCreditSalesData(String terminal) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Creditors");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                creditList.clear();
+                for (DataSnapshot creditSnapshot : snapshot.getChildren()) {
+
+                    Credit credit = creditSnapshot.getValue(Credit.class);
+
+                    String date = credit.getDate();
+                    if (date.equals(dateToday)) {
+                        creditList.add(credit);
+                        int creditSales = 0;
+
+                        for (Credit myCredit : creditList) {
+                            int currentCredit = myCredit.getAmount();
+                            creditSales = creditSales + currentCredit;
+                            binding.tvCreditSales.setText("KES " + creditSales);
+                        }
+                    } else {
+                        binding.tvCreditSales.setText("KES 00");
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void getRefillData(String myTerminal) {

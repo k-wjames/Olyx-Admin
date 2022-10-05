@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +34,7 @@ import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.CreditAdapter;
+import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentCreditBinding;
 import ke.co.ideagalore.olyxadmin.models.Credit;
@@ -48,6 +48,8 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
     List<Credit> creditList = new ArrayList<>();
 
     String dateToday, time, store, terminal, username;
+
+    CustomDialogs customDialogs = new CustomDialogs();
 
     public CreditFragment() {
     }
@@ -179,8 +181,8 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
                 credit.setDate(dateToday);
                 credit.setTime(time);
                 credit.setProduct(product.getText().toString().trim());
-                credit.setQuantity(quantity.getText().toString().trim());
-                credit.setAmount(amount.getText().toString().trim());
+                credit.setQuantity(Integer.parseInt(quantity.getText().toString().trim()));
+                credit.setAmount(Integer.parseInt(amount.getText().toString().trim()));
                 credit.setName(name.getText().toString().trim());
                 credit.setPhone(phone.getText().toString().trim());
                 credit.setStore(store);
@@ -194,7 +196,7 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
                 }).addOnFailureListener(e -> {
 
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), "Oops! Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                    customDialogs.showSnackBar(requireActivity(), "Oops! Something went wrong. Please try again.");
 
                 });
             }

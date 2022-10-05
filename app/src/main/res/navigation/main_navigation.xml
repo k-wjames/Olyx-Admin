@@ -18,6 +18,15 @@
             android:id="@+id/action_mainFragment_to_catalogueItemsFragment"
             app:destination="@id/catalogueItemsFragment"
             app:popUpTo="@id/catalogueItemsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_sellFragment"
+            app:destination="@id/sellFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_creditFragment"
+            app:destination="@id/creditFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
     </fragment>
 
     <fragment
@@ -115,12 +124,32 @@
         android:id="@+id/sellFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.SellFragment"
         android:label="fragment_sell"
-        tools:layout="@layout/fragment_sell" />
+        tools:layout="@layout/fragment_sell" >
+        <action
+            android:id="@+id/action_sellFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/creditFragment"
         android:name="ke.co.ideagalore.olyxadmin.ui.fragments.CreditFragment"
         android:label="fragment_credit"
-        tools:layout="@layout/fragment_credit" />
+        tools:layout="@layout/fragment_credit" >
+        <action
+            android:id="@+id/action_creditFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.StatisticsFragment"
+        android:label="fragment_statistics"
+        tools:layout="@layout/fragment_statistics" >
+        <action
+            android:id="@+id/action_statisticsFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"/>
+    </fragment>
 
 
 </navigation>
