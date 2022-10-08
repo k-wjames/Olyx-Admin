@@ -39,12 +39,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.SaleAdapter;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentSellBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
+import ke.co.ideagalore.olyxadmin.models.CatalogueUpdate;
 import ke.co.ideagalore.olyxadmin.models.Transaction;
 import ke.co.ideagalore.olyxadmin.models.TransactionItem;
 
@@ -54,11 +56,13 @@ public class SellFragment extends Fragment implements View.OnClickListener {
     FragmentSellBinding binding;
 
     ArrayList<TransactionItem> myGasArray, myAccessoriesArray, myGasRefillArray;
-    ArrayList<Transaction> myTransactionArray = new ArrayList<>();
+    static ArrayList<Transaction> myTransactionArray = new ArrayList<>();
+    ArrayList<Catalogue> catalogueArrayList = new ArrayList<>();
 
     TransactionItem transactionItem;
 
     int price, markedPrice, buyingPrice;
+    static int  stokedCatalogueItem;
 
     String transactionType, selectedItem, dateToday, store, name, terminal, businessName;
 
@@ -66,7 +70,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
     Dialog dialog;
 
-    CustomDialogs customDialogs=new CustomDialogs();
+    CustomDialogs customDialogs = new CustomDialogs();
 
     public SellFragment() {
     }
@@ -140,47 +144,57 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                catalogueArrayList.clear();
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
 
-                    ArrayList<Catalogue> catalogueArrayList = new ArrayList<>();
-                    catalogueArrayList.add(catalogue);
+                    int stock = catalogue.getStockedQuantity();
 
-                    for (int i = 0; i < catalogueArrayList.size(); i++) {
+                    if (stock > 0) {
+                        catalogueArrayList.add(catalogue);
 
-                        String prod = catalogueArrayList.get(i).getProduct();
-                        price = catalogueArrayList.get(i).getMarkedPrice();
-                        String category = catalogueArrayList.get(i).getCategory();
-                        int buyingPrice = catalogueArrayList.get(i).getBuyingPrice();
-                        int markedPrice = catalogueArrayList.get(i).getMarkedPrice();
+                        for (int i = 0; i < catalogueArrayList.size(); i++) {
+
+                            String prod = catalogueArrayList.get(i).getProduct();
+                            price = catalogueArrayList.get(i).getMarkedPrice();
+                            String category = catalogueArrayList.get(i).getCategory();
+                            int buyingPrice = catalogueArrayList.get(i).getBuyingPrice();
+                            int stockedQuantity=catalogueArrayList.get(i).getStockedQuantity();
+                            int markedPrice = catalogueArrayList.get(i).getMarkedPrice();
+                            String prodId=catalogueArrayList.get(i).getProdId();
 
 
-                        transactionItem = new TransactionItem();
-                        if (category.equals("New Gas")) {
+                            transactionItem = new TransactionItem();
+                            if (category.equals("New Gas")) {
 
-                            transactionItem.setMarkedPrice(price);
-                            transactionItem.setProduct(prod);
-                            transactionItem.setBuyingPrice(buyingPrice);
-                            myGasArray.add(transactionItem);
+                                transactionItem.setMarkedPrice(price);
+                                transactionItem.setProduct(prod);
+                                transactionItem.setBuyingPrice(buyingPrice);
+                                transactionItem.setAvailableStock(stockedQuantity);
+                                transactionItem.setProductId(prodId);
+                                myGasArray.add(transactionItem);
 
-                        } else if (category.equals("Accessories")) {
-                            transactionItem.setMarkedPrice(price);
-                            transactionItem.setProduct(prod);
-                            transactionItem.setBuyingPrice(buyingPrice);
-                            myAccessoriesArray.add(transactionItem);
+                            } else if (category.equals("Accessories")) {
+                                transactionItem.setMarkedPrice(price);
+                                transactionItem.setProduct(prod);
+                                transactionItem.setBuyingPrice(buyingPrice);
+                                transactionItem.setAvailableStock(stockedQuantity);
+                                transactionItem.setProductId(prodId);
+                                myAccessoriesArray.add(transactionItem);
 
-                        } else {
-                            transactionItem.setMarkedPrice(price);
-                            transactionItem.setProduct(prod);
-                            transactionItem.setBuyingPrice(buyingPrice);
-                            myGasRefillArray.add(transactionItem);
+                            } else {
+                                transactionItem.setMarkedPrice(price);
+                                transactionItem.setProduct(prod);
+                                transactionItem.setBuyingPrice(buyingPrice);
+                                transactionItem.setAvailableStock(stockedQuantity);
+                                transactionItem.setProductId(prodId);
+                                myGasRefillArray.add(transactionItem);
+                            }
                         }
+
                     }
 
                 }
-
-
             }
 
             @Override
@@ -194,7 +208,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
     private void refillGasDialog(String transType) {
 
-        if (myGasRefillArray.size()==0){
+        if (myGasRefillArray.size() == 0) {
             customDialogs.showSnackBar(requireActivity(), "No gas refill data found. Please check with your admin");
             return;
         }
@@ -223,6 +237,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 TransactionItem item = (TransactionItem) spinner.getSelectedItem();
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
+                stokedCatalogueItem=item.getAvailableStock();
                 edtPrice.setText(String.valueOf(markedPrice));
             }
 
@@ -287,7 +302,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
     private void sellNewGasDialog(String transType) {
 
-        if (myGasArray.size()==0){
+        if (myGasArray.size() == 0) {
             customDialogs.showSnackBar(requireActivity(), "No new gas data found. Please check with your admin");
             return;
         }
@@ -315,6 +330,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 TransactionItem item = (TransactionItem) spinner.getSelectedItem();
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
+                stokedCatalogueItem=item.getAvailableStock();
                 edtPrice.setText(markedPrice + "");
             }
 
@@ -377,7 +393,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
     }
 
     private void sellAnAccessoryDialog(String transType) {
-        if (myAccessoriesArray.size()==0){
+        if (myAccessoriesArray.size() == 0) {
             customDialogs.showSnackBar(requireActivity(), "No accessories data found. Please check with you admin");
             return;
         }
@@ -404,6 +420,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 TransactionItem item = (TransactionItem) spinner.getSelectedItem();
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
+                stokedCatalogueItem=item.getAvailableStock();
                 edtPrice.setText(markedPrice + "");
             }
 
@@ -495,7 +512,9 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+
                             dialogs.dismissProgressDialog();
+
                         }
                     }
                 });
@@ -515,7 +534,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     private void displayList() {
         binding.rvSales.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvSales.setHasFixedSize(true);
@@ -530,7 +548,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         store = sharedPreferences.getString("store", null);
         terminal = sharedPreferences.getString("terminal", null);
         name = sharedPreferences.getString("name", null);
-        businessName=sharedPreferences.getString("business",null);
+        businessName = sharedPreferences.getString("business", null);
 
     }
 }

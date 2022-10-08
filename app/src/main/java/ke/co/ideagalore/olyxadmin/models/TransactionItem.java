@@ -2,16 +2,18 @@ package ke.co.ideagalore.olyxadmin.models;
 
 public class TransactionItem {
 
-    int buyingPrice, markedPrice;
-    String product;
+    int buyingPrice, markedPrice, availableStock;
+    String product, productId;
 
     public TransactionItem() {
     }
 
-    public TransactionItem(int buyingPrice, int markedPrice, String product) {
+    public TransactionItem(int buyingPrice, int markedPrice, int availableStock, String product, String productId) {
         this.buyingPrice = buyingPrice;
         this.markedPrice = markedPrice;
+        this.availableStock = availableStock;
         this.product = product;
+        this.productId = productId;
     }
 
     public int getBuyingPrice() {
@@ -30,6 +32,14 @@ public class TransactionItem {
         this.markedPrice = markedPrice;
     }
 
+    public int getAvailableStock() {
+        return availableStock;
+    }
+
+    public void setAvailableStock(int availableStock) {
+        this.availableStock = availableStock;
+    }
+
     public String getProduct() {
         return product;
     }
@@ -38,8 +48,11 @@ public class TransactionItem {
         this.product = product;
     }
 
-    public String toString()
-    {
-        return product;
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }

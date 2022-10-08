@@ -2,16 +2,18 @@ package ke.co.ideagalore.olyxadmin.models;
 
 public class Transaction {
 
-    String transactionId,transactionType, product, store, date, time, attendant, terminalId;
+    String transactionId,transactionType, productId,product, store, date, time, attendant, terminalId;
     int quantity, buyingPrice,sellingPrice,totalPrice, profit;
 
     public Transaction() {
     }
 
-    public Transaction(String transactionId, String transactionType, String product, String store,
-                       String date, String time, String attendant, String terminalId, int quantity, int buyingPrice, int sellingPrice, int totalPrice, int profit) {
+    public Transaction(String transactionId, String transactionType, String productId, String product,
+                       String store, String date, String time, String attendant, String terminalId,
+                       int quantity, int buyingPrice, int sellingPrice, int totalPrice, int profit) {
         this.transactionId = transactionId;
         this.transactionType = transactionType;
+        this.productId = productId;
         this.product = product;
         this.store = store;
         this.date = date;
@@ -39,6 +41,14 @@ public class Transaction {
 
     public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getProduct() {
