@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/lato"
-            android:text="New Gas"
+            android:text="Gas sale"
             android:textAllCaps="false"
             android:textColor="@color/accentTwo"
             android:textStyle="bold"

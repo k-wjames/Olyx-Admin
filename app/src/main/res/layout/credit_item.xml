@@ -8,7 +8,6 @@
     android:layout_marginEnd="1dp"
     android:layout_marginBottom="1dp"
     android:orientation="vertical"
-    app:cardBackgroundColor="@color/background"
     app:cardCornerRadius="5dp">
 
     <LinearLayout
@@ -27,7 +26,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:fontFamily="@font/lato"
-                android:textColor="@color/text" />
+                android:textColor="@color/text"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_date_time"
@@ -35,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:fontFamily="@font/lato"
-                android:textColor="@color/text" />
+                android:textColor="@color/text"
+                android:textStyle="bold"/>
 
         </RelativeLayout>
 
@@ -43,48 +44,49 @@
             android:id="@+id/tv_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edt_background"
             android:fontFamily="@font/lato"
             android:textColor="@color/text" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/lato"
                 android:text="@string/total_credit_balance"
-                android:textColor="@color/text" />
+                android:textColor="@color/text"
+                android:textStyle="bold"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"/>
 
             <TextView
                 android:id="@+id/tv_amount"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/lato"
                 android:gravity="start"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/text"/>
+                android:textColor="@color/text"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
 
             <ImageView
                 android:id="@+id/iv_call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="20dp"
+                android:background="@drawable/iv_back_background"
                 android:src="@drawable/ic_call"
-                app:tint="@color/text"
-                android:layout_alignParentEnd="true"/>
+                app:tint="@color/accent" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </LinearLayout>

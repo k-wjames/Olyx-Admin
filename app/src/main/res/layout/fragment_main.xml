@@ -320,7 +320,8 @@
                             android:fontFamily="@font/lato"
                             android:textColor="@color/text"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:text="KES 00"/>
 
 
                     </LinearLayout>
