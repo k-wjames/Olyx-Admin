@@ -95,8 +95,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
                     Transaction transaction = transactionSnapshot.getValue(Transaction.class);
 
-                    if (transaction.getDate().equals(dateToday)) {
-
                         transactionList.add(transaction);
 
                         int sales = 0;
@@ -119,7 +117,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                         getRefillData(terminal);
                         getNewGasSalesData(terminal);
                         getAccessorySalesData(terminal);
-                    }
+
 
                 }
 
@@ -144,7 +142,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                     Credit credit = creditSnapshot.getValue(Credit.class);
 
                     String date = credit.getDate();
-                    if (date.equals(dateToday)) {
                         creditList.add(credit);
                         int creditSales = 0;
 
@@ -153,9 +150,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                             creditSales = creditSales + currentCredit;
                             binding.tvCreditSales.setText("KES " + creditSales);
                         }
-                    } else {
-                        binding.tvCreditSales.setText("KES 00");
-                    }
+
                 }
 
             }
@@ -175,7 +170,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 refillList.clear();
                 for (DataSnapshot refillSnapshot : snapshot.getChildren()) {
                     Transaction transaction = refillSnapshot.getValue(Transaction.class);
-                    if (transaction.getDate().equals(dateToday) && transaction.getTransactionType().equals("Gas refill")) {
+                    if (transaction.getTransactionType().equals("Gas refill")) {
                         refillList.add(0, transaction);
                         int totalRefills = 0;
                         for (Transaction refill : refillList) {
@@ -206,7 +201,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 for (DataSnapshot gasSnapshot : snapshot.getChildren()) {
 
                     Transaction transaction = gasSnapshot.getValue(Transaction.class);
-                    if (transaction.getDate().equals(dateToday) && transaction.getTransactionType().equals("Gas sale")) {
+                    if (transaction.getTransactionType().equals("Gas sale")) {
                         gasSales.add(0, transaction);
                         int myGasSales = 0;
                         for (Transaction gasSale : gasSales) {
@@ -236,7 +231,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 accessories.clear();
                 for (DataSnapshot accessorySnapshot : snapshot.getChildren()) {
                     Transaction transaction = accessorySnapshot.getValue(Transaction.class);
-                    if (transaction.getDate().equals(dateToday) && transaction.getTransactionType().equals("Accessory sale")) {
+                    if (transaction.getTransactionType().equals("Accessory sale")) {
                         accessories.add(0, transaction);
                         int accessorySales = 0;
                         for (Transaction accessorySale : accessories) {
@@ -269,9 +264,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
                 for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
                     Expense expense = transactionSnapshot.getValue(Expense.class);
-                    String date = expense.getDate();
 
-                    if (date.equals(dateToday)) {
+
                         expenseList.add(expense);
                         int totalExpenses = 0;
                         for (Expense myExpense : expenseList) {
@@ -283,13 +277,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
                         }
 
-                    } else {
-
-                        binding.tvExpenses.setText("KES 00");
-                        int expenses = 0;
-                        netProfit = profits - expenses;
-                        binding.tvNetProfits.setText("KES " + netProfit);
-                    }
                 }
 
 
