@@ -15,18 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
+import ke.co.ideagalore.olyxadmin.models.Catalogue;
 import ke.co.ideagalore.olyxadmin.models.Credit;
 
 
 public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder> {
 
     List<Credit> creditList;
-    Context context;
-    String phone;
 
-    public CreditAdapter(List<Credit> creditList, Context context) {
+    public interface OnItemClickListener {
+        void onItemClick(Credit item);
+    }
+    private final CreditAdapter.OnItemClickListener listener;
+
+    public CreditAdapter(List<Credit> creditList,OnItemClickListener listener) {
         this.creditList = creditList;
-        this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -39,20 +43,7 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Credit credit = creditList.get(position);
-
-        holder.name.setText(credit.getName());
-        holder.product.setText(credit.getProduct());
-        holder.amount.setText("KES " + credit.getAmount());
-        holder.date.setText(credit.getDate() + " " + credit.getTime());
-
-        phone = credit.getPhone();
-
-        holder.ivCall.setOnClickListener(view -> {
-            Intent callIntent = new Intent(Intent.ACTION_DIAL);
-            callIntent.setData(Uri.parse("tel:" + phone));
-            context.startActivity(callIntent);
-        });
+        holder.bind(creditList.get(position), listener);
 
     }
 
@@ -73,6 +64,23 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder
             amount = itemView.findViewById(R.id.tv_amount);
             date = itemView.findViewById(R.id.tv_date_time);
             ivCall = itemView.findViewById(R.id.iv_call);
+        }
+
+        public void bind(final Credit credit, final CreditAdapter.OnItemClickListener listener) {
+            name.setText(credit.getName());
+            product.setText(credit.getProduct());
+            amount.setText("KES "+credit.getAmount());
+            date.setText(credit.getDate()+" "+credit.getTime());
+            ivCall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String phone=credit.getPhone();
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" + phone));
+                    view.getContext().startActivity(callIntent);
+                }
+            });
+            itemView.setOnClickListener(v -> listener.onItemClick(credit));
         }
     }
 

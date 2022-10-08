@@ -20,6 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +41,8 @@ import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentCreditBinding;
 import ke.co.ideagalore.olyxadmin.models.Credit;
+import ke.co.ideagalore.olyxadmin.models.CreditRepayment;
+import ke.co.ideagalore.olyxadmin.models.Transaction;
 
 public class CreditFragment extends Fragment implements View.OnClickListener {
 
@@ -123,6 +128,8 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
                 for (DataSnapshot creditSnapshot : snapshot.getChildren()) {
 
                     Credit credit = creditSnapshot.getValue(Credit.class);
+                    assert credit != null;
+                    if (credit.getAmount()>0)
                     creditList.add(0, credit);
                 }
 
@@ -138,10 +145,83 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
     }
 
     private void displayData(List<Credit> creditList) {
-        CreditAdapter adapter = new CreditAdapter(creditList, getActivity());
         binding.rvCreditors.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvCreditors.setHasFixedSize(true);
+        CreditAdapter adapter = new CreditAdapter(creditList, item -> {
+
+            String id = item.getCreditId();
+            int amount = item.getAmount();
+            int quantity = item.getQuantity();
+            String name = item.getName();
+            String product = item.getProduct();
+            String phone=item.getPhone();
+            showRepayCreditDialog(id, amount, quantity, name, product, phone);
+
+        });
         binding.rvCreditors.setAdapter(adapter);
+    }
+
+    private void showRepayCreditDialog(String id, int amount, int quantity, String name, String product, String phone) {
+
+        Dialog myDialog = new Dialog(getActivity());
+        myDialog.setContentView(R.layout.repay_credit_dialog);
+        myDialog.setCanceledOnTouchOutside(false);
+        myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        myDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        myDialog.show();
+
+        TextView customer, creditProduct, balance;
+        customer = myDialog.findViewById(R.id.tv_customer);
+        customer.setText(name);
+        creditProduct = myDialog.findViewById(R.id.tv_product);
+        creditProduct.setText(product + " *" + quantity);
+        balance = myDialog.findViewById(R.id.tv_amount);
+        balance.setText("KES " + amount);
+
+        EditText receivedAmount = myDialog.findViewById(R.id.edt_amount_received);
+
+        TextView cancel=myDialog.findViewById(R.id.tv_cancel);
+        cancel.setOnClickListener(view -> myDialog.dismiss());
+
+        Button updateCredit=myDialog.findViewById(R.id.btn_update_credit);
+        updateCredit.setOnClickListener(view -> {
+            if (validateEditTextFields(receivedAmount)) {
+                int received = Integer.parseInt(receivedAmount.getText().toString().trim());
+                int creditBalance=amount-received;
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Creditors");
+                reference.child(id).child("amount").setValue(creditBalance).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+
+                        RecordCreditPaid(name,phone,product,received,creditBalance, myDialog);
+
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void RecordCreditPaid(String name, String phone, String product, int received, int creditBalance, Dialog myDialog) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Repayments");
+        String key=reference.push().getKey();
+        CreditRepayment repayment=new CreditRepayment();
+        repayment.setRepaymentId(key);
+        repayment.setCustomer(name);
+        repayment.setAttendant(username);
+        repayment.setPhone(phone);
+        repayment.setProduct(product);
+        repayment.setAttendant(username);
+        repayment.setAmount(received);
+        repayment.setStore(store);
+        repayment.setTime(time);
+        repayment.setDate(dateToday);
+        repayment.setBalance(creditBalance);
+
+        reference.child(key).setValue(repayment).addOnCompleteListener(task1 -> myDialog.dismiss()).addOnFailureListener(e -> {
+            customDialogs.showSnackBar(requireActivity(), e.getMessage());
+        });
+
     }
 
     private void showCreditDialog() {

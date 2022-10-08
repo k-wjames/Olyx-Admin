@@ -1,30 +1,15 @@
 package ke.co.ideagalore.olyxadmin.adapters;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.app.Dialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;

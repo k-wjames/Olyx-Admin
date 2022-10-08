@@ -32,6 +32,7 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/spinner_background.xml" value="0.17" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/square_background.xml" value="0.154" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/transaction_dialog_bg.xml" value="0.1945" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/drawable/tv_terminal_background.xml" value="0.1705" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/activity_home.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/activity_main.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/activity_onboard.xml" value="0.29322916666666665" />
@@ -81,6 +82,7 @@
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/progress_dialog.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/refill_dialog.xml" value="0.28958333333333336" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/refill_item.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/repay_credit_dialog.xml" value="0.28958333333333336" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/sales_item.xml" value="0.4645669291338583" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/sell_accessory_dialog.xml" value="0.28958333333333336" />
         <entry key="..\:/Users/Dr. Pop Candy/AndroidStudioProjects/OlyxAdmin/app/src/main/res/layout/sell_gas_dialog.xml" value="0.28958333333333336" />

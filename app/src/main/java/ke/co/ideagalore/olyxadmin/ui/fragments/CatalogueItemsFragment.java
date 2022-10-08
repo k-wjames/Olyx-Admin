@@ -162,16 +162,19 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         }
         binding.rvCatalogue.setLayoutManager(new GridLayoutManager(getActivity(),2));
         binding.rvCatalogue.setHasFixedSize(true);
-        CatalogueAdapter adapter = new CatalogueAdapter(catalogues, item -> {
+        CatalogueAdapter adapter = new CatalogueAdapter(catalogues, new CatalogueAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Catalogue item) {
 
-            Bundle bundle = new Bundle();
-            bundle.putString("productId", item.getProdId());
-            bundle.putString("product", item.getProduct());
-            bundle.putString("category", item.getCategory());
-            bundle.putInt("stockedItems", item.getStockedQuantity());
-            bundle.putInt("buyingPrice", item.getBuyingPrice());
-            bundle.putInt("sellingPrice", item.getMarkedPrice());
-            Navigation.findNavController(requireView()).navigate(R.id.editProductFragment, bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("productId", item.getProdId());
+                bundle.putString("product", item.getProduct());
+                bundle.putString("category", item.getCategory());
+                bundle.putInt("stockedItems", item.getStockedQuantity());
+                bundle.putInt("buyingPrice", item.getBuyingPrice());
+                bundle.putInt("sellingPrice", item.getMarkedPrice());
+                Navigation.findNavController(CatalogueItemsFragment.this.requireView()).navigate(R.id.editProductFragment, bundle);
+            }
         });
         binding.rvCatalogue.setAdapter(adapter);
         adapter.notifyDataSetChanged();

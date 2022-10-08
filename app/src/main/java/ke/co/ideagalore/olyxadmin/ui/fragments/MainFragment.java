@@ -37,6 +37,7 @@ import ke.co.ideagalore.olyxadmin.adapters.ExpenseAdapter;
 import ke.co.ideagalore.olyxadmin.adapters.TransactionsAdapter;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentMainBinding;
 import ke.co.ideagalore.olyxadmin.models.Credit;
+import ke.co.ideagalore.olyxadmin.models.CreditRepayment;
 import ke.co.ideagalore.olyxadmin.models.Expense;
 import ke.co.ideagalore.olyxadmin.models.Transaction;
 
@@ -50,6 +51,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     List<Transaction> refillList = new ArrayList<>();
     List<Transaction> gasSales = new ArrayList<>();
     List<Transaction> accessories = new ArrayList<>();
+    List<CreditRepayment> repaymentList = new ArrayList<>();
 
     String terminal, name, businessName, terminalId, dateToday;
 
@@ -354,7 +356,40 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             getTransactionsData(terminal);
             getExpenditureData(terminal);
             getCreditSalesData(terminal);
+            getCreditRepayments(terminal);
         }
+    }
+
+    private void getCreditRepayments(String terminal) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Repayments");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                repaymentList.clear();
+                for (DataSnapshot repaymentSnapshot : snapshot.getChildren()) {
+
+                    CreditRepayment repayment = repaymentSnapshot.getValue(CreditRepayment.class);
+                    String date = repayment.getDate();
+                    int totalRepayments = 0;
+                    if (date.equals(dateToday)) {
+                        repaymentList.add(repayment);
+                        for (CreditRepayment creditRepayment : repaymentList) {
+                            int currentPayment=creditRepayment.getAmount();
+                            totalRepayments=totalRepayments+currentPayment;
+                            binding.tvCreditRepayed.setText("KES "+totalRepayments);
+                        }
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void getCreditSalesData(String terminal) {
