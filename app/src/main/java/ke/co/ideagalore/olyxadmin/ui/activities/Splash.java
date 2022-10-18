@@ -31,7 +31,7 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             checkAuthenticationStatus();
 
-        }, 1000);
+        }, 800);
 
 
     }
