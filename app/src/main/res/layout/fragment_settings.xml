@@ -14,33 +14,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:background="@drawable/iv_back_background"
-                android:src="@drawable/ic_back"
-                app:tint="@color/yellow" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/lato"
-                android:text="Account"
-                android:textColor="@color/text"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
+            android:fontFamily="@font/lato"
+            android:text="Account"
+            android:textColor="@color/text"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="40dp"/>
 
         <TextView
             android:id="@+id/tv_business"

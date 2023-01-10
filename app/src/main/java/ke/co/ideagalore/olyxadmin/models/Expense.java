@@ -2,19 +2,20 @@ package ke.co.ideagalore.olyxadmin.models;
 
 public class Expense {
 
-    String category, expenseId, date, time, description;
+    String category, expenseId, time, description;
     int price;
+    long date;
 
     public Expense() {
     }
 
-    public Expense(String category, String expenseId, String date, String time, String description, int price) {
+    public Expense(String category, String expenseId, String time, String description, int price, long date) {
         this.category = category;
         this.expenseId = expenseId;
-        this.date = date;
         this.time = time;
         this.description = description;
         this.price = price;
+        this.date = date;
     }
 
     public String getCategory() {
@@ -31,14 +32,6 @@ public class Expense {
 
     public void setExpenseId(String expenseId) {
         this.expenseId = expenseId;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getTime() {
@@ -63,5 +56,13 @@ public class Expense {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 }

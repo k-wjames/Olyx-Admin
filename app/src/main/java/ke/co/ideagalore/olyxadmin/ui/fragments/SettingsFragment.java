@@ -78,7 +78,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         binding.ivMinimise.setOnClickListener(this);
         binding.ivExpandAttendants.setOnClickListener(this);
         binding.ivMinimiseAttendants.setOnClickListener(this);
-        binding.ivBack.setOnClickListener(this);
         binding.ivCopy.setOnClickListener(this);
         binding.ivSignOut.setOnClickListener(this);
     }
@@ -119,8 +118,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
             signOut();
 
-        } else {
-            Navigation.findNavController(view).navigate(R.id.mainFragment);
         }
     }
 

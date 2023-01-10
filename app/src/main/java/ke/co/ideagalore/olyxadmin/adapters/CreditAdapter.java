@@ -1,8 +1,8 @@
 package ke.co.ideagalore.olyxadmin.adapters;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
-import ke.co.ideagalore.olyxadmin.models.Catalogue;
 import ke.co.ideagalore.olyxadmin.models.Credit;
 
 
@@ -26,9 +30,10 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder
     public interface OnItemClickListener {
         void onItemClick(Credit item);
     }
+
     private final CreditAdapter.OnItemClickListener listener;
 
-    public CreditAdapter(List<Credit> creditList,OnItemClickListener listener) {
+    public CreditAdapter(List<Credit> creditList, OnItemClickListener listener) {
         this.creditList = creditList;
         this.listener = listener;
     }
@@ -66,19 +71,29 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder
             ivCall = itemView.findViewById(R.id.iv_call);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         public void bind(final Credit credit, final CreditAdapter.OnItemClickListener listener) {
+
+            LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
+            long dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String creditDate = sdf.format(new Date(credit.getDate()));
+
             name.setText(credit.getName());
             product.setText(credit.getProduct());
-            amount.setText("KES "+credit.getAmount());
-            date.setText(credit.getDate()+" "+credit.getTime());
-            ivCall.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String phone=credit.getPhone();
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                    callIntent.setData(Uri.parse("tel:" + phone));
-                    view.getContext().startActivity(callIntent);
-                }
+            amount.setText("KES " + credit.getAmount());
+
+            if (credit.getDate() == dateToday) {
+                date.setText(credit.getTime());
+            } else {
+                date.setText(creditDate + " " + credit.getTime());
+            }
+            ivCall.setOnClickListener(view -> {
+                String phone = credit.getPhone();
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + phone));
+                view.getContext().startActivity(callIntent);
             });
             itemView.setOnClickListener(v -> listener.onItemClick(credit));
         }

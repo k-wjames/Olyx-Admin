@@ -1,13 +1,19 @@
 package ke.co.ideagalore.olyxadmin.adapters;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
@@ -27,6 +33,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -38,10 +45,24 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         }else {
             itemPosition=pos+".";
         }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String date=sdf.format(new Date(expense.getDate()));
+
+        LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
+        long dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+
         holder.expense.setText(itemPosition+" "+expense.getCategory());
         holder.description.setText(expense.getDescription());
         holder.cost.setText("KES "+expense.getPrice());
-        holder.time.setText( expense.getDate()+":"+expense.getTime());
+
+        if (expense.getDate()==dateToday) {
+            holder.time.setText(expense.getTime());
+        } else {
+            holder.time.setText( date+" "+expense.getTime());
+        }
+
+
 
     }
 

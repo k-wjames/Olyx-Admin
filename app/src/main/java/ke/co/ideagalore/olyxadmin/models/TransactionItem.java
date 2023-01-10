@@ -55,4 +55,9 @@ public class TransactionItem {
     public void setProductId(String productId) {
         this.productId = productId;
     }
+
+    public String toString()
+    {
+        return product;
+    }
 }

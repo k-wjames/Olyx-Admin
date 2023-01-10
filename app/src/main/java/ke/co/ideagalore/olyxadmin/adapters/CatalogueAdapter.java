@@ -51,20 +51,22 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView product, stock;
+        TextView product, sellingPrice, buyingPrice;
         CardView layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             product = itemView.findViewById(R.id.tv_product);
-            stock = itemView.findViewById(R.id.tv_stocked);
+            sellingPrice = itemView.findViewById(R.id.tv_selling_price);
+            buyingPrice=itemView.findViewById(R.id.tv_buying_price);
             layout = itemView.findViewById(R.id.layout);
 
         }
 
         public void bind(final Catalogue catalogue, final OnItemClickListener listener) {
             product.setText(catalogue.getProduct());
-            stock.setText("KES "+catalogue.getMarkedPrice());
+            sellingPrice.setText("KES "+catalogue.getMarkedPrice());
+            buyingPrice.setText("KES "+catalogue.getBuyingPrice());
             itemView.setOnClickListener(v -> listener.onItemClick(catalogue));
         }
     }

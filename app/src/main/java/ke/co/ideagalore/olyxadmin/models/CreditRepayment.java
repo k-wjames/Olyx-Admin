@@ -3,23 +3,24 @@ package ke.co.ideagalore.olyxadmin.models;
 public class CreditRepayment {
 
     int amount, balance;
-    String repaymentId,customer, phone, product,date, time, attendant, store;
+    String repaymentId, customer, phone, product, time, attendant, store;
+    long date;
 
     public CreditRepayment() {
     }
 
     public CreditRepayment(int amount, int balance, String repaymentId, String customer, String phone,
-                           String product, String date, String time, String attendant, String store) {
+                           String product, String time, String attendant, String store, long date) {
         this.amount = amount;
         this.balance = balance;
         this.repaymentId = repaymentId;
         this.customer = customer;
         this.phone = phone;
         this.product = product;
-        this.date = date;
         this.time = time;
         this.attendant = attendant;
         this.store = store;
+        this.date = date;
     }
 
     public int getAmount() {
@@ -70,14 +71,6 @@ public class CreditRepayment {
         this.product = product;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getTime() {
         return time;
     }
@@ -100,5 +93,13 @@ public class CreditRepayment {
 
     public void setStore(String store) {
         this.store = store;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 }

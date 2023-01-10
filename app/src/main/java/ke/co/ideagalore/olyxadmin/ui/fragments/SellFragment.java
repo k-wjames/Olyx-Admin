@@ -37,16 +37,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.SaleAdapter;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentSellBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
-import ke.co.ideagalore.olyxadmin.models.CatalogueUpdate;
 import ke.co.ideagalore.olyxadmin.models.Transaction;
 import ke.co.ideagalore.olyxadmin.models.TransactionItem;
 
@@ -62,9 +62,10 @@ public class SellFragment extends Fragment implements View.OnClickListener {
     TransactionItem transactionItem;
 
     int price, markedPrice, buyingPrice;
-    static int  stokedCatalogueItem;
+    static int stokedCatalogueItem;
 
-    String transactionType, selectedItem, dateToday, store, name, terminal, businessName;
+    String transactionType, selectedItem, store, name, terminal, businessName;
+    long dateToday;
 
     Transaction transaction;
 
@@ -82,6 +83,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         return binding.getRoot();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,9 +92,8 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         myAccessoriesArray = new ArrayList<>();
         myGasRefillArray = new ArrayList<>();
 
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        dateToday = formatter.format(date);
+        LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
+        dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
 
         getPreferenceData();
         getCatalogueData();
@@ -101,8 +102,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         binding.btnBuyGas.setOnClickListener(this);
         binding.btnBuyAccessory.setOnClickListener(this);
         binding.btnCheckOut.setOnClickListener(this);
-        binding.ivBack.setOnClickListener(this);
-        binding.ivBack.setOnClickListener(this);
 
     }
 
@@ -128,13 +127,10 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                     CommitNewTransaction commitNewTransaction = new CommitNewTransaction(this);
                     commitNewTransaction.execute(item);
                 }
+
             } else {
                 customDialogs.showSnackBar(requireActivity(), "No items have been added to the cart");
             }
-
-        } else {
-
-            Navigation.findNavController(view).navigate(R.id.mainFragment);
 
         }
     }
@@ -159,10 +155,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                             price = catalogueArrayList.get(i).getMarkedPrice();
                             String category = catalogueArrayList.get(i).getCategory();
                             int buyingPrice = catalogueArrayList.get(i).getBuyingPrice();
-                            int stockedQuantity=catalogueArrayList.get(i).getStockedQuantity();
-                            int markedPrice = catalogueArrayList.get(i).getMarkedPrice();
-                            String prodId=catalogueArrayList.get(i).getProdId();
-
+                            int stockedQuantity = catalogueArrayList.get(i).getStockedQuantity();
 
                             transactionItem = new TransactionItem();
                             if (category.equals("New Gas")) {
@@ -171,7 +164,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                                 transactionItem.setProduct(prod);
                                 transactionItem.setBuyingPrice(buyingPrice);
                                 transactionItem.setAvailableStock(stockedQuantity);
-                                transactionItem.setProductId(prodId);
                                 myGasArray.add(transactionItem);
 
                             } else if (category.equals("Accessories")) {
@@ -179,7 +171,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                                 transactionItem.setProduct(prod);
                                 transactionItem.setBuyingPrice(buyingPrice);
                                 transactionItem.setAvailableStock(stockedQuantity);
-                                transactionItem.setProductId(prodId);
                                 myAccessoriesArray.add(transactionItem);
 
                             } else {
@@ -187,7 +178,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                                 transactionItem.setProduct(prod);
                                 transactionItem.setBuyingPrice(buyingPrice);
                                 transactionItem.setAvailableStock(stockedQuantity);
-                                transactionItem.setProductId(prodId);
                                 myGasRefillArray.add(transactionItem);
                             }
                         }
@@ -237,7 +227,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 TransactionItem item = (TransactionItem) spinner.getSelectedItem();
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
-                stokedCatalogueItem=item.getAvailableStock();
+                stokedCatalogueItem = item.getAvailableStock();
                 edtPrice.setText(String.valueOf(markedPrice));
             }
 
@@ -330,7 +320,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 TransactionItem item = (TransactionItem) spinner.getSelectedItem();
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
-                stokedCatalogueItem=item.getAvailableStock();
+                stokedCatalogueItem = item.getAvailableStock();
                 edtPrice.setText(markedPrice + "");
             }
 
@@ -410,7 +400,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
         Spinner spinner = dialog.findViewById(R.id.spinner_product);
 
-        ArrayAdapter<TransactionItem> arrayAdapter = new ArrayAdapter<TransactionItem>(getActivity(), android.R.layout.simple_spinner_item, myAccessoriesArray);
+        ArrayAdapter<TransactionItem> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, myAccessoriesArray);
         arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -420,7 +410,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 TransactionItem item = (TransactionItem) spinner.getSelectedItem();
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
-                stokedCatalogueItem=item.getAvailableStock();
+                stokedCatalogueItem = item.getAvailableStock();
                 edtPrice.setText(markedPrice + "");
             }
 
@@ -514,6 +504,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                         if (task.isSuccessful()) {
 
                             dialogs.dismissProgressDialog();
+                            myTransactionArray.clear();
 
                         }
                     }

@@ -1,24 +1,25 @@
 package ke.co.ideagalore.olyxadmin.models;
 
 public class Credit {
-    String product,name, phone, creditId, date, time, attendant, store;
+    String product, name, phone, creditId, time, attendant, store;
     int amount, quantity;
+    long date;
 
     public Credit() {
     }
 
-    public Credit(String product, String name, String phone, String creditId, String date, String time,
-                  String attendant, String store, int amount, int quantity) {
+    public Credit(String product, String name, String phone, String creditId, String time,
+                  String attendant, String store, int amount, int quantity, long date) {
         this.product = product;
         this.name = name;
         this.phone = phone;
         this.creditId = creditId;
-        this.date = date;
         this.time = time;
         this.attendant = attendant;
         this.store = store;
         this.amount = amount;
         this.quantity = quantity;
+        this.date = date;
     }
 
     public String getProduct() {
@@ -51,14 +52,6 @@ public class Credit {
 
     public void setCreditId(String creditId) {
         this.creditId = creditId;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getTime() {
@@ -99,5 +92,13 @@ public class Credit {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 }

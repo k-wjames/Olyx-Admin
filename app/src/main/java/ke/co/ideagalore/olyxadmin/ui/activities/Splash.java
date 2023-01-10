@@ -42,6 +42,7 @@ public class Splash extends AppCompatActivity {
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(getApplicationContext(), Onboard.class));
         }else   {
+            //startActivity(new Intent(getApplicationContext(), SubscriptionsActivity.class));
             startActivity(new Intent(getApplicationContext(), Home.class));
         }
         finish();

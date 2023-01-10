@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +16,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,21 +39,19 @@ import java.util.List;
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.CreditAdapter;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
-import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentCreditBinding;
 import ke.co.ideagalore.olyxadmin.models.Credit;
 import ke.co.ideagalore.olyxadmin.models.CreditRepayment;
-import ke.co.ideagalore.olyxadmin.models.Transaction;
 
 public class CreditFragment extends Fragment implements View.OnClickListener {
 
     FragmentCreditBinding binding;
 
-    ValidateFields validator = new ValidateFields();
-
     List<Credit> creditList = new ArrayList<>();
 
-    String dateToday, time, store, terminal, username;
+    String time, store, terminal, username;
+
+    long dateToday;
 
     CustomDialogs customDialogs = new CustomDialogs();
 
@@ -66,13 +65,13 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
         return binding.getRoot();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        dateToday = formatter.format(date);
+        LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
+        dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
 
         DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss a");
         time = timeFormat.format(new Date());
@@ -95,15 +94,12 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
         });
 
         binding.fabCredit.setOnClickListener(this);
-        binding.ivBack.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if (view == binding.fabCredit) {
             showCreditDialog();
-        } else {
-            Navigation.findNavController(view).navigate(R.id.mainFragment);
         }
     }
 
@@ -129,8 +125,8 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
 
                     Credit credit = creditSnapshot.getValue(Credit.class);
                     assert credit != null;
-                    if (credit.getAmount()>0)
-                    creditList.add(0, credit);
+                    if (credit.getAmount() > 0)
+                        creditList.add(0, credit);
                 }
 
                 displayData(creditList);
@@ -154,7 +150,7 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
             int quantity = item.getQuantity();
             String name = item.getName();
             String product = item.getProduct();
-            String phone=item.getPhone();
+            String phone = item.getPhone();
             showRepayCreditDialog(id, amount, quantity, name, product, phone);
 
         });
@@ -180,19 +176,19 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
 
         EditText receivedAmount = myDialog.findViewById(R.id.edt_amount_received);
 
-        TextView cancel=myDialog.findViewById(R.id.tv_cancel);
+        TextView cancel = myDialog.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(view -> myDialog.dismiss());
 
-        Button updateCredit=myDialog.findViewById(R.id.btn_update_credit);
+        Button updateCredit = myDialog.findViewById(R.id.btn_update_credit);
         updateCredit.setOnClickListener(view -> {
             if (validateEditTextFields(receivedAmount)) {
                 int received = Integer.parseInt(receivedAmount.getText().toString().trim());
-                int creditBalance=amount-received;
+                int creditBalance = amount - received;
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Creditors");
                 reference.child(id).child("amount").setValue(creditBalance).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
 
-                        RecordCreditPaid(name,phone,product,received,creditBalance, myDialog);
+                        RecordCreditPaid(name, phone, product, received, creditBalance, myDialog);
 
                     }
                 });
@@ -204,8 +200,8 @@ public class CreditFragment extends Fragment implements View.OnClickListener {
     private void RecordCreditPaid(String name, String phone, String product, int received, int creditBalance, Dialog myDialog) {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Repayments");
-        String key=reference.push().getKey();
-        CreditRepayment repayment=new CreditRepayment();
+        String key = reference.push().getKey();
+        CreditRepayment repayment = new CreditRepayment();
         repayment.setRepaymentId(key);
         repayment.setCustomer(name);
         repayment.setAttendant(username);

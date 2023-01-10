@@ -1,5 +1,6 @@
 package ke.co.ideagalore.olyxadmin.adapters;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,9 +8,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +36,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -41,20 +46,17 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         holder.price.setText("Received : KES "+transaction.getTotalPrice());
         holder.store.setText(transaction.getStore());
 
-        if (getDate().equals(transaction.getDate())) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String date=sdf.format(new Date(transaction.getDate()));
+
+        LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
+        long dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+
+        if (transaction.getDate()==dateToday) {
             holder.time.setText(transaction.getTime());
         } else {
-            holder.time.setText(transaction.getDate() + " " + transaction.getTime());
+            holder.time.setText(date + " " + transaction.getTime());
         }
-
-    }
-
-    String getDate() {
-        String dateString;
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        dateString = formatter.format(date);
-        return dateString;
 
     }
 

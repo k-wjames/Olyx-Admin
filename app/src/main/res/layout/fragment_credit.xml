@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:id="@+id/layout"
     android:padding="10dp"
     tools:context=".ui.fragments.CreditFragment">
 
@@ -15,37 +15,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/layer_one"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_dash"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:background="@drawable/iv_back_background"
-                android:src="@drawable/ic_back"
-                app:tint="@color/yellow" />
-
-
-            <TextView
-                android:id="@+id/tv_dash"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/lato"
-                android:text="@string/credit_sales"
-                android:textColor="@color/text"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
+            android:layout_centerInParent="true"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/lato"
+            android:text="@string/credit_sales"
+            android:textColor="@color/text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -95,12 +75,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_creditors"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/layer_main"
-        android:layout_marginTop="15dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="60dp" />
+        android:layout_marginBottom="0dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_credit"
@@ -110,7 +90,7 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/accent"
-        app:elevation="0dp"
+        app:elevation="1dp"
         app:tint="@color/text" />
 
 </RelativeLayout>

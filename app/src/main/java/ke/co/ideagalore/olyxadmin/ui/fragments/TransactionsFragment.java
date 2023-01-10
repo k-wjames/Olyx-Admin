@@ -69,14 +69,11 @@ public class TransactionsFragment extends Fragment implements View.OnClickListen
             }
         });
 
-        binding.ivBack.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view == binding.ivBack) {
-            Navigation.findNavController(view).navigate(R.id.mainFragment);
-        }
+
     }
 
     private void getPreferenceData() {

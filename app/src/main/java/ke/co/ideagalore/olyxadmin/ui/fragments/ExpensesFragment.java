@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -33,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +52,9 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener {
     FragmentExpensesBinding binding;
     CustomDialogs customDialogs = new CustomDialogs();
     ValidateFields validator = new ValidateFields();
-    String terminal, dateToday, selectedItem;
+    String terminal, selectedItem;
+
+    long dateToday;
 
     List<Expense> expenseList = new ArrayList<>();
 
@@ -62,14 +68,14 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener {
         return binding.getRoot();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getPreferenceData();
 
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        dateToday = formatter.format(date);
+        LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
+        dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
 
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
