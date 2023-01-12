@@ -113,6 +113,14 @@
 
             </LinearLayout>
 
+            <View
+                android:id="@+id/viewmonth"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/text"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
