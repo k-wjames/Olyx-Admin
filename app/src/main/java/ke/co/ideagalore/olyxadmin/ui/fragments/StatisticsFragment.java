@@ -17,10 +17,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +42,18 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
     private DatabaseReference reference;
 
-    long dateToday;
+    long dateToday, firstDayOfWeek, firstDayOfMonth;
 
-    double profits, netProfit;
+    double profits, netProfit, weeklyProfit, weeklyNetProfit, monthlyProfit, monthlyNetProfit;
 
     List<Transaction> transactionList = new ArrayList<>();
     List<Expense> expenseList = new ArrayList<>();
+
+    List<Transaction> weeklyTransactionList = new ArrayList<>();
+    List<Expense> weeklyExpenseList = new ArrayList<>();
+
+    List<Transaction> monthlyTransactionList = new ArrayList<>();
+    List<Expense> monthlyExpenseList = new ArrayList<>();
 
     StatisticsViewModel viewModel;
 
@@ -66,6 +76,13 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
         dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
 
+        LocalDateTime firstOfWeek = LocalDateTime.now().with(ChronoField.DAY_OF_WEEK, 1).toLocalDate().atStartOfDay();
+        LocalDateTime firstOfMonth = LocalDateTime.now().with(ChronoField.DAY_OF_MONTH, 1).toLocalDate().atStartOfDay();
+
+        firstDayOfWeek = firstOfWeek.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        firstDayOfMonth = firstOfMonth.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+
         auth = FirebaseAuth.getInstance();
         terminalId = auth.getUid();
 
@@ -85,33 +102,31 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if (view == binding.tvToday) {
-            binding.viewToday.setVisibility(View.VISIBLE);
-            binding.viewThisWeek.setVisibility(View.GONE);
-            binding.viewThisMonth.setVisibility(View.GONE);
-            binding.viewCustom.setVisibility(View.GONE);
 
             fetchTodayData();
 
         } else if (view == binding.tvThisWeek) {
-            binding.viewToday.setVisibility(View.GONE);
-            binding.viewThisWeek.setVisibility(View.VISIBLE);
-            binding.viewThisMonth.setVisibility(View.GONE);
-            binding.viewCustom.setVisibility(View.GONE);
+
+            fetchWeeklyData();
+
         } else if (view == binding.tvThisMonth) {
-            binding.viewToday.setVisibility(View.GONE);
-            binding.viewThisWeek.setVisibility(View.GONE);
-            binding.viewThisMonth.setVisibility(View.VISIBLE);
-            binding.viewCustom.setVisibility(View.GONE);
-        }else if (view==binding.tvCustom){
-            binding.viewToday.setVisibility(View.GONE);
-            binding.viewThisWeek.setVisibility(View.GONE);
-            binding.viewThisMonth.setVisibility(View.GONE);
-            binding.viewCustom.setVisibility(View.VISIBLE);
+
+            fetchMonthlyData();
+
+        } else if (view == binding.tvCustom) {
+            fetchCustomPeriodData();
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void fetchTodayData() {
+
+        binding.viewToday.setVisibility(View.VISIBLE);
+        binding.viewThisWeek.setVisibility(View.GONE);
+        binding.viewThisMonth.setVisibility(View.GONE);
+        binding.viewCustom.setVisibility(View.GONE);
+
+        clearViews();
 
         viewModel.getTodaySales().observe(requireActivity(), salesToday -> {
             if (salesToday != null) binding.tvSales.setText("KES " + salesToday);
@@ -146,9 +161,114 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         getTodayNetProfit();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void fetchWeeklyData() {
+
+        binding.viewToday.setVisibility(View.GONE);
+        binding.viewThisWeek.setVisibility(View.VISIBLE);
+        binding.viewThisMonth.setVisibility(View.GONE);
+        binding.viewCustom.setVisibility(View.GONE);
+
+        clearViews();
+
+        getWeeklyNetProfit();
+
+        viewModel.getWeeklySales().observe(requireActivity(), weeklySales -> {
+            if (weeklySales != null) binding.tvSales.setText("KES " + weeklySales);
+        });
+
+        viewModel.getWeeklyTransactions().observe(requireActivity(), weeklyTransactions -> {
+            if (weeklyTransactions != null)
+                binding.tvTransactions.setText(String.valueOf(weeklyTransactions));
+        });
+
+        viewModel.getWeeklyNewGasSales().observe(requireActivity(), weeklyGasSales -> {
+            if (weeklyGasSales != null) binding.tvNewGasTotals.setText("KES " + weeklyGasSales);
+        });
+
+        viewModel.getWeeklyGasRefills().observe(requireActivity(), weeklyGasRefills -> {
+            if (weeklyGasRefills != null) binding.tvRefillTotals.setText("KES " + weeklyGasRefills);
+        });
+
+        viewModel.getWeeklyAccessorySales().observe(requireActivity(), weeklyAccessorySales -> {
+            if (weeklyAccessorySales != null)
+                binding.tvTotalAccessoriesSales.setText("KES " + weeklyAccessorySales);
+        });
+
+        viewModel.getTotalWeeklyExpenditure().observe(requireActivity(), weeklyExpenditure -> {
+            if (weeklyExpenditure != null) binding.tvExpenses.setText("KES " + weeklyExpenditure);
+        });
+
+        viewModel.getWeeklyTotalCreditSales().observe(requireActivity(), weeklyCreditSales -> {
+            if (weeklyCreditSales != null)
+                binding.tvCreditSales.setText("KES " + weeklyCreditSales);
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void fetchMonthlyData() {
+
+        binding.viewToday.setVisibility(View.GONE);
+        binding.viewThisWeek.setVisibility(View.GONE);
+        binding.viewThisMonth.setVisibility(View.VISIBLE);
+        binding.viewCustom.setVisibility(View.GONE);
+
+        clearViews();
+
+        getMonthlyNetProfit();
+
+        viewModel.getMonthlySales().observe(requireActivity(), monthlySales -> {
+            if (monthlySales != null) binding.tvSales.setText("KES " + monthlySales);
+
+        });
+
+        viewModel.getMonthlyTransactions().observe(requireActivity(), monthlyTransactions -> {
+            if (monthlyTransactions!=null) binding.tvTransactions.setText(String.valueOf(monthlyTransactions));
+        });
+
+        viewModel.getMonthlyNewGasSales().observe(requireActivity(),monthlyGasSales->{
+            if (monthlyGasSales!=null) binding.tvNewGasTotals.setText("KES "+monthlyGasSales);
+        });
+
+        viewModel.getMonthlyGasRefills().observe(requireActivity(), monthlyGasRefills->{
+            if (monthlyGasRefills!=null) binding.tvRefillTotals.setText("KES "+monthlyGasRefills);
+        });
+
+        viewModel.getMonthlyAccessorySales().observe(requireActivity(), monthlyAccessorySales->{
+            if (monthlyAccessorySales!=null) binding.tvTotalAccessoriesSales.setText("KES "+monthlyAccessorySales);
+        });
+
+        viewModel.getTotalMonthlyExpenditure().observe(requireActivity(), monthlyExpenditure->{
+            if (monthlyExpenditure!=null) binding.tvExpenses.setText(String.valueOf(monthlyExpenditure));
+        });
+
+        viewModel.getMonthlyTotalCreditSales().observe(requireActivity(), monthlyCreditSales->{
+            if (monthlyCreditSales!=null) binding.tvCreditSales.setText(String.valueOf(monthlyCreditSales));
+        });
+    }
+
+    private void fetchCustomPeriodData() {
+        binding.viewToday.setVisibility(View.GONE);
+        binding.viewThisWeek.setVisibility(View.GONE);
+        binding.viewThisMonth.setVisibility(View.GONE);
+        binding.viewCustom.setVisibility(View.VISIBLE);
+
+        clearViews();
+    }
+
     private void getTodayNetProfit() {
         getTodayProfit();
         getTodayExpenditure();
+    }
+
+    private void getWeeklyNetProfit() {
+        getWeeklyProfit();
+        getWeeklyExpenditure();
+    }
+
+    private void getMonthlyNetProfit() {
+        getMonthlyProfit();
+        getMonthlyExpenditure();
     }
 
     private void getTodayProfit() {
@@ -219,6 +339,157 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
             }
         });
     }
+
+    private void getWeeklyProfit() {
+
+        DatabaseReference ref = reference.child("Sales");
+
+        Query query = ref.orderByChild("date").startAt(firstDayOfWeek).endAt(dateToday);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                weeklyTransactionList.clear();
+
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
+                    Transaction transaction = transactionSnapshot.getValue(Transaction.class);
+
+                    weeklyTransactionList.add(transaction);
+
+                    int totalWeeklyProfit = 0;
+
+                    for (Transaction item : weeklyTransactionList) {
+                        totalWeeklyProfit = totalWeeklyProfit + item.getProfit();
+                        weeklyProfit = totalWeeklyProfit;
+                        binding.tvNetProfits.setText(String.valueOf(weeklyProfit));
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getWeeklyExpenditure() {
+
+        DatabaseReference ref = reference.child("Expenditure");
+        Query query = ref.orderByChild("date").startAt(firstDayOfWeek).endAt(dateToday);
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                weeklyExpenseList.clear();
+
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
+
+                    Expense expense = transactionSnapshot.getValue(Expense.class);
+                    weeklyExpenseList.add(expense);
+                    int totalWeeklyExpenses = 0;
+                    for (Expense myExpense : weeklyExpenseList) {
+                        totalWeeklyExpenses = totalWeeklyExpenses + myExpense.getPrice();
+                        weeklyNetProfit = weeklyProfit - totalWeeklyExpenses;
+                        binding.tvNetProfits.setText("KES " + weeklyNetProfit);
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getMonthlyProfit() {
+
+        DatabaseReference ref = reference.child("Sales");
+        Query query = ref.orderByChild("date").startAt(firstDayOfMonth).endAt(dateToday);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                monthlyTransactionList.clear();
+
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
+                    Transaction transaction = transactionSnapshot.getValue(Transaction.class);
+                    monthlyTransactionList.add(transaction);
+
+                    int totalMonthlyProfit = 0;
+
+                    for (Transaction item : monthlyTransactionList) {
+                        totalMonthlyProfit = totalMonthlyProfit + item.getProfit();
+                        monthlyProfit = totalMonthlyProfit;
+                        binding.tvNetProfits.setText(String.valueOf(monthlyProfit));
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getMonthlyExpenditure() {
+
+        DatabaseReference ref = reference.child("Expenditure");
+        Query query = ref.orderByChild("date").startAt(firstDayOfMonth).endAt(dateToday);
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                monthlyExpenseList.clear();
+
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
+
+                    Expense expense = transactionSnapshot.getValue(Expense.class);
+                    monthlyExpenseList.add(expense);
+                    int totalMonthlyExpenses = 0;
+                    for (Expense myExpense : monthlyExpenseList) {
+                        totalMonthlyExpenses = totalMonthlyExpenses + myExpense.getPrice();
+                        monthlyNetProfit = monthlyProfit - totalMonthlyExpenses;
+                        binding.tvNetProfits.setText("KES " + monthlyNetProfit);
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void clearViews() {
+        String empty = "KES 00";
+        binding.tvSales.setText(empty);
+        binding.tvTransactions.setText("00");
+        binding.tvExpenses.setText(empty);
+        binding.tvCreditSales.setText(empty);
+        binding.tvNewGasTotals.setText(empty);
+        binding.tvRefillTotals.setText(empty);
+        binding.tvTotalAccessoriesSales.setText(empty);
+        binding.tvNetProfits.setText(empty);
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

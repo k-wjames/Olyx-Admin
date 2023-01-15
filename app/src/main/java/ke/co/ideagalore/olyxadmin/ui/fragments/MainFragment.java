@@ -93,6 +93,22 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
 
         getPreferenceData();
+        getTodayData();
+
+        binding.tvViewTransactions.setOnClickListener(this);
+        binding.btnSales.setOnClickListener(this);
+        binding.btnExpenditure.setOnClickListener(this);
+        binding.cvTransact.setOnClickListener(this);
+        binding.cvCatalogue.setOnClickListener(this);
+        binding.btnAddExpense.setOnClickListener(this);
+        binding.btnAddCredit.setOnClickListener(this);
+
+        binding.ivFilter.setOnClickListener(this);
+
+    }
+
+    private void getTodayData() {
+        getDaysNetProfit();
 
         viewModel = new ViewModelProvider(this).get(FragmentMainViewModel.class);
         viewModel.getSales().observe(requireActivity(), sales -> {
@@ -130,18 +146,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         viewModel.getCreditPaid().observe(requireActivity(), clearedCredit -> {
             if (clearedCredit != null) binding.tvCreditRepayed.setText("KES " + clearedCredit);
         });
-
-        getDaysNetProfit();
-
-        binding.tvViewTransactions.setOnClickListener(this);
-        binding.btnSales.setOnClickListener(this);
-        binding.btnExpenditure.setOnClickListener(this);
-        binding.cvTransact.setOnClickListener(this);
-        binding.cvCatalogue.setOnClickListener(this);
-        binding.btnAddExpense.setOnClickListener(this);
-        binding.btnAddCredit.setOnClickListener(this);
-
-        binding.ivFilter.setOnClickListener(this);
 
     }
 
@@ -369,7 +373,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        getDaysNetProfit();
         getPreferenceData();
+        getTodayData();
     }
 }
