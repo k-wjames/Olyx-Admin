@@ -65,15 +65,13 @@ public class AddCatalogueFragment extends Fragment implements View.OnClickListen
         binding.spinnerCategory.setAdapter(arrayAdapter);
 
         binding.btnAddItem.setOnClickListener(this);
-        binding.ivBack.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if (view == binding.btnAddItem) {
             saveNewCategoryItem();
-        } else
-            Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
+        }
     }
 
     public void getPreferenceData() {

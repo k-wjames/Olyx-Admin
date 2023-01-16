@@ -91,16 +91,12 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-
-        binding.ivBack.setOnClickListener(this);
         binding.ivAdd.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view == binding.ivBack) {
-            Navigation.findNavController(view).navigate(R.id.mainFragment);
-        } else if (view == binding.ivAdd) {
+        if (view == binding.ivAdd) {
             showAddExpenseDialog();
         }
     }

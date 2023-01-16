@@ -4,14 +4,16 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
-    app:cardCornerRadius="5dp">
+    android:layout_marginStart="1dp"
+    android:layout_marginEnd="1dp"
+    android:layout_marginBottom="1dp"
+    app:cardCornerRadius="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp"
+        android:padding="10dp"
         android:gravity="center">
 
         <TextView

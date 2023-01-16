@@ -45,6 +45,7 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -81,7 +82,7 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.ViewHolder
             String creditDate = sdf.format(new Date(credit.getDate()));
 
             name.setText(credit.getName());
-            product.setText(credit.getProduct());
+            product.setText("Product: "+credit.getProduct());
             amount.setText("KES " + credit.getAmount());
 
             if (credit.getDate() == dateToday) {

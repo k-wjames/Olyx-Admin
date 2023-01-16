@@ -3,11 +3,9 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +38,7 @@ import java.util.Locale;
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.ExpenseAdapter;
 import ke.co.ideagalore.olyxadmin.adapters.TransactionsAdapter;
-import ke.co.ideagalore.olyxadmin.common.MySharedPreferences;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentMainBinding;
-import ke.co.ideagalore.olyxadmin.models.Credit;
-import ke.co.ideagalore.olyxadmin.models.CreditRepayment;
 import ke.co.ideagalore.olyxadmin.models.Expense;
 import ke.co.ideagalore.olyxadmin.models.Transaction;
 import ke.co.ideagalore.olyxadmin.viewmodels.FragmentMainViewModel;
@@ -93,6 +88,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
 
         getPreferenceData();
+        getDaysNetProfit();
         getTodayData();
 
         binding.tvViewTransactions.setOnClickListener(this);
@@ -108,6 +104,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getTodayData() {
+
         getDaysNetProfit();
 
         viewModel = new ViewModelProvider(this).get(FragmentMainViewModel.class);
@@ -152,7 +149,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private void getDaysNetProfit() {
 
         getDaysProfit(terminalId);
-        getTodayExpenditure(terminalId);
+        //getTodayExpenditure(terminalId);
 
     }
 
@@ -288,6 +285,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                             totalProfit = totalProfit + item.getProfit();
                             profits = totalProfit;
 
+                            getTodayExpenditure(terminalId);
+
                         }
                     }
 
@@ -321,9 +320,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         for (Expense myExpense : expenseList) {
                             int currentExpense = myExpense.getPrice();
                             totalExpenses = totalExpenses + currentExpense;
-                            netProfit = profits - totalExpenses;
                             binding.tvExpenses.setText("KES " + totalExpenses);
-                            binding.tvNetProfits.setText("KES " + netProfit);
+
+                            if (totalExpenses == 0) {
+                                binding.tvNetProfits.setText("KES " + profits);
+                            } else {
+                                netProfit = profits - totalExpenses;
+                                binding.tvNetProfits.setText("KES " + netProfit);
+                            }
 
                         }
 
@@ -374,6 +378,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         getPreferenceData();
+        getDaysNetProfit();
         getTodayData();
     }
 }
