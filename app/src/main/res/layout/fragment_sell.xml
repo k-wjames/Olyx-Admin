@@ -142,7 +142,7 @@
             android:padding="10dp"
             android:text="@string/check_out"
             android:textAllCaps="false"
-            android:textColor="@color/text"
+            android:textColor="@color/black"
             android:textStyle="bold"
             app:backgroundTint="@color/accent" />
 

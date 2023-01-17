@@ -5,6 +5,9 @@
     <color name="yellow">#FFFD01</color>
     <color name="lighter">#95DDDFDF</color>
     <color name="text">#202020</color>
+    <color name="edtBackground">@color/background</color>
+    <color name="cardLight">@color/white</color>
+    <color name="cardDark">@color/black</color>
     <color name="text_light">#757575</color>
     <color name="accent">@color/yellow</color>
     <color name="green">#4CAF50</color>

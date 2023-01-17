@@ -125,7 +125,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            app:cardBackgroundColor="@color/text"
+            app:cardBackgroundColor="@color/cardDark"
             app:cardCornerRadius="5dp">
 
             <RelativeLayout
@@ -180,7 +180,8 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardBackgroundColor="@color/cardLight">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -223,7 +224,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardBackgroundColor="@color/cardLight">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -266,7 +268,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardBackgroundColor="@color/cardLight">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -317,7 +320,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -375,7 +379,7 @@
                             android:fontFamily="@font/lato"
                             android:text="Add an expense"
                             android:textAllCaps="false"
-                            android:textColor="@color/text"
+                            android:textColor="@color/black"
                             android:textStyle="bold"
                             app:backgroundTint="@color/yellow" />
 
@@ -395,7 +399,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -453,7 +458,7 @@
                             android:fontFamily="@font/lato"
                             android:text="Add new credit sale"
                             android:textAllCaps="false"
-                            android:textColor="@color/text"
+                            android:textColor="@color/black"
                             android:textStyle="bold"
                             app:backgroundTint="@color/yellow" />
 
@@ -472,7 +477,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -588,30 +594,12 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            app:cardCornerRadius="5dp">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_transact"
@@ -637,7 +625,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:src="@drawable/ic_sell"
-                        app:tint="@color/text" />
+                        app:tint="@color/black" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -645,7 +633,7 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/lato"
                         android:text="Add a new sale"
-                        android:textColor="@color/text"
+                        android:textColor="@color/black"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -660,7 +648,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/text"
+                app:cardBackgroundColor="@color/cardDark"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout

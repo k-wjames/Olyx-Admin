@@ -28,6 +28,13 @@ public class MySharedPreferences {
         editor.commit();
     }
 
+    public void updateStoreName(Context context, String store){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("Terminal", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("business", store);
+
+    }
+
     public void getPreferenceData(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("Terminal", MODE_PRIVATE);
         business = sharedPreferences.getString("business", null);

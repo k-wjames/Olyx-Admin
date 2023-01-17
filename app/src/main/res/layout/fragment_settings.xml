@@ -15,46 +15,45 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_proprietor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
-            android:text="Account"
+            android:text="Hi"
             android:textColor="@color/text"
-            android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="40dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/lato"
+            android:text="Overview"
+            android:textColor="@color/text"/>
 
         <TextView
             android:id="@+id/tv_business"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_gravity="start"
             android:fontFamily="@font/lato"
             android:text="Lynx Gas Point"
             android:textColor="@color/text"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/lato"
-            android:text="by"
-            android:textColor="@color/text"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_proprietor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="start"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lato"
             android:textColor="@color/text"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
 
         <TextView
@@ -100,7 +99,8 @@
             android:layout_marginStart="1dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="1dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -190,7 +190,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -271,7 +272,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="5dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <RelativeLayout
                 android:layout_width="match_parent"

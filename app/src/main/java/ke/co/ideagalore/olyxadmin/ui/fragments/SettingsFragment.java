@@ -199,8 +199,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         business = sharedPreferences.getString("business", null);
         terminal = sharedPreferences.getString("terminal", null);
         name = sharedPreferences.getString("name", null);
-        binding.tvBusiness.setText(business);
-        binding.tvProprietor.setText(name);
+        binding.tvBusiness.setText("Enterprise:\n"+business);
+        binding.tvProprietor.setText("Hi "+name);
         binding.tvTerminal.setText(terminal);
 
     }

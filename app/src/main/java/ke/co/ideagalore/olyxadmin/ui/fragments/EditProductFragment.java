@@ -70,7 +70,6 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         binding.ivDelete.setOnClickListener(this);
-        binding.ivBack.setOnClickListener(this);
         binding.btnEditItem.setOnClickListener(this);
     }
 
@@ -79,9 +78,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         if (view == binding.ivDelete) {
             deleteProduct(productId, view);
-        } else if (view == binding.ivBack) {
-            Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
-        } else {
+        }  else {
             updateItemData(productId);
         }
     }

@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
+import ke.co.ideagalore.olyxadmin.common.MySharedPreferences;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentEditStoreBinding;
 import ke.co.ideagalore.olyxadmin.models.Stores;
@@ -29,6 +30,7 @@ public class EditStoreFragment extends Fragment implements View.OnClickListener 
     String storeName, storeId, storeLocation, terminal;
     ValidateFields validator = new ValidateFields();
     CustomDialogs customDialogs = new CustomDialogs();
+    MySharedPreferences preferences=new MySharedPreferences();
 
     public EditStoreFragment() {
     }
@@ -47,7 +49,6 @@ public class EditStoreFragment extends Fragment implements View.OnClickListener 
         getBundleData();
         getPreferenceData();
         binding.btnEditStore.setOnClickListener(this);
-        binding.ivBack.setOnClickListener(this);
         binding.tvDeleteStore.setOnClickListener(this);
     }
 
@@ -110,9 +111,6 @@ public class EditStoreFragment extends Fragment implements View.OnClickListener 
                     Navigation.findNavController(view).navigate(R.id.settingsFragment);
                 }
             }).addOnFailureListener(e -> customDialogs.showSnackBar(getActivity(), e.getMessage()));
-        }
-        else if (view==binding.ivBack){
-            Navigation.findNavController(view).popBackStack(R.id.settingsFragment, true);
         }
 
     }

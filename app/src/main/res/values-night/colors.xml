@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">@color/light</color>
-    <color name="light">#F7F7F7</color>
+    <color name="background">#222831</color>
+    <color name="light">@color/lighter</color>
     <color name="yellow">#FFFD01</color>
     <color name="lighter">#95DDDFDF</color>
-    <color name="text">#202020</color>
+    <color name="text">@color/light</color>
+    <color name="edtBackground">@color/background</color>
+    <color name="cardLight">#30475E</color>
+    <color name="cardDark">@color/black</color>
     <color name="text_light">#757575</color>
     <color name="accent">@color/yellow</color>
     <color name="green">#4CAF50</color>

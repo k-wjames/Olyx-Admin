@@ -15,21 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:background="@drawable/iv_back_background"
-                android:src="@drawable/ic_back"
-                app:tint="@color/yellow" />
-
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
@@ -39,9 +24,8 @@
                 android:text="Edit store"
                 android:textColor="@color/text"
                 android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
+                android:textStyle="bold"
+                android:layout_marginTop="40dp"/>
 
     </LinearLayout>
 
@@ -50,7 +34,8 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="5dp"
         android:layout_margin="5dp"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/cardLight">
 
 
         <LinearLayout
@@ -140,7 +125,7 @@
                     android:text="@string/submit_changes"
                     android:textAllCaps="false"
                     android:textColor="@color/yellow"
-                    app:backgroundTint="@color/text" />
+                    app:backgroundTint="@color/black" />
 
             </RelativeLayout>
 

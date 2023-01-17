@@ -542,4 +542,11 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         businessName = sharedPreferences.getString("business", null);
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        myTransactionArray.clear();
+
+    }
 }
