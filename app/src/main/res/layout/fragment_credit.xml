@@ -35,7 +35,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_view"
@@ -89,8 +90,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/accent"
+        app:backgroundTint="@color/buttonBg"
         app:elevation="1dp"
-        app:tint="@color/text" />
+        app:tint="@color/black" />
 
 </RelativeLayout>

@@ -4,6 +4,8 @@
     <color name="light">#F7F7F7</color>
     <color name="yellow">#FFFD01</color>
     <color name="lighter">#95DDDFDF</color>
+    <color name="buttonBg">@color/accentThree</color>
+    <!--<color name="buttonBg">@color/yellow</color>-->
     <color name="text">#202020</color>
     <color name="edtBackground">@color/background</color>
     <color name="cardLight">@color/white</color>

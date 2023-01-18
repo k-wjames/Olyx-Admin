@@ -142,7 +142,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/lato"
                     android:text="Net profit"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_light"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -157,7 +157,7 @@
                     android:fontFamily="@font/lato"
                     android:gravity="end|center"
                     android:text="KES 00"
-                    android:textColor="@color/yellow"
+                    android:textColor="@color/buttonBg"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -381,7 +381,7 @@
                             android:textAllCaps="false"
                             android:textColor="@color/black"
                             android:textStyle="bold"
-                            app:backgroundTint="@color/yellow" />
+                            app:backgroundTint="@color/buttonBg" />
 
                     </LinearLayout>
 
@@ -460,7 +460,7 @@
                             android:textAllCaps="false"
                             android:textColor="@color/black"
                             android:textStyle="bold"
-                            app:backgroundTint="@color/yellow" />
+                            app:backgroundTint="@color/buttonBg" />
 
                     </LinearLayout>
 
@@ -614,7 +614,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/yellow"
+                    android:background="@color/buttonBg"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:padding="15dp">
@@ -663,7 +663,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="Stocked items"
-                        android:textColor="@color/yellow"
+                        android:textColor="@color/buttonBg"
                         android:textStyle="bold" />
 
                 </LinearLayout>

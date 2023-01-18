@@ -34,13 +34,12 @@
 
             <ImageView
                 android:id="@+id/iv_delete"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/iv_back_background"
                 android:src="@drawable/ic_delete"
-                app:tint="@color/yellow" />
+                app:tint="@color/buttonBg" />
 
 
         </RelativeLayout>
@@ -49,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -200,8 +200,8 @@
                         android:padding="10dp"
                         android:text="@string/submit_changes"
                         android:textAllCaps="false"
-                        android:textColor="@color/yellow"
-                        app:backgroundTint="@color/text" />
+                        android:textColor="@color/buttonBg"
+                        app:backgroundTint="@color/black" />
 
 
                 </LinearLayout>

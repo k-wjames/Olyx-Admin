@@ -144,7 +144,7 @@
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:backgroundTint="@color/accent" />
+            app:backgroundTint="@color/buttonBg" />
 
     </RelativeLayout>
 

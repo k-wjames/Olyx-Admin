@@ -89,7 +89,7 @@
                 android:background="@drawable/edt_background"
                 android:hint="store location"
                 android:inputType="textCapWords"
-                android:textColorHint="@color/text"
+                android:textColorHint="@color/text_light"
                 android:textCursorDrawable="@null"
                 android:textSize="14sp"
                 android:layout_gravity="start"/>
@@ -124,7 +124,7 @@
                     android:padding="10dp"
                     android:text="@string/submit_changes"
                     android:textAllCaps="false"
-                    android:textColor="@color/yellow"
+                    android:textColor="@color/buttonBg"
                     app:backgroundTint="@color/black" />
 
             </RelativeLayout>

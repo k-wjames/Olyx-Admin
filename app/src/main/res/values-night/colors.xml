@@ -4,9 +4,11 @@
     <color name="light">@color/lighter</color>
     <color name="yellow">#FFFD01</color>
     <color name="lighter">#95DDDFDF</color>
+    <color name="buttonBg">@color/accentThree</color>
+    <!--<color name="buttonBg">#90BCBC21</color>-->
     <color name="text">@color/light</color>
     <color name="edtBackground">@color/background</color>
-    <color name="cardLight">#30475E</color>
+    <color name="cardLight">#29343E</color>
     <color name="cardDark">@color/black</color>
     <color name="text_light">#757575</color>
     <color name="accent">@color/yellow</color>

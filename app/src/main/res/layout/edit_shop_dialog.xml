@@ -39,7 +39,7 @@
                 android:background="@drawable/edt_circular_dark_background"
                 android:src="@drawable/ic_delete"
                 android:visibility="visible"
-                app:tint="@color/accent" />
+                app:tint="@color/buttonBg" />
 
         </RelativeLayout>
 
@@ -113,7 +113,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/text"
                 android:textStyle="bold"
-                app:backgroundTint="@color/accent" />
+                app:backgroundTint="@color/buttonBg" />
 
         </RelativeLayout>
 

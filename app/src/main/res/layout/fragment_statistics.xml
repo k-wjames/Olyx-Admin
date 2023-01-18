@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background"
     android:padding="20dp"
     tools:context=".ui.fragments.StatisticsFragment">
 
@@ -153,7 +153,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="3"
-                app:cardBackgroundColor="@color/accent"
+                app:cardBackgroundColor="@color/buttonBg"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="Sales"
-                        android:textColor="@color/text"
+                        android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
@@ -177,7 +177,7 @@
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/lato"
                         android:text="KES 00"
-                        android:textColor="@color/text"
+                        android:textColor="@color/black"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -193,7 +193,8 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="2"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardBackgroundColor="@color/cardLight">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -239,7 +240,8 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardBackgroundColor="@color/cardLight">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -277,7 +279,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/text"
+                app:cardBackgroundColor="@color/black"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -291,7 +293,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="Net profit"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_light"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -305,7 +307,7 @@
                         android:fontFamily="@font/lato"
                         android:gravity="end|center"
                         android:text="KES 00"
-                        android:textColor="@color/yellow"
+                        android:textColor="@color/buttonBg"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -330,7 +332,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -455,7 +458,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/cardLight">
 
             <RelativeLayout
                 android:layout_width="match_parent"

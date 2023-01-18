@@ -32,13 +32,12 @@
 
             <ImageView
                 android:id="@+id/iv_add"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:background="@drawable/iv_back_background"
                 android:src="@drawable/ic_add"
-                app:tint="@color/yellow"/>
+                app:tint="@color/buttonBg" />
 
         </RelativeLayout>
 
