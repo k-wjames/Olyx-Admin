@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,11 +53,12 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     List<Expense> expenseList = new ArrayList<>();
     private FirebaseAuth auth;
 
+    DatabaseReference reference;
+
     String terminalId;
     long dateToday;
 
-    int profits = 0;
-    int netProfit = 0;
+    double profits, netProfit;
 
     double totalExpenses;
 
@@ -84,11 +86,12 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         auth = FirebaseAuth.getInstance();
         terminalId = auth.getUid();
 
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminalId).child("Transactions");
+
         LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
         dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
 
         getPreferenceData();
-        getDaysNetProfit();
         getTodayData();
 
         binding.tvViewTransactions.setOnClickListener(this);
@@ -104,8 +107,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getTodayData() {
-
-        getDaysNetProfit();
 
         viewModel = new ViewModelProvider(this).get(FragmentMainViewModel.class);
         viewModel.getSales().observe(requireActivity(), sales -> {
@@ -144,14 +145,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             if (clearedCredit != null) binding.tvCreditRepayed.setText("KES " + clearedCredit);
         });
 
-    }
-
-    private void getDaysNetProfit() {
-
-        getDaysProfit(terminalId);
-        //getTodayExpenditure(terminalId);
+        getTodayNetProfit();
 
     }
+
 
     @Override
     public void onClick(View view) {
@@ -264,10 +261,13 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void getDaysProfit(String myTerminal) {
+    private void getTodayNetProfit() {
+        getTodayProfit();
+        getTodayExpenditure();
+    }
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Sales");
-        reference.addValueEventListener(new ValueEventListener() {
+    private void getTodayProfit() {
+        reference.child("Sales").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -284,8 +284,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         for (Transaction item : transactionList) {
                             totalProfit = totalProfit + item.getProfit();
                             profits = totalProfit;
-
-                            getTodayExpenditure(terminalId);
+                            binding.tvNetProfits.setText(String.valueOf(profits));
 
                         }
                     }
@@ -299,12 +298,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-
     }
 
-    private void getTodayExpenditure(String myTerminal) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
-        reference.addValueEventListener(new ValueEventListener() {
+    private void getTodayExpenditure() {
+        reference.child("Expenditure").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -320,14 +317,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         for (Expense myExpense : expenseList) {
                             int currentExpense = myExpense.getPrice();
                             totalExpenses = totalExpenses + currentExpense;
-                            binding.tvExpenses.setText("KES " + totalExpenses);
-
-                            if (totalExpenses == 0) {
-                                binding.tvNetProfits.setText("KES " + profits);
-                            } else {
-                                netProfit = profits - totalExpenses;
-                                binding.tvNetProfits.setText("KES " + netProfit);
-                            }
+                            netProfit = profits - totalExpenses;
+                            binding.tvNetProfits.setText("KES " + netProfit);
 
                         }
 
@@ -378,7 +369,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         getPreferenceData();
-        getDaysNetProfit();
-        getTodayData();
     }
+
 }
