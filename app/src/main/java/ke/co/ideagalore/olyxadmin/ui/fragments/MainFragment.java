@@ -320,6 +320,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                             netProfit = profits - totalExpenses;
                             binding.tvNetProfits.setText("KES " + netProfit);
 
+
                         }
 
                     }
