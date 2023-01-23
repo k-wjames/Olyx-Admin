@@ -160,9 +160,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             displayExpenditureList(expenseList);
         } else if (view == binding.cvTransact) {
             Navigation.findNavController(view).navigate(R.id.sellFragment);
-        } else if (view == binding.ivFilter) {
-            showFilterPeriodDialog();
-        } else if (view == binding.btnAddExpense) {
+        }  else if (view == binding.btnAddExpense) {
             Navigation.findNavController(view).navigate(R.id.expensesFragment);
         } else if (view == binding.btnAddCredit) {
             Navigation.findNavController(view).navigate(R.id.creditFragment);
@@ -179,87 +177,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void showFilterPeriodDialog() {
-        Dialog myDialog = new Dialog(getActivity());
-        myDialog.setContentView(R.layout.period_filter_dialog);
-        myDialog.setCanceledOnTouchOutside(false);
-        myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        myDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        myDialog.show();
-        TextView currentDate = myDialog.findViewById(R.id.tv_today);
-        TextView specificDate = myDialog.findViewById(R.id.tv_specific_date);
-        TextView selectedPeriod = myDialog.findViewById(R.id.tv_period);
-        TextView noFilter = myDialog.findViewById(R.id.tv_all);
-
-        currentDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myDialog.dismiss();
-                filterDataByCurrentDate();
-            }
-        });
-
-        specificDate.setOnClickListener(view -> {
-            myDialog.dismiss();
-            showDatePickerDialog();
-        });
-
-        selectedPeriod.setOnClickListener(view -> {
-            myDialog.dismiss();
-        });
-
-        noFilter.setOnClickListener(view -> {
-            myDialog.dismiss();
-            binding.tvPeriod.setText("All Time");
-            displayTransactionsList(transactionList);
-        });
-
-    }
-
-    private void showDatePickerDialog() {
-        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
-        builder.setTitleText("Select range");
-        MaterialDatePicker materialDatePicker = builder.build();
-        materialDatePicker.show(requireActivity().getSupportFragmentManager(), "Range Picker");
-        materialDatePicker.addOnPositiveButtonClickListener(selection -> {
-
-
-            String selectedDate = formatter.format(selection);
-            if (selectedDate.equals(dateToday)) {
-                binding.tvPeriod.setText("Today");
-            } else {
-                binding.tvPeriod.setText("Date : " + selectedDate);
-            }
-            filterDataBySpecificDate(selectedDate);
-        });
-
-    }
-
-    private void filterDataByCurrentDate() {
-        List<Transaction> todayList = new ArrayList<>();
-        for (Transaction transaction : transactionList) {
-            if (transaction.getDate() == dateToday) {
-
-                todayList.add(0, transaction);
-
-                binding.tvPeriod.setText("Today");
-                displayTransactionsList(todayList);
-
-            }
-        }
-    }
-
-    private void filterDataBySpecificDate(String selectedDate) {
-        List<Transaction> list = new ArrayList<>();
-        for (Transaction transaction : transactionList) {
-            if (selectedDate.equals(transaction.getDate())) {
-
-                list.add(0, transaction);
-                displayTransactionsList(list);
-
-            }
-        }
-    }
 
     private void getTodayNetProfit() {
         getTodayProfit();

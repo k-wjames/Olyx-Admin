@@ -56,6 +56,7 @@ public class StatisticsViewModel extends ViewModel {
     List<Transaction> monthlyNewGasList = new ArrayList<>();
     List<Transaction> monthlyGasRefillList = new ArrayList<>();
     List<Transaction> monthlyAccessoryList = new ArrayList<>();
+    List<Transaction> customPeriodSalesList = new ArrayList<>();
 
     LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
     long dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
@@ -650,5 +651,38 @@ public class StatisticsViewModel extends ViewModel {
 
             }
         });
+    }
+
+  private void getCustomPeriodSales(long startDate, long endDate){
+
+        double totalCustomSales=0;
+
+        DatabaseReference ref = reference.child("Sales");
+        Query query = ref.orderByChild("date").startAt(startDate).endAt(endDate);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                customPeriodSalesList.clear();
+                for (DataSnapshot customPeriodSaleSnapshot:snapshot.getChildren()){
+
+                    Transaction transaction=customPeriodSaleSnapshot.getValue(Transaction.class);
+                    customPeriodSalesList.add(transaction);
+
+                    double customSales=0;
+                    for (Transaction trans: customPeriodSalesList){
+                        customSales=customSales+trans.getTotalPrice();
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

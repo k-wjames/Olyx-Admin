@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class FragmentMainViewModel extends ViewModel {
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     String terminalId = auth.getUid();
-    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminalId).child("Transactions");
 
     List<Transaction> transactionList = new ArrayList<>();
     List<Expense> expenseList = new ArrayList<>();
@@ -41,8 +42,8 @@ public class FragmentMainViewModel extends ViewModel {
     List<Transaction> newGasList = new ArrayList<>();
     List<Transaction> gasRefillList = new ArrayList<>();
     List<Transaction> accessoryList = new ArrayList<>();
-
     long dateToday;
+
 
     private MutableLiveData<Double> sales;
     private MutableLiveData<Integer> transactions;
@@ -65,7 +66,7 @@ public class FragmentMainViewModel extends ViewModel {
 
     private void getAllSales() {
 
-        reference.child(terminalId).child("Transactions").child("Sales").addValueEventListener(new ValueEventListener() {
+        reference.child("Sales").addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -120,7 +121,7 @@ public class FragmentMainViewModel extends ViewModel {
     }
 
     private void getTodayExpenses() {
-        reference.child(terminalId).child("Transactions").child("Expenditure").addValueEventListener(new ValueEventListener() {
+        reference.child("Expenditure").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -185,7 +186,7 @@ public class FragmentMainViewModel extends ViewModel {
     }
 
     private void getAllCreditSales() {
-        reference.child(terminalId).child("Transactions").child("Creditors").addValueEventListener(new ValueEventListener() {
+        reference.child("Creditors").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 creditList.clear();
@@ -214,7 +215,7 @@ public class FragmentMainViewModel extends ViewModel {
 
     private void getSalesPerCategory() {
 
-        reference.child(terminalId).child("Transactions").child("Sales").addValueEventListener(new ValueEventListener() {
+        reference.child("Sales").addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -287,7 +288,7 @@ public class FragmentMainViewModel extends ViewModel {
     }
 
     private void getClearedCredit() {
-        reference.child(terminalId).child("Transactions").child("Repayments").addValueEventListener(new ValueEventListener() {
+        reference.child("Repayments").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 clearedCreditList.clear();
@@ -313,4 +314,5 @@ public class FragmentMainViewModel extends ViewModel {
             }
         });
     }
+
 }

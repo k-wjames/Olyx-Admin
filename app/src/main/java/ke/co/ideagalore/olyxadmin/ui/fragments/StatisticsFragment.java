@@ -9,9 +9,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +31,7 @@ import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 
+import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentStatisticsBinding;
 import ke.co.ideagalore.olyxadmin.models.Expense;
 import ke.co.ideagalore.olyxadmin.models.Transaction;
@@ -43,6 +47,9 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private DatabaseReference reference;
 
     long dateToday, firstDayOfWeek, firstDayOfMonth;
+
+    Long startDate;
+    Long endDate;
 
     double profits, netProfit, weeklyProfit, weeklyNetProfit, monthlyProfit, monthlyNetProfit;
 
@@ -223,27 +230,32 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         });
 
         viewModel.getMonthlyTransactions().observe(requireActivity(), monthlyTransactions -> {
-            if (monthlyTransactions!=null) binding.tvTransactions.setText(String.valueOf(monthlyTransactions));
+            if (monthlyTransactions != null)
+                binding.tvTransactions.setText(String.valueOf(monthlyTransactions));
         });
 
-        viewModel.getMonthlyNewGasSales().observe(requireActivity(),monthlyGasSales->{
-            if (monthlyGasSales!=null) binding.tvNewGasTotals.setText("KES "+monthlyGasSales);
+        viewModel.getMonthlyNewGasSales().observe(requireActivity(), monthlyGasSales -> {
+            if (monthlyGasSales != null) binding.tvNewGasTotals.setText("KES " + monthlyGasSales);
         });
 
-        viewModel.getMonthlyGasRefills().observe(requireActivity(), monthlyGasRefills->{
-            if (monthlyGasRefills!=null) binding.tvRefillTotals.setText("KES "+monthlyGasRefills);
+        viewModel.getMonthlyGasRefills().observe(requireActivity(), monthlyGasRefills -> {
+            if (monthlyGasRefills != null)
+                binding.tvRefillTotals.setText("KES " + monthlyGasRefills);
         });
 
-        viewModel.getMonthlyAccessorySales().observe(requireActivity(), monthlyAccessorySales->{
-            if (monthlyAccessorySales!=null) binding.tvTotalAccessoriesSales.setText("KES "+monthlyAccessorySales);
+        viewModel.getMonthlyAccessorySales().observe(requireActivity(), monthlyAccessorySales -> {
+            if (monthlyAccessorySales != null)
+                binding.tvTotalAccessoriesSales.setText("KES " + monthlyAccessorySales);
         });
 
-        viewModel.getTotalMonthlyExpenditure().observe(requireActivity(), monthlyExpenditure->{
-            if (monthlyExpenditure!=null) binding.tvExpenses.setText(String.valueOf(monthlyExpenditure));
+        viewModel.getTotalMonthlyExpenditure().observe(requireActivity(), monthlyExpenditure -> {
+            if (monthlyExpenditure != null)
+                binding.tvExpenses.setText(String.valueOf(monthlyExpenditure));
         });
 
-        viewModel.getMonthlyTotalCreditSales().observe(requireActivity(), monthlyCreditSales->{
-            if (monthlyCreditSales!=null) binding.tvCreditSales.setText(String.valueOf(monthlyCreditSales));
+        viewModel.getMonthlyTotalCreditSales().observe(requireActivity(), monthlyCreditSales -> {
+            if (monthlyCreditSales != null)
+                binding.tvCreditSales.setText(String.valueOf(monthlyCreditSales));
         });
     }
 
@@ -254,6 +266,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         binding.viewCustom.setVisibility(View.VISIBLE);
 
         clearViews();
+
+        pickDateRange();
     }
 
     private void getTodayNetProfit() {
@@ -490,6 +504,25 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         binding.tvNetProfits.setText(empty);
     }
 
+    private void pickDateRange() {
+
+        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
+        builder.setTheme(R.style.MaterialCalendarTheme_RangeFill);
+        MaterialDatePicker<Pair<Long, Long>> pickerRange = builder.build();
+        pickerRange.show(requireActivity().getSupportFragmentManager(), pickerRange.toString());
+
+        pickerRange.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onPositiveButtonClick(Pair<Long, Long> selection) {
+                startDate = selection.first;
+                endDate = selection.second;
+
+                //binding.tvSales.setText(String.valueOf(viewModel.getCustomPeriodSales(startDate, endDate)));
+            }
+        });
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

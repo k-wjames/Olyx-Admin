@@ -14,4 +14,8 @@
         <!-- Customize your theme here. -->
 
     </style>
+
+    <style name="MaterialCalendarTheme_RangeFill" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/accentThree</item>
+    </style>
 </resources>
