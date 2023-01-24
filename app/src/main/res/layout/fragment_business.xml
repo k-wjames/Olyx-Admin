@@ -43,8 +43,9 @@
             android:hint="@string/business_name"
             android:inputType="textCapWords"
             android:textColorHint="@color/text"
-            android:textCursorDrawable="@null"
-            android:textSize="14sp" />
+            android:textColor="@color/text"
+            android:textColorLink="@color/text"
+            android:textCursorDrawable="@null" />
 
 
         <Button
@@ -56,9 +57,9 @@
             android:padding="10dp"
             android:text="@string/next"
             android:textAllCaps="false"
-            android:textColor="@color/text"
+            android:textColor="@color/black"
             android:textStyle="bold"
-            app:backgroundTint="@color/accent" />
+            app:backgroundTint="@color/accentThree" />
 
 
 

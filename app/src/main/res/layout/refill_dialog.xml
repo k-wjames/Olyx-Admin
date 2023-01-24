@@ -65,10 +65,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edt_background"
+            android:background="@drawable/dialog_edt_background"
             android:hint="1"
             android:inputType="number"
             android:textColorHint="@color/text"
+            android:textColor="@color/text"
+            android:textColorLink="@color/text"
             android:textCursorDrawable="@null"
             android:textSize="14sp" />
 
@@ -87,10 +89,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edt_background"
+            android:background="@drawable/dialog_edt_background"
             android:hint="Amount"
             android:inputType="number"
             android:textColorHint="@color/text"
+            android:textColor="@color/text"
+            android:textColorLink="@color/text"
             android:textCursorDrawable="@null"
             android:textSize="14sp" />
 

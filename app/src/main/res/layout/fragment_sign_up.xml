@@ -50,12 +50,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/edt_background"
+                android:background="@drawable/dialog_edt_background"
                 android:hint="@string/hint_username"
                 android:inputType="textCapWords"
                 android:textColorHint="@color/text"
-                android:textCursorDrawable="@null"
-                android:textSize="14sp" />
+                android:textColor="@color/text"
+                android:textColorLink="@color/text"
+                android:textCursorDrawable="@null" />
 
 
             <TextView
@@ -73,12 +74,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/edt_background"
+                android:background="@drawable/dialog_edt_background"
                 android:hint="@string/sample_email"
                 android:inputType="textEmailAddress"
                 android:textColorHint="@color/text"
-                android:textCursorDrawable="@null"
-                android:textSize="14sp" />
+                android:textColor="@color/text"
+                android:textColorLink="@color/text"
+                android:textCursorDrawable="@null" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -95,12 +97,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/edt_background"
+                android:background="@drawable/dialog_edt_background"
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:textColorHint="@color/text"
-                android:textCursorDrawable="@null"
-                android:textSize="14sp" />
+                android:textColor="@color/text"
+                android:textColorLink="@color/text"
+                android:textCursorDrawable="@null" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -117,12 +120,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/edt_background"
+                android:background="@drawable/dialog_edt_background"
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:textColorHint="@color/text"
-                android:textCursorDrawable="@null"
-                android:textSize="14sp" />
+                android:textColor="@color/text"
+                android:textColorLink="@color/text"
+                android:textCursorDrawable="@null" />
 
             <Button
                 android:id="@+id/btn_signup"
@@ -133,9 +137,9 @@
                 android:padding="10dp"
                 android:text="@string/create_user_account"
                 android:textAllCaps="false"
-                android:textColor="@color/text"
+                android:textColor="@color/black"
                 android:textStyle="bold"
-                app:backgroundTint="@color/accent" />
+                app:backgroundTint="@color/accentThree" />
 
 
             <LinearLayout
