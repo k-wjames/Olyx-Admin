@@ -46,7 +46,7 @@
             android:textColor="@color/text"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/edt_background"/>
+            android:background="@drawable/dialog_edt_background"/>
 
         <LinearLayout
             android:layout_width="match_parent"
