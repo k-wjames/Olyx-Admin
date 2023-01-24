@@ -109,7 +109,7 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getExpenditureData(String myTerminal) {
-        binding.progressBar.setVisibility(View.VISIBLE);
+        //binding.progressBar.setVisibility(View.VISIBLE);
         expenseList.clear();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(myTerminal).child("Transactions").child("Expenditure");
         reference.addValueEventListener(new ValueEventListener() {
@@ -119,7 +119,7 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener {
                 for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
                     Expense expense = expenseSnapshot.getValue(Expense.class);
                     expenseList.add(0,expense);
-                    binding.progressBar.setVisibility(View.GONE);
+                    //binding.progressBar.setVisibility(View.GONE);
                 }
                 binding.rvExpenditure.setLayoutManager(new LinearLayoutManager(getActivity()));
                 binding.rvExpenditure.setHasFixedSize(true);
@@ -130,7 +130,7 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                binding.progressBar.setVisibility(View.GONE);
+                //binding.progressBar.setVisibility(View.GONE);
                 customDialogs.showSnackBar(requireActivity(), error.getMessage());
             }
         });
