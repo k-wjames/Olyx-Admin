@@ -180,8 +180,8 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="5dp"
-                app:cardBackgroundColor="@color/cardLight">
+                app:cardBackgroundColor="@color/cardLight"
+                app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -204,12 +204,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
+                        android:layout_marginTop="3dp"
                         android:fontFamily="@font/lato"
                         android:text="KES 00"
                         android:textColor="@color/text"
                         android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="3dp"/>
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -224,8 +224,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
-                app:cardCornerRadius="5dp"
-                app:cardBackgroundColor="@color/cardLight">
+                app:cardBackgroundColor="@color/cardLight"
+                app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -248,12 +248,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
+                        android:layout_marginTop="3dp"
                         android:fontFamily="@font/lato"
                         android:text="KES 00"
                         android:textColor="@color/text"
                         android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="3dp"/>
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -268,8 +268,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
-                app:cardCornerRadius="5dp"
-                app:cardBackgroundColor="@color/cardLight">
+                app:cardBackgroundColor="@color/cardLight"
+                app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -302,7 +302,7 @@
                             android:fontFamily="@font/lato"
                             android:text="00"
                             android:textColor="@color/text"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -320,8 +320,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="@color/cardLight">
+            app:cardBackgroundColor="@color/cardLight"
+            app:cardCornerRadius="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -399,8 +399,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="@color/cardLight">
+            app:cardBackgroundColor="@color/cardLight"
+            app:cardCornerRadius="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -477,8 +477,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="@color/cardLight">
+            app:cardBackgroundColor="@color/cardLight"
+            app:cardCornerRadius="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -598,8 +598,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_transact"

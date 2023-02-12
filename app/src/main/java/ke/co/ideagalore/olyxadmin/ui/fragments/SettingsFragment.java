@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,10 +200,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         business = sharedPreferences.getString("business", null);
         terminal = sharedPreferences.getString("terminal", null);
         name = sharedPreferences.getString("name", null);
-        binding.tvBusiness.setText("Enterprise:\n"+business);
-        binding.tvProprietor.setText("Hi "+name);
-        binding.tvTerminal.setText(terminal);
 
+            binding.tvBusiness.setText("Enterprise:\n"+business);
+            binding.tvProprietor.setText("Hi "+name);
+            binding.tvTerminal.setText(terminal);
     }
 
     private void getStoresData() {
