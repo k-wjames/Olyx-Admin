@@ -138,6 +138,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         cancel.setOnClickListener(view -> dialog.dismiss());
         logout.setOnClickListener(view -> {
+            dialog.dismiss();
             auth.signOut();
             clearSharedPrefs();
 
