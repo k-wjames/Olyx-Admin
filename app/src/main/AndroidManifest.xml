@@ -18,10 +18,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.Home"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.Onboard"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.Splash"
             android:exported="true">

@@ -45,7 +45,8 @@
             android:textColorHint="@color/text"
             android:textColor="@color/text"
             android:textColorLink="@color/text"
-            android:textCursorDrawable="@null"/>
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,7 +69,8 @@
             android:textColorHint="@color/text"
             android:textColor="@color/text"
             android:textColorLink="@color/text"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"/>
 
 
         <TextView
@@ -101,7 +103,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -125,4 +128,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </RelativeLayout>

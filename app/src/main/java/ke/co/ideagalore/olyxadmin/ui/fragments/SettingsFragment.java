@@ -139,10 +139,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         cancel.setOnClickListener(view -> dialog.dismiss());
         logout.setOnClickListener(view -> {
             auth.signOut();
-            startActivity(new Intent(getActivity(), Onboard.class));
-            getActivity().finish();
+            clearSharedPrefs();
+
         });
 
+    }
+
+    private void clearSharedPrefs() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
+        startActivity(new Intent(getActivity(), Onboard.class));
+        getActivity().finish();
     }
 
     public void showAddStoreDialog() {

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,8 +57,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        //getPreferenceData();
 
         binding.btnLogin.setOnClickListener(this);
         binding.tvSignup.setOnClickListener(this);
@@ -130,7 +129,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 }
                 getPreferenceData();
 
-
             });
 
 
@@ -144,6 +142,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         editor.putString("business", businessName);
         editor.putString("terminal", terminal);
         editor.commit();
+
+        dialogs.dismissProgressDialog();
+        startActivity(new Intent(getActivity(), Home.class));
+        getActivity().finish();
     }
 
     private void getPreferenceData() {
@@ -155,6 +157,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             FirebaseAuth auth=FirebaseAuth.getInstance();
             terminal=auth.getUid();
             getTerminalData(terminal);
+        }else {
+
+            dialogs.dismissProgressDialog();
+            startActivity(new Intent(getActivity(), Home.class));
+            getActivity().finish();
         }
     }
 
@@ -171,9 +178,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                     savePreferencesData(owner,business, businessId);
 
-                    dialogs.dismissProgressDialog();
-                    startActivity(new Intent(getActivity(), Home.class));
-                    getActivity().finish();
                 }
 
             }
