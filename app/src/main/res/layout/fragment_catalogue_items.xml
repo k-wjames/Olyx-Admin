@@ -32,12 +32,14 @@
 
             <ImageView
                 android:id="@+id/iv_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/add_catalogue_img_bg"
                 android:src="@drawable/ic_add"
-                app:tint="@color/buttonBg" />
+                app:tint="@color/buttonBg"
+                android:padding="8dp"/>
 
         </RelativeLayout>
 

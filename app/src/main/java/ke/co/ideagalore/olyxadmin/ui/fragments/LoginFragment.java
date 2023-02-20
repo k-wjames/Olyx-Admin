@@ -2,6 +2,7 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,14 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -92,7 +91,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             FirebaseAuth auth = FirebaseAuth.getInstance();
             if (validateFields.validateEmailAddress(requireActivity(), mail)) {
                 dialogs.showProgressDialog(requireActivity(), "Sending password reset link");
-                String emailAddress =mail.getText().toString();
+                String emailAddress = mail.getText().toString();
                 auth.sendPasswordResetEmail(emailAddress)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
@@ -136,16 +135,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     public void savePreferencesData(String name, String businessName, String terminal) {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("name", name);
-        editor.putString("business", businessName);
-        editor.putString("terminal", terminal);
-        editor.commit();
 
-        dialogs.dismissProgressDialog();
-        startActivity(new Intent(getActivity(), Home.class));
-        getActivity().finish();
+        Activity activity = getActivity();
+
+        if (activity != null) {
+            SharedPreferences sharedPreferences = activity.getSharedPreferences("Terminal", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("name", name);
+            editor.putString("business", businessName);
+            editor.putString("terminal", terminal);
+            editor.commit();
+
+            dialogs.dismissProgressDialog();
+            startActivity(new Intent(getActivity(), Home.class));
+            getActivity().finish();
+        }
     }
 
     private void getPreferenceData() {
@@ -153,11 +157,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         name = sharedPreferences.getString("name", null);
         terminal = sharedPreferences.getString("terminal", null);
 
-        if (TextUtils.isEmpty(name) && TextUtils.isEmpty(terminal)){
-            FirebaseAuth auth=FirebaseAuth.getInstance();
-            terminal=auth.getUid();
+        if (TextUtils.isEmpty(name) && TextUtils.isEmpty(terminal)) {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            terminal = auth.getUid();
             getTerminalData(terminal);
-        }else {
+        } else {
 
             dialogs.dismissProgressDialog();
             startActivity(new Intent(getActivity(), Home.class));
@@ -170,13 +174,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
 
-                    String business=snapshot.child("business").getValue().toString();
-                    String businessId=terminal;
-                    String owner=snapshot.child("name").getValue().toString();
+                    String business = snapshot.child("business").getValue().toString();
+                    String businessId = terminal;
+                    String owner = snapshot.child("name").getValue().toString();
 
-                    savePreferencesData(owner,business, businessId);
+                    savePreferencesData(owner, business, businessId);
 
                 }
 
