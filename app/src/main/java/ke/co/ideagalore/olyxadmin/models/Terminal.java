@@ -7,11 +7,11 @@ public class Terminal {
     public Terminal() {
     }
 
-    public Terminal(String business, String businessId, String proprietor, Stores store) {
+    public Terminal(String business, String businessId, String proprietor, Stores stores) {
         this.business = business;
         this.businessId = businessId;
         this.proprietor = proprietor;
-        this.stores = store;
+        this.stores = stores;
     }
 
     public String getBusiness() {
@@ -42,7 +42,7 @@ public class Terminal {
         return stores;
     }
 
-    public void setStore(Stores store) {
-        this.stores = store;
+    public void setStore(Stores stores) {
+        this.stores = stores;
     }
 }

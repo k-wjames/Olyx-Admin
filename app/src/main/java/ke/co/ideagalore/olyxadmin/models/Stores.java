@@ -3,6 +3,8 @@ package ke.co.ideagalore.olyxadmin.models;
 public class Stores {
     String store, storeId, location,agent, agentId;
 
+    //Catalogue catalogue;
+
     public Stores() {
     }
 

@@ -15,41 +15,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_alignParentStart="true"
-                android:fontFamily="@font/lato"
-                android:text="Edit product"
-                android:textColor="@color/text"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/iv_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_delete"
-                app:tint="@color/buttonBg" />
-
-
-        </RelativeLayout>
+            android:layout_marginTop="35dp"
+            android:fontFamily="@font/lato"
+            android:text="Edit product"
+            android:textColor="@color/text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="@color/cardLight">
+            app:cardBackgroundColor="@color/cardLight"
+            app:cardCornerRadius="5dp">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -70,11 +52,48 @@
                         android:layout_gravity="start"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/lato"
+                        android:text="Outlet"
+                        android:textColor="@color/text"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/spinner_shop"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent"
+                            android:spinnerMode="dialog"
+                            tools:listitem="@layout/spinner_item" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/drop_down" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/lato"
                         android:text="Product Category"
                         android:textColor="@color/text"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -84,12 +103,22 @@
                         <Spinner
                             android:id="@+id/spinner_category"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="48dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:spinnerMode="dialog"
                             tools:listitem="@layout/spinner_item" />
 
-                    </LinearLayout>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/drop_down" />
+
+                    </RelativeLayout>
 
 
                     <TextView
@@ -112,8 +141,8 @@
                         android:background="@drawable/dialog_edt_background"
                         android:hint="product"
                         android:inputType="textCapWords"
-                        android:textColorHint="@color/text"
                         android:textColor="@color/text"
+                        android:textColorHint="@color/text"
                         android:textColorLink="@color/text"
                         android:textCursorDrawable="@null"
                         android:textSize="14sp" />
@@ -139,8 +168,8 @@
                         android:background="@drawable/dialog_edt_background"
                         android:hint="00"
                         android:inputType="number"
-                        android:textColorHint="@color/text"
                         android:textColor="@color/text"
+                        android:textColorHint="@color/text"
                         android:textColorLink="@color/text"
                         android:textCursorDrawable="@null"
                         android:textSize="14sp" />
@@ -166,8 +195,8 @@
                         android:background="@drawable/dialog_edt_background"
                         android:hint="00"
                         android:inputType="number"
-                        android:textColorHint="@color/text"
                         android:textColor="@color/text"
+                        android:textColorHint="@color/text"
                         android:textColorLink="@color/text"
                         android:textCursorDrawable="@null"
                         android:textSize="14sp" />
@@ -192,24 +221,48 @@
                         android:background="@drawable/dialog_edt_background"
                         android:hint="00"
                         android:inputType="number"
-                        android:textColorHint="@color/text"
                         android:textColor="@color/text"
+                        android:textColorHint="@color/text"
                         android:textColorLink="@color/text"
                         android:textCursorDrawable="@null"
                         android:textSize="14sp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="30dp"
+                        android:background="@color/background" />
 
-                    <Button
-                        android:id="@+id/btn_edit_item"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:fontFamily="@font/lato"
-                        android:padding="10dp"
-                        android:text="@string/submit_changes"
-                        android:textAllCaps="false"
-                        android:textColor="@color/buttonBg"
-                        app:backgroundTint="@color/black" />
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/tv_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/lato"
+                            android:text="Delete product"
+                            android:textColor="@color/text"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/btn_edit_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/lato"
+                            android:text="@string/submit_changes"
+                            android:textAllCaps="false"
+                            android:textColor="@color/buttonBg"
+                            app:backgroundTint="@color/black" />
+
+                    </RelativeLayout>
 
 
                 </LinearLayout>

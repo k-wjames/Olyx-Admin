@@ -33,15 +33,15 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Stores store=stores.get(position);
+        Stores stores = this.stores.get(position);
         int pos=position+1;
-        holder.store.setText(pos+". "+store.getStore()+",");
-        holder.location.setText(store.getLocation()+".");
+        holder.store.setText(pos+". "+ stores.getStore()+",");
+        holder.location.setText(stores.getLocation()+".");
         holder.itemView.setOnClickListener(view -> {
             Bundle bundle=new Bundle();
-            bundle.putString("store", store.getStore());
-            bundle.putString("storeId", store.getStoreId());
-            bundle.putString("storeLocation", store.getLocation());
+            bundle.putString("store", stores.getStore());
+            bundle.putString("storeId", stores.getStoreId());
+            bundle.putString("storeLocation", stores.getLocation());
             Navigation.findNavController(view).navigate(R.id.editStoreFragment,bundle);
 
         });

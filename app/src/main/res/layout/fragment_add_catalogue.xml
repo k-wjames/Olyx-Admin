@@ -24,7 +24,7 @@
                 android:textColor="@color/text"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginTop="40dp"/>
+                android:layout_marginTop="40dp" />
 
 
         <androidx.cardview.widget.CardView
@@ -51,14 +51,53 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/lato"
-                        android:text="Product Category"
+                        android:text="Select outlet"
                         android:textColor="@color/text"
                         android:textStyle="bold" />
 
 
-                    <LinearLayout
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/spinner_shop"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent"
+                            android:spinnerMode="dialog"
+                            tools:listitem="@layout/spinner_item" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/drop_down"
+                            android:layout_marginEnd="10dp"/>
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/lato"
+                        android:text="Product category"
+                        android:textColor="@color/text"
+                        android:textStyle="bold" />
+
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -68,12 +107,22 @@
                         <Spinner
                             android:id="@+id/spinner_category"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="48dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:spinnerMode="dialog"
                             tools:listitem="@layout/spinner_item" />
 
-                    </LinearLayout>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/drop_down"
+                            android:layout_marginEnd="10dp"/>
+
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -108,7 +157,7 @@
                         android:layout_gravity="start"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/lato"
-                        android:text="Buying Price"
+                        android:text="Buying price"
                         android:textColor="@color/text"
                         android:textStyle="bold" />
 
@@ -135,7 +184,7 @@
                         android:layout_gravity="start"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/lato"
-                        android:text="Marked Price"
+                        android:text="Marked price"
                         android:textColor="@color/text"
                         android:textStyle="bold" />
 
@@ -162,7 +211,7 @@
                         android:layout_gravity="start"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/lato"
-                        android:text="Items In Stock"
+                        android:text="Total items"
                         android:textColor="@color/text"
                         android:textStyle="bold" />
 
@@ -182,9 +231,10 @@
                         android:textCursorDrawable="@null"
                         android:textSize="14sp" />
 
+
                     <Button
                         android:id="@+id/btn_add_item"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/lato"
@@ -192,7 +242,8 @@
                         android:text="@string/add_catalogue_item"
                         android:textAllCaps="false"
                         android:textColor="@color/buttonBg"
-                        app:backgroundTint="@color/black" />
+                        app:backgroundTint="@color/black"
+                        android:layout_gravity="end"/>
 
 
                 </LinearLayout>

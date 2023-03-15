@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -185,15 +183,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Stores");
         String shopId = reference.push().getKey();
-        Stores myStore = new Stores();
-        myStore.setStore(store);
-        myStore.setLocation(location);
-        myStore.setStoreId(shopId);
+        Stores myStores = new Stores();
+        myStores.setStore(store);
+        myStores.setLocation(location);
+        myStores.setStoreId(shopId);
         Terminal myTerminal = new Terminal();
         myTerminal.setBusiness(business);
         myTerminal.setProprietor(name);
-        myTerminal.setStore(myStore);
-        reference.child(shopId).setValue(myStore).addOnCompleteListener(task -> {
+        myTerminal.setStore(myStores);
+        reference.child(shopId).setValue(myStores).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 getStoresData();
                 myDialog.dismiss();
@@ -221,8 +219,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 storesList.clear();
                 for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
-                    Stores store = storeSnapshot.getValue(Stores.class);
-                    storesList.add(store);
+                    Stores stores = storeSnapshot.getValue(Stores.class);
+                    storesList.add(stores);
 
                     if (storesList.size() >= 1) {
 

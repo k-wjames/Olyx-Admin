@@ -109,7 +109,7 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/lato"
                 android:padding="10dp"
-                android:text="Edit store"
+                android:text="Edit stores"
                 android:textAllCaps="false"
                 android:textColor="@color/text"
                 android:textStyle="bold"

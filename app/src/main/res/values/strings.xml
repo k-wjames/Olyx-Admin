@@ -22,7 +22,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="sign_in_here">Sign in here</string>
     <string name="delete_store">Delete Store</string>
-    <string name="submit_changes">Submit changes</string>
+    <string name="submit_changes">Update</string>
     <string name="accessories">Accessories</string>
     <string name="gas_refill">Gas Refill</string>
     <string name="new_gas_cylinders">New Gas</string>

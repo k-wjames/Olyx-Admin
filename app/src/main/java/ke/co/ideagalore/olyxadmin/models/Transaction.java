@@ -3,7 +3,7 @@ package ke.co.ideagalore.olyxadmin.models;
 public class Transaction {
 
     String transactionId, transactionType, productId, product, store, time, attendant, terminalId;
-    int quantity, buyingPrice, sellingPrice, totalPrice, profit;
+    int quantity, buyingPrice, sellingPrice, totalPrice, profit, updatedStock;
     long date;
 
     public Transaction() {
@@ -11,7 +11,7 @@ public class Transaction {
 
     public Transaction(String transactionId, String transactionType, String productId, String product,
                        String store, String time, String attendant, String terminalId, int quantity,
-                       int buyingPrice, int sellingPrice, int totalPrice, int profit, long date) {
+                       int buyingPrice, int sellingPrice, int totalPrice, int profit, long date,int updatedStock) {
         this.transactionId = transactionId;
         this.transactionType = transactionType;
         this.productId = productId;
@@ -26,6 +26,15 @@ public class Transaction {
         this.totalPrice = totalPrice;
         this.profit = profit;
         this.date = date;
+        this.updatedStock = updatedStock;
+    }
+
+    public int getUpdatedStock() {
+        return updatedStock;
+    }
+
+    public void setUpdatedStock(int updatedStock) {
+        this.updatedStock = updatedStock;
     }
 
     public String getTransactionId() {

@@ -15,23 +15,32 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
 import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentEditProductBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
+import ke.co.ideagalore.olyxadmin.models.Stores;
 
 public class EditProductFragment extends Fragment implements View.OnClickListener {
     FragmentEditProductBinding binding;
-    String terminal, productCategory, product, productId, selectedItem;
+    String terminal, productCategory, product, productId, selectedItem,selectedShop,shop;
     int bPrice, sPrice, numberStoked;
     DatabaseReference reference;
 
     CustomDialogs customDialogs = new CustomDialogs();
     ValidateFields validator = new ValidateFields();
+
+    List<String> storesList = new ArrayList<>();
 
     public EditProductFragment() {
 
@@ -49,13 +58,14 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         super.onViewCreated(view, savedInstanceState);
         getPreferenceData();
         getBundleData();
+        getStoresData();
 
         String[] category = new String[]{"Gas Refill", "New Gas", "Accessories"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item,
                 category);
-        arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        binding.spinnerCategory.setAdapter(arrayAdapter);
+        categoryAdapter.setDropDownViewResource(R.layout.spinner_item);
+        binding.spinnerCategory.setAdapter(categoryAdapter);
         binding.spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -66,19 +76,17 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        binding.spinnerCategory.setAdapter(arrayAdapter);
+        binding.spinnerCategory.setAdapter(categoryAdapter);
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
-        binding.ivDelete.setOnClickListener(this);
+        binding.tvDelete.setOnClickListener(this);
         binding.btnEditItem.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View view) {
-        if (view == binding.ivDelete) {
-            deleteProduct(productId, view);
-        }  else {
+        if (view == binding.tvDelete) {
             updateItemData(productId);
         }
     }
@@ -97,28 +105,19 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
             sPrice = arguments.getInt("sellingPrice");
             numberStoked = arguments.getInt("stockedItems");
             productId = arguments.get("productId").toString();
-            setViews(product, bPrice, sPrice, numberStoked);
+            shop=arguments.get("shop").toString();
+            setViews(productCategory,shop,product, bPrice, sPrice, numberStoked);
         }
     }
 
-    private void setViews(String product, int bPrice, int sPrice, int numberStoked) {
+    private void setViews(String productCategory,String shop,String product, int bPrice, int sPrice, int numberStoked) {
+
         binding.spinnerCategory.setSelection(binding.spinnerCategory.getSelectedItemPosition());
+        binding.spinnerShop.setSelection(binding.spinnerShop.getSelectedItemPosition());
         binding.edtProduct.setText(product);
         binding.edtBuyingPrice.setText(String.valueOf(bPrice));
         binding.edtMarkedPrice.setText(String.valueOf(sPrice));
         binding.edtStocked.setText(String.valueOf(numberStoked));
-    }
-
-    private void deleteProduct(String productId, View view) {
-        reference.child(productId).setValue(null).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                customDialogs.showSnackBar(requireActivity(), "Item successfully deleted.");
-                Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
-            }
-
-        }).addOnFailureListener(e -> {
-            customDialogs.showSnackBar(requireActivity(), e.getMessage());
-        });
     }
 
     private void updateItemData(String productId) {
@@ -128,11 +127,14 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
                 && validator.validateEditTextFields(getActivity(), binding.edtMarkedPrice, "Selling price")
                 && validator.validateEditTextFields(getActivity(), binding.edtStocked, "Items stocked")) {
             Catalogue catalogue = new Catalogue();
+            catalogue.setShop(selectedShop);
             catalogue.setCategory(selectedItem);
             catalogue.setProdId(productId);
             catalogue.setBuyingPrice(Integer.parseInt(binding.edtBuyingPrice.getText().toString()));
             catalogue.setMarkedPrice(Integer.parseInt(binding.edtMarkedPrice.getText().toString()));
             catalogue.setProduct(binding.edtProduct.getText().toString());
+            catalogue.setAvailableItems(0);
+            catalogue.setSoldItems(0);
             catalogue.setStockedQuantity(Integer.parseInt(binding.edtStocked.getText().toString()));
             reference.child(productId).setValue(catalogue).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -143,6 +145,57 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
 
             }).addOnFailureListener(e -> customDialogs.showSnackBar(getActivity(), e.getMessage()));
         }
+    }
+
+    private void getStoresData() {
+        customDialogs.showProgressDialog(requireActivity(), "Fetching stores");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Stores");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                storesList.clear();
+
+                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
+
+                    Stores store = storeSnapshot.getValue(Stores.class);
+                    String storeName = store.getStore();
+                    storesList.add(0, storeName);
+                    if (storesList.isEmpty()){
+                        getStoresData();
+                        return;
+                    }
+
+                    ArrayAdapter<String> shopAdapter = new ArrayAdapter<>(requireActivity(),
+                            android.R.layout.simple_spinner_item,
+                            storesList);
+                    shopAdapter.setDropDownViewResource(R.layout.spinner_item);
+                    binding.spinnerShop.setAdapter(shopAdapter);
+                    binding.spinnerShop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            selectedShop = binding.spinnerShop.getSelectedItem().toString();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                        }
+                    });
+                    binding.spinnerShop.setAdapter(shopAdapter);
+                    customDialogs.dismissProgressDialog();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                customDialogs.dismissProgressDialog();
+                customDialogs.showSnackBar(requireActivity(), error.getMessage());
+
+            }
+        });
+
     }
 
     private void resetViews() {

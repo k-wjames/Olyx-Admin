@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +42,9 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.SaleAdapter;
@@ -58,13 +62,14 @@ public class SellFragment extends Fragment implements View.OnClickListener {
     ArrayList<TransactionItem> myGasArray, myAccessoriesArray, myGasRefillArray;
     static ArrayList<Transaction> myTransactionArray = new ArrayList<>();
     ArrayList<Catalogue> catalogueArrayList = new ArrayList<>();
+    Map<String, Object> catalogueUpdateList=new HashMap<>();
 
     TransactionItem transactionItem;
 
-    int price, markedPrice, buyingPrice;
+    int price, markedPrice, buyingPrice, soldStock;
     static int stokedCatalogueItem;
 
-    String transactionType, selectedItem, store, name, terminal, businessName;
+    String transactionType, selectedItem, store, name, terminal, businessName, prodId;
     long dateToday;
 
     Transaction transaction;
@@ -73,6 +78,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
     CustomDialogs customDialogs = new CustomDialogs();
 
+    DatabaseReference reference;
     public SellFragment() {
     }
 
@@ -96,6 +102,9 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         dateToday = localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
 
         getPreferenceData();
+
+        reference= FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
+
         getCatalogueData();
 
         binding.btnRefill.setOnClickListener(this);
@@ -136,7 +145,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getCatalogueData() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -152,32 +160,43 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                         for (int i = 0; i < catalogueArrayList.size(); i++) {
 
                             String prod = catalogueArrayList.get(i).getProduct();
+                            String catalogueId=catalogueArrayList.get(i).getProdId();
                             price = catalogueArrayList.get(i).getMarkedPrice();
                             String category = catalogueArrayList.get(i).getCategory();
                             int buyingPrice = catalogueArrayList.get(i).getBuyingPrice();
                             int stockedQuantity = catalogueArrayList.get(i).getStockedQuantity();
+                            int soldStock=catalogueArrayList.get(i).getSoldItems();
 
                             transactionItem = new TransactionItem();
-                            if (category.equals("New Gas")) {
+                            if (category.equals("New Gas") && stockedQuantity!=soldStock) {
 
                                 transactionItem.setMarkedPrice(price);
                                 transactionItem.setProduct(prod);
                                 transactionItem.setBuyingPrice(buyingPrice);
                                 transactionItem.setAvailableStock(stockedQuantity);
+                                transactionItem.setSoldStock(soldStock);
+                                transactionItem.setProductId(catalogueId);
+
                                 myGasArray.add(transactionItem);
 
-                            } else if (category.equals("Accessories")) {
+                            } else if (category.equals("Accessories")&& stockedQuantity!=soldStock) {
                                 transactionItem.setMarkedPrice(price);
                                 transactionItem.setProduct(prod);
                                 transactionItem.setBuyingPrice(buyingPrice);
                                 transactionItem.setAvailableStock(stockedQuantity);
+                                transactionItem.setSoldStock(soldStock);
+                                transactionItem.setProductId(catalogueId);
+
                                 myAccessoriesArray.add(transactionItem);
 
-                            } else {
+                            } else if (category.equals("Gas Refill")&& stockedQuantity!=soldStock){
                                 transactionItem.setMarkedPrice(price);
                                 transactionItem.setProduct(prod);
                                 transactionItem.setBuyingPrice(buyingPrice);
                                 transactionItem.setAvailableStock(stockedQuantity);
+                                transactionItem.setSoldStock(soldStock);
+                                transactionItem.setProductId(catalogueId);
+
                                 myGasRefillArray.add(transactionItem);
                             }
                         }
@@ -202,7 +221,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             customDialogs.showSnackBar(requireActivity(), "No gas refill data found. Please check with your admin");
             return;
         }
-
         dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.refill_dialog);
         dialog.setCanceledOnTouchOutside(false);
@@ -228,6 +246,8 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
                 stokedCatalogueItem = item.getAvailableStock();
+                soldStock=item.getSoldStock();
+                prodId=item.getProductId();
                 edtPrice.setText(String.valueOf(markedPrice));
             }
 
@@ -263,6 +283,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             String time = formatter.format(new Date());
 
             transaction = new Transaction();
+            transaction.setProductId(prodId);
             transaction.setTerminalId(terminal);
             transaction.setAttendant(name);
             transaction.setStore(businessName);
@@ -276,7 +297,9 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             transaction.setBuyingPrice(buyingPrice);
             transaction.setSellingPrice(pricePerUnit);
             transaction.setTransactionType(transType);
+            transaction.setUpdatedStock(soldStock+unitsSold);
             myTransactionArray.add(transaction);
+
 
             int totalShillings = 0;
             for (int i = 0; i < myTransactionArray.size(); i++) {
@@ -321,6 +344,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
                 stokedCatalogueItem = item.getAvailableStock();
+                soldStock=item.getSoldStock();
                 edtPrice.setText(markedPrice + "");
             }
 
@@ -356,6 +380,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             String time = formatter.format(new Date());
 
             transaction = new Transaction();
+            transaction.setProductId(prodId);
             transaction.setTerminalId(terminal);
             transaction.setAttendant(name);
             transaction.setStore(businessName);
@@ -369,6 +394,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             transaction.setBuyingPrice(buyingPrice);
             transaction.setSellingPrice(pricePerUnit);
             transaction.setTransactionType(transType);
+            transaction.setUpdatedStock(soldStock+unitsSold);
             myTransactionArray.add(transaction);
 
             int totalShillings = 0;
@@ -384,7 +410,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
     private void sellAnAccessoryDialog(String transType) {
         if (myAccessoriesArray.size() == 0) {
-            customDialogs.showSnackBar(requireActivity(), "No accessories data found. Please check with you admin");
+            customDialogs.showSnackBar(requireActivity(), "No accessories found. Please check with you admin");
             return;
         }
         dialog = new Dialog(getActivity());
@@ -411,6 +437,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
                 stokedCatalogueItem = item.getAvailableStock();
+                soldStock=item.getSoldStock();
                 edtPrice.setText(markedPrice + "");
             }
 
@@ -446,6 +473,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             String time = formatter.format(new Date());
 
             transaction = new Transaction();
+            transaction.setProductId(prodId);
             transaction.setTerminalId(terminal);
             transaction.setAttendant(name);
             transaction.setStore(businessName);
@@ -459,6 +487,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             transaction.setBuyingPrice(buyingPrice);
             transaction.setSellingPrice(pricePerUnit);
             transaction.setTransactionType(transType);
+            transaction.setUpdatedStock(soldStock+unitsSold);
             myTransactionArray.add(transaction);
 
             int totalShillings = 0;
@@ -471,7 +500,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
         });
     }
-
     private static class CommitNewTransaction extends AsyncTask<Transaction, Void, Void> {
 
         CustomDialogs dialogs = new CustomDialogs();
@@ -498,16 +526,23 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 String key = transactions[i].getTransactionId();
                 String terminal = transactions[i].getTerminalId();
                 DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Sales");
-                myRef.child(key).setValue(transaction).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
+                myRef.child(key).setValue(transaction).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                       for (int k=0; k<transactions.length;k++){
+                               String productId = transaction.getProductId();
+                               int updatedStock = transaction.getUpdatedStock();
 
-                            dialogs.dismissProgressDialog();
-                            myTransactionArray.clear();
+                               DatabaseReference myRef1 = FirebaseDatabase.getInstance().getReference("Users").
+                                       child(terminal).child("Catalogue").child(transaction.getProductId()).child("soldItems");
+                               myRef1.setValue(updatedStock).addOnCompleteListener(task1 -> {
+                                   if (task1.isSuccessful()) {
 
-                        }
-                    }
+                                       myTransactionArray.clear();
+                                   }
+                               });
+
+                           }
+                       }
                 });
 
             }
@@ -520,7 +555,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
             SellFragment fragment = weakReference.get();
             if (fragment == null || fragment.isRemoving()) return;
-
+            dialogs.dismissProgressDialog();
             Navigation.findNavController(weakReference.get().requireView()).navigate(R.id.mainFragment);
         }
     }

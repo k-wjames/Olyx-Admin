@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -65,6 +66,9 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         super.onViewCreated(view, savedInstanceState);
 
         getPreferenceData();
+
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
+
         getCatalogueData();
 
         binding.tvAll.setOnClickListener(this);
@@ -123,15 +127,12 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         refillCatalogueItems.clear();
         newGasCylinderItems.clear();
         accessories.clear();
-       // binding.progressBar.setVisibility(View.VISIBLE);
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
                     catalogueList.add(0, catalogue);
-                    //binding.progressBar.setVisibility(View.GONE);
                     displayCatalogueList(catalogueList);
                 }
 
@@ -177,6 +178,25 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         binding.rvCatalogue.setHasFixedSize(true);
         CatalogueAdapter adapter = new CatalogueAdapter(catalogues, item -> {
 
+            showActivityDialog(item);
+
+        });
+        binding.rvCatalogue.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showActivityDialog(Catalogue item) {
+        Dialog myDialog = new Dialog(requireActivity());
+        myDialog.setContentView(R.layout.update_catalogue_dialog);
+        myDialog.setCanceledOnTouchOutside(false);
+        myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        myDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        RelativeLayout rlUpdateCatalogue=myDialog.findViewById(R.id.rl_update_item);
+        RelativeLayout rlRestockCatalogue=myDialog.findViewById(R.id.rl_restock_item);
+        RelativeLayout rlDeleteCatalogue=myDialog.findViewById(R.id.rl_delete_item);
+
+        rlUpdateCatalogue.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("productId", item.getProdId());
             bundle.putString("product", item.getProduct());
@@ -184,9 +204,29 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
             bundle.putInt("stockedItems", item.getStockedQuantity());
             bundle.putInt("buyingPrice", item.getBuyingPrice());
             bundle.putInt("sellingPrice", item.getMarkedPrice());
+            bundle.putString("shop", item.getShop());
+            myDialog.dismiss();
             Navigation.findNavController(CatalogueItemsFragment.this.requireView()).navigate(R.id.editProductFragment, bundle);
         });
-        binding.rvCatalogue.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+
+        rlRestockCatalogue.setOnClickListener(view -> myDialog.dismiss());
+
+        rlDeleteCatalogue.setOnClickListener(view -> deleteProduct(item.getProdId(), view));
+
+        myDialog.show();
     }
+
+    private void deleteProduct(String productId, View view) {
+        reference.child(productId).setValue(null).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                customDialogs.showSnackBar(requireActivity(), "Item successfully deleted.");
+                Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
+            }
+
+        }).addOnFailureListener(e -> {
+            customDialogs.showSnackBar(requireActivity(), e.getMessage());
+        });
+    }
+
+
 }
