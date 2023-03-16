@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:fontFamily="@font/lato"
-            android:text="Edit product"
+            android:text="Update product"
             android:textColor="@color/text"
             android:textSize="18sp"
             android:textStyle="bold" />

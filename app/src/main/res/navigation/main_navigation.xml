@@ -129,6 +129,9 @@
             android:id="@+id/action_sellFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:popUpTo="@id/mainFragment"/>
+        <action
+            android:id="@+id/action_sellFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/creditFragment"
@@ -149,6 +152,23 @@
             android:id="@+id/action_statisticsFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:popUpTo="@id/mainFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="ke.co.ideagalore.olyxadmin.ui.fragments.checkoutFragment"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_checkout" >
+        <action
+            android:id="@+id/action_checkoutFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"/>
+        <argument
+            android:name="transactionArray"
+            app:argType="ke.co.ideagalore.olyxadmin.models.Transaction[]" />
+        <action
+            android:id="@+id/action_checkoutFragment_self"
+            app:destination="@id/checkoutFragment"
+            app:popUpTo="@id/checkoutFragment" />
     </fragment>
 
 

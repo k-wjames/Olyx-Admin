@@ -1,6 +1,11 @@
 package ke.co.ideagalore.olyxadmin.models;
 
-public class Transaction {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Transaction implements Parcelable {
 
     String transactionId, transactionType, productId, product, store, time, attendant, terminalId;
     int quantity, buyingPrice, sellingPrice, totalPrice, profit, updatedStock;
@@ -28,6 +33,36 @@ public class Transaction {
         this.date = date;
         this.updatedStock = updatedStock;
     }
+
+    protected Transaction(Parcel in) {
+        transactionId = in.readString();
+        transactionType = in.readString();
+        productId = in.readString();
+        product = in.readString();
+        store = in.readString();
+        time = in.readString();
+        attendant = in.readString();
+        terminalId = in.readString();
+        quantity = in.readInt();
+        buyingPrice = in.readInt();
+        sellingPrice = in.readInt();
+        totalPrice = in.readInt();
+        profit = in.readInt();
+        updatedStock = in.readInt();
+        date = in.readLong();
+    }
+
+    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
+        @Override
+        public Transaction createFromParcel(Parcel in) {
+            return new Transaction(in);
+        }
+
+        @Override
+        public Transaction[] newArray(int size) {
+            return new Transaction[size];
+        }
+    };
 
     public int getUpdatedStock() {
         return updatedStock;
@@ -147,5 +182,29 @@ public class Transaction {
 
     public void setDate(long date) {
         this.date = date;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(transactionId);
+        parcel.writeString(transactionType);
+        parcel.writeString(productId);
+        parcel.writeString(product);
+        parcel.writeString(store);
+        parcel.writeString(time);
+        parcel.writeString(attendant);
+        parcel.writeString(terminalId);
+        parcel.writeInt(quantity);
+        parcel.writeInt(buyingPrice);
+        parcel.writeInt(sellingPrice);
+        parcel.writeInt(totalPrice);
+        parcel.writeInt(profit);
+        parcel.writeInt(updatedStock);
+        parcel.writeLong(date);
     }
 }

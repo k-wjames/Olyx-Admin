@@ -10,18 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +33,7 @@ import java.util.List;
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.CatalogueAdapter;
 import ke.co.ideagalore.olyxadmin.common.CustomDialogs;
+import ke.co.ideagalore.olyxadmin.common.ValidateFields;
 import ke.co.ideagalore.olyxadmin.databinding.FragmentCatalogueItemsBinding;
 import ke.co.ideagalore.olyxadmin.models.Catalogue;
 
@@ -50,6 +50,8 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
 
     String name, business, terminal;
     CustomDialogs customDialogs = new CustomDialogs();
+
+    ValidateFields validator = new ValidateFields();
 
     public CatalogueItemsFragment() {
     }
@@ -116,7 +118,7 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
             binding.viewAccessories.setVisibility(View.VISIBLE);
             displayCatalogueList(accessories);
 
-        }else if (view==binding.ivAdd){
+        } else if (view == binding.ivAdd) {
             Navigation.findNavController(view).navigate(R.id.addCatalogueFragment);
         }
 
@@ -174,7 +176,7 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         } else {
             binding.tvFound.setText(String.valueOf(catalogues.size()));
         }
-        binding.rvCatalogue.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        binding.rvCatalogue.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         binding.rvCatalogue.setHasFixedSize(true);
         CatalogueAdapter adapter = new CatalogueAdapter(catalogues, item -> {
 
@@ -192,9 +194,9 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         myDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        RelativeLayout rlUpdateCatalogue=myDialog.findViewById(R.id.rl_update_item);
-        RelativeLayout rlRestockCatalogue=myDialog.findViewById(R.id.rl_restock_item);
-        RelativeLayout rlDeleteCatalogue=myDialog.findViewById(R.id.rl_delete_item);
+        RelativeLayout rlUpdateCatalogue = myDialog.findViewById(R.id.rl_update_item);
+        RelativeLayout rlRestockCatalogue = myDialog.findViewById(R.id.rl_restock_item);
+        RelativeLayout rlDeleteCatalogue = myDialog.findViewById(R.id.rl_delete_item);
 
         rlUpdateCatalogue.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
@@ -209,18 +211,51 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
             Navigation.findNavController(CatalogueItemsFragment.this.requireView()).navigate(R.id.editProductFragment, bundle);
         });
 
-        rlRestockCatalogue.setOnClickListener(view -> myDialog.dismiss());
+        rlRestockCatalogue.setOnClickListener(view -> {
+            myDialog.dismiss();
+            restockProduct(item.getProdId(),item.getStockedQuantity(), item.getProduct());
+        });
 
-        rlDeleteCatalogue.setOnClickListener(view -> deleteProduct(item.getProdId(), view));
+        rlDeleteCatalogue.setOnClickListener(view -> deleteProduct(item.getProdId(), myDialog));
 
         myDialog.show();
     }
 
-    private void deleteProduct(String productId, View view) {
+    private void restockProduct(String prodId, int stockedQuantity, String product) {
+
+        Dialog dialog = new Dialog(requireActivity());
+        dialog.setContentView(R.layout.restock_catalogue_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+
+        TextView productName = dialog.findViewById(R.id.tv_product);
+        productName.setText(product);
+        EditText editText = dialog.findViewById(R.id.edt_quantity);
+
+        TextView cancel = dialog.findViewById(R.id.tv_cancel);
+        cancel.setOnClickListener(view -> dialog.dismiss());
+
+        Button restockBtn = dialog.findViewById(R.id.btn_restock_item);
+        restockBtn.setOnClickListener(view -> {
+            if (validator.validateEditTextFields(getActivity(), editText, "Product quantity")) {
+                reference.child(prodId).child("").setValue(10).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) dialog.dismiss();
+                    }
+                });
+            }
+        });
+    }
+
+    private void deleteProduct(String productId, Dialog dialog) {
         reference.child(productId).setValue(null).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 customDialogs.showSnackBar(requireActivity(), "Item successfully deleted.");
-                Navigation.findNavController(view).navigate(R.id.catalogueItemsFragment);
+                dialog.dismiss();
+                getCatalogueData();
             }
 
         }).addOnFailureListener(e -> {

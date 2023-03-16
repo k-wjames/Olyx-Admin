@@ -56,6 +56,8 @@
     <string name="debtors">Lending list</string>
     <string name="credit_sales">Credit sales</string>
     <string name="search_credit_sales">search by phone</string>
+    <string name="new_sale">New sale</string>
+    <string name="restock_product">Restock product</string>
 
     <string-array name="stockItems">
         <item>Select category</item>

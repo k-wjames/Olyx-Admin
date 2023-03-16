@@ -19,7 +19,7 @@ public class ValidateFields {
             return true;
         } else {
             editText.setHint("This field cannot be empty ");
-            editText.setHintTextColor(activity.getResources().getColor(R.color.accent));
+            editText.setHintTextColor(activity.getResources().getColor(R.color.text));
             return false;
         }
     }
@@ -30,11 +30,11 @@ public class ValidateFields {
             return true;
         } else if (!email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editText.setHint("Please use a valid email address");
-            editText.setHintTextColor(activity.getResources().getColor(R.color.accent));
+            editText.setHintTextColor(activity.getResources().getColor(R.color.text));
             return false;
         } else {
             editText.setHint("This field cannot be empty");
-            editText.setHintTextColor(activity.getResources().getColor(R.color.accent));
+            editText.setHintTextColor(activity.getResources().getColor(R.color.text));
             return false;
         }
     }

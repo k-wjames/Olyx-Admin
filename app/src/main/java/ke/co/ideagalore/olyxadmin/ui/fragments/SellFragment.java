@@ -26,9 +26,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,6 +60,8 @@ public class SellFragment extends Fragment implements View.OnClickListener {
     static ArrayList<Transaction> myTransactionArray = new ArrayList<>();
     ArrayList<Catalogue> catalogueArrayList = new ArrayList<>();
     Map<String, Object> catalogueUpdateList=new HashMap<>();
+
+    List<Catalogue>catalogueList=new ArrayList<>();
 
     TransactionItem transactionItem;
 
@@ -114,6 +113,36 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    /*private void getCatalogueData() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot catalogueSnapshot: snapshot.getChildren()){
+                    Catalogue catalogue=catalogueSnapshot.getValue(Catalogue.class);
+                    catalogueList.add(0,catalogue);
+
+                }
+
+                binding.rvSales.setLayoutManager(new LinearLayoutManager(getActivity()));
+                binding.rvSales.setHasFixedSize(true);
+                CatalogueAdapter adapter = new CatalogueAdapter(catalogueList, new CatalogueAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Catalogue item) {
+                        Toast.makeText(requireActivity(), item.getProduct(), Toast.LENGTH_LONG).show();
+                    }
+                });
+                binding.rvSales.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }*/
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view) {
@@ -152,6 +181,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
 
+                    assert catalogue != null;
                     int stock = catalogue.getStockedQuantity();
 
                     if (stock > 0) {
@@ -168,6 +198,14 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                             int soldStock=catalogueArrayList.get(i).getSoldItems();
 
                             transactionItem = new TransactionItem();
+
+                            transactionItem.setMarkedPrice(price);
+                            transactionItem.setProduct(prod);
+                            transactionItem.setBuyingPrice(buyingPrice);
+                            transactionItem.setAvailableStock(stockedQuantity);
+                            transactionItem.setSoldStock(soldStock);
+                            transactionItem.setProductId(catalogueId);
+
                             if (category.equals("New Gas") && stockedQuantity!=soldStock) {
 
                                 transactionItem.setMarkedPrice(price);
@@ -214,7 +252,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-
     private void refillGasDialog(String transType) {
 
         if (myGasRefillArray.size() == 0) {
@@ -527,27 +564,33 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 String terminal = transactions[i].getTerminalId();
                 DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Sales");
                 myRef.child(key).setValue(transaction).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                       for (int k=0; k<transactions.length;k++){
-                               String productId = transaction.getProductId();
-                               int updatedStock = transaction.getUpdatedStock();
-
-                               DatabaseReference myRef1 = FirebaseDatabase.getInstance().getReference("Users").
-                                       child(terminal).child("Catalogue").child(transaction.getProductId()).child("soldItems");
-                               myRef1.setValue(updatedStock).addOnCompleteListener(task1 -> {
-                                   if (task1.isSuccessful()) {
-
-                                       myTransactionArray.clear();
-                                   }
-                               });
-
-                           }
-                       }
                 });
 
             }
+
+            for (Transaction trans:transactions){
+                String productId = trans.getProductId();
+                int updatedStock = trans.getUpdatedStock();
+                String terminal=trans.getTerminalId();
+
+                DatabaseReference myRef1 = FirebaseDatabase.getInstance().getReference("Users").
+                        child(terminal).child("Catalogue").child(productId).child("soldItems");
+                myRef1.setValue(updatedStock).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+
+                        myTransactionArray.clear();
+                    }
+                });
+
+            }
+
             return null;
         }
+
+        private void updateCatalogue(Transaction[] transactions) {
+
+        }
+
 
         @Override
         protected void onPostExecute(Void unused) {

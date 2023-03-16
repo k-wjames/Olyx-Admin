@@ -21,14 +21,14 @@
             android:id="@+id/tv_dash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/lato"
-            android:text="@string/transact"
+            android:text="@string/new_sale"
             android:textColor="@color/text"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_centerInParent="true"
-            android:layout_alignParentStart="true"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -39,7 +39,8 @@
         android:layout_below="@+id/layer_one"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:visibility="visible">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_refill"
@@ -91,9 +92,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_sales"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/layer_two"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/layer_bottom"/>
 
     <RelativeLayout
         android:id="@+id/layer_bottom"

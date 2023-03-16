@@ -14,40 +14,61 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/lato"
-            android:text="Select action"
-            android:textColor="@color/text"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="Select action"
+                android:textColor="@color/text"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"
+                android:layout_alignParentStart="true"/>
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/dialog_edt_background"
+                android:src="@drawable/ic_add"
+                app:tint="@color/buttonBg"
+                android:padding="8dp"/>
+
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_update_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/spinner_background">
+            android:background="@drawable/dialog_edt_background">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
-                android:text="Catalogue Item Update"
-                android:textColor="@color/text"
-                android:textStyle="bold"
-                android:padding="10dp"
+                android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
-                android:layout_alignParentStart="true"/>
+                android:fontFamily="@font/lato"
+                android:padding="10dp"
+                android:text="Update product"
+                android:textColor="@color/text"
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_next"
+                android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_alignParentEnd="true"/>
+                android:src="@drawable/ic_next"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 
@@ -56,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/spinner_background">
+            android:background="@drawable/dialog_edt_background">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,16 +86,17 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/lato"
                 android:padding="10dp"
-                android:text="Restock Catalogue Item"
+                android:text="Restock product"
                 android:textColor="@color/text"
                 android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_next"
+                android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_alignParentEnd="true" />
+                android:src="@drawable/ic_next"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 
@@ -83,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/spinner_background">
+            android:background="@drawable/dialog_edt_background">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -92,7 +114,7 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/lato"
                 android:padding="10dp"
-                android:text="Delete Catalogue Item"
+                android:text="Delete product"
                 android:textColor="@color/text"
                 android:textStyle="bold" />
 
@@ -101,7 +123,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_next"
                 android:layout_centerInParent="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 

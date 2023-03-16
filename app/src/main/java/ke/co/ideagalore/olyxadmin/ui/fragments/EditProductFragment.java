@@ -2,6 +2,7 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -86,8 +87,10 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        if (view == binding.tvDelete) {
+        if (view == binding.btnEditItem) {
             updateItemData(productId);
+        }else if (view==binding.tvDelete){
+            deleteProduct(productId);
         }
     }
 
@@ -198,9 +201,21 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
 
     }
 
-    private void resetViews() {
+    private void deleteProduct(String productId) {
+        reference.child(productId).setValue(null).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                customDialogs.showSnackBar(requireActivity(), "Item successfully deleted.");
+                resetViews();
+            }
 
+        }).addOnFailureListener(e -> {
+            customDialogs.showSnackBar(requireActivity(), e.getMessage());
+        });
+    }
+
+    private void resetViews() {
         binding.spinnerCategory.setSelection(0);
+        binding.spinnerShop.setSelection(0);
         binding.edtProduct.setText(null);
         binding.edtBuyingPrice.setText(0 + "");
         binding.edtMarkedPrice.setText(0 + "");
