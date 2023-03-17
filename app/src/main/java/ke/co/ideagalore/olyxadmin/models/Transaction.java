@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class Transaction implements Parcelable {
+public class Transaction {
 
     String transactionId, transactionType, productId, product, store, time, attendant, terminalId;
     int quantity, buyingPrice, sellingPrice, totalPrice, profit, updatedStock;
@@ -52,17 +52,6 @@ public class Transaction implements Parcelable {
         date = in.readLong();
     }
 
-    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
-        @Override
-        public Transaction createFromParcel(Parcel in) {
-            return new Transaction(in);
-        }
-
-        @Override
-        public Transaction[] newArray(int size) {
-            return new Transaction[size];
-        }
-    };
 
     public int getUpdatedStock() {
         return updatedStock;
@@ -182,29 +171,5 @@ public class Transaction implements Parcelable {
 
     public void setDate(long date) {
         this.date = date;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeString(transactionId);
-        parcel.writeString(transactionType);
-        parcel.writeString(productId);
-        parcel.writeString(product);
-        parcel.writeString(store);
-        parcel.writeString(time);
-        parcel.writeString(attendant);
-        parcel.writeString(terminalId);
-        parcel.writeInt(quantity);
-        parcel.writeInt(buyingPrice);
-        parcel.writeInt(sellingPrice);
-        parcel.writeInt(totalPrice);
-        parcel.writeInt(profit);
-        parcel.writeInt(updatedStock);
-        parcel.writeLong(date);
     }
 }
