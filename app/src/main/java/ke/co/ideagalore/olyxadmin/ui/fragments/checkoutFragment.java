@@ -33,7 +33,5 @@ public class checkoutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle bundle = requireActivity().getIntent().getExtras();
-        ArrayList<Transaction> arraylist = bundle.getParcelableArrayList("mylist");
     }
 }

@@ -1,23 +1,15 @@
 package ke.co.ideagalore.olyxadmin.ui.activities;
 
 import android.os.Bundle;
-import android.util.ArrayMap;
 import android.util.Base64;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.models.AccessToken;
@@ -26,8 +18,6 @@ import ke.co.ideagalore.olyxadmin.models.MpesaQuery;
 import ke.co.ideagalore.olyxadmin.models.MpesaQueryResponse;
 import ke.co.ideagalore.olyxadmin.models.STKPush;
 import ke.co.ideagalore.olyxadmin.models.STKResponse;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,7 +28,6 @@ public class MPesa extends AppCompatActivity {
 
     TextView textView;
     String token;
-    RequestQueue mRequestQue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +35,6 @@ public class MPesa extends AppCompatActivity {
         setContentView(R.layout.activity_mpesa);
         textView = findViewById(R.id.tvToken);
         getAccessToken();
-
-        mRequestQue = Volley.newRequestQueue(this);
     }
 
     private void getAccessToken() {

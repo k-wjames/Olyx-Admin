@@ -162,9 +162,6 @@
             android:id="@+id/action_checkoutFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             app:popUpTo="@id/mainFragment"/>
-        <argument
-            android:name="transactionArray"
-            app:argType="ke.co.ideagalore.olyxadmin.models.Transaction[]" />
         <action
             android:id="@+id/action_checkoutFragment_self"
             app:destination="@id/checkoutFragment"
