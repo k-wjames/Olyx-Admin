@@ -136,7 +136,6 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
             catalogue.setBuyingPrice(Integer.parseInt(binding.edtBuyingPrice.getText().toString()));
             catalogue.setMarkedPrice(Integer.parseInt(binding.edtMarkedPrice.getText().toString()));
             catalogue.setProduct(binding.edtProduct.getText().toString());
-            catalogue.setAvailableItems(0);
             catalogue.setSoldItems(0);
             catalogue.setStockedQuantity(Integer.parseInt(binding.edtStocked.getText().toString()));
             reference.child(productId).setValue(catalogue).addOnCompleteListener(task -> {

@@ -190,7 +190,7 @@ public class AddCatalogueFragment extends Fragment implements View.OnClickListen
         binding.edtProduct.setText("");
         binding.edtBuyingPrice.setText("");
         binding.edtMarkedPrice.setText("");
-        binding.edtStocked.setText("00");
+        binding.edtStocked.setText("");
     }
 
 }

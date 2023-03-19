@@ -3,14 +3,14 @@ package ke.co.ideagalore.olyxadmin.models;
 public class Catalogue {
 
     String prodId, product, category, shop;
-    int stockedQuantity, buyingPrice, markedPrice, availableItems, soldItems;
+    int stockedQuantity, buyingPrice, markedPrice,  soldItems;
 
     public Catalogue() {
     }
 
     public Catalogue(String prodId, String product, String category, String shop,
                      int stockedQuantity, int buyingPrice, int markedPrice,
-                     int availableItems, int soldItems) {
+                      int soldItems) {
         this.prodId = prodId;
         this.product = product;
         this.category = category;
@@ -18,7 +18,6 @@ public class Catalogue {
         this.stockedQuantity = stockedQuantity;
         this.buyingPrice = buyingPrice;
         this.markedPrice = markedPrice;
-        this.availableItems = availableItems;
         this.soldItems = soldItems;
     }
 
@@ -76,14 +75,6 @@ public class Catalogue {
 
     public void setMarkedPrice(int markedPrice) {
         this.markedPrice = markedPrice;
-    }
-
-    public int getAvailableItems() {
-        return availableItems;
-    }
-
-    public void setAvailableItems(int availableItems) {
-        this.availableItems = availableItems;
     }
 
     public int getSoldItems() {

@@ -65,10 +65,9 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
     TransactionItem transactionItem;
 
-    int price, markedPrice, buyingPrice, soldStock;
-    static int stokedCatalogueItem;
+    int price, markedPrice, buyingPrice,stockedQuantity, soldStock;
 
-    String transactionType, selectedItem, store, name, terminal, businessName, prodId;
+    String transactionType, selectedItem, store, name, terminal, businessName, prodId, productCategory;
     long dateToday;
 
     Transaction transaction;
@@ -112,36 +111,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         binding.btnCheckOut.setOnClickListener(this);
 
     }
-
-    /*private void getCatalogueData() {
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot catalogueSnapshot: snapshot.getChildren()){
-                    Catalogue catalogue=catalogueSnapshot.getValue(Catalogue.class);
-                    catalogueList.add(0,catalogue);
-
-                }
-
-                binding.rvSales.setLayoutManager(new LinearLayoutManager(getActivity()));
-                binding.rvSales.setHasFixedSize(true);
-                CatalogueAdapter adapter = new CatalogueAdapter(catalogueList, new CatalogueAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Catalogue item) {
-                        Toast.makeText(requireActivity(), item.getProduct(), Toast.LENGTH_LONG).show();
-                    }
-                });
-                binding.rvSales.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -199,39 +168,33 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
                             transactionItem = new TransactionItem();
 
-                            transactionItem.setMarkedPrice(price);
-                            transactionItem.setProduct(prod);
-                            transactionItem.setBuyingPrice(buyingPrice);
-                            transactionItem.setAvailableStock(stockedQuantity);
-                            transactionItem.setSoldStock(soldStock);
-                            transactionItem.setProductId(catalogueId);
-
                             if (category.equals("New Gas") && stockedQuantity!=soldStock) {
-
+                                myGasArray.clear();
                                 transactionItem.setMarkedPrice(price);
                                 transactionItem.setProduct(prod);
                                 transactionItem.setBuyingPrice(buyingPrice);
-                                transactionItem.setAvailableStock(stockedQuantity);
+                                transactionItem.setTotalStock(stockedQuantity);
                                 transactionItem.setSoldStock(soldStock);
                                 transactionItem.setProductId(catalogueId);
 
                                 myGasArray.add(transactionItem);
 
                             } else if (category.equals("Accessories")&& stockedQuantity!=soldStock) {
+                                myAccessoriesArray.clear();
                                 transactionItem.setMarkedPrice(price);
                                 transactionItem.setProduct(prod);
                                 transactionItem.setBuyingPrice(buyingPrice);
-                                transactionItem.setAvailableStock(stockedQuantity);
+                                transactionItem.setTotalStock(stockedQuantity);
                                 transactionItem.setSoldStock(soldStock);
                                 transactionItem.setProductId(catalogueId);
-
                                 myAccessoriesArray.add(transactionItem);
 
                             } else if (category.equals("Gas Refill")&& stockedQuantity!=soldStock){
+                                myGasRefillArray.clear();
                                 transactionItem.setMarkedPrice(price);
                                 transactionItem.setProduct(prod);
                                 transactionItem.setBuyingPrice(buyingPrice);
-                                transactionItem.setAvailableStock(stockedQuantity);
+                                transactionItem.setTotalStock(stockedQuantity);
                                 transactionItem.setSoldStock(soldStock);
                                 transactionItem.setProductId(catalogueId);
 
@@ -282,7 +245,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 TransactionItem item = (TransactionItem) spinner.getSelectedItem();
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
-                stokedCatalogueItem = item.getAvailableStock();
+                stockedQuantity = item.getTotalStock();
                 soldStock=item.getSoldStock();
                 prodId=item.getProductId();
                 edtPrice.setText(String.valueOf(markedPrice));
@@ -334,7 +297,9 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             transaction.setBuyingPrice(buyingPrice);
             transaction.setSellingPrice(pricePerUnit);
             transaction.setTransactionType(transType);
-            transaction.setUpdatedStock(soldStock+unitsSold);
+            int totalUnitsSold=soldStock+unitsSold;
+            transaction.setUpdatedStock(totalUnitsSold);
+            transaction.setStockedQuantity(stockedQuantity-totalUnitsSold);
             myTransactionArray.add(transaction);
 
 
@@ -380,9 +345,10 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 TransactionItem item = (TransactionItem) spinner.getSelectedItem();
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
-                stokedCatalogueItem = item.getAvailableStock();
+                stockedQuantity = item.getTotalStock();
                 soldStock=item.getSoldStock();
-                edtPrice.setText(markedPrice + "");
+                prodId=item.getProductId();
+                edtPrice.setText(String.valueOf(markedPrice));
             }
 
             @Override
@@ -431,7 +397,9 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             transaction.setBuyingPrice(buyingPrice);
             transaction.setSellingPrice(pricePerUnit);
             transaction.setTransactionType(transType);
-            transaction.setUpdatedStock(soldStock+unitsSold);
+            int totalUnitsSold=soldStock+unitsSold;
+            transaction.setUpdatedStock(totalUnitsSold);
+            transaction.setStockedQuantity(stockedQuantity-totalUnitsSold);
             myTransactionArray.add(transaction);
 
             int totalShillings = 0;
@@ -473,9 +441,10 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 TransactionItem item = (TransactionItem) spinner.getSelectedItem();
                 markedPrice = item.getMarkedPrice();
                 buyingPrice = item.getBuyingPrice();
-                stokedCatalogueItem = item.getAvailableStock();
+                stockedQuantity = item.getTotalStock();
                 soldStock=item.getSoldStock();
-                edtPrice.setText(markedPrice + "");
+                prodId=item.getProductId();
+                edtPrice.setText(String.valueOf(markedPrice));
             }
 
             @Override
@@ -524,7 +493,9 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             transaction.setBuyingPrice(buyingPrice);
             transaction.setSellingPrice(pricePerUnit);
             transaction.setTransactionType(transType);
-            transaction.setUpdatedStock(soldStock+unitsSold);
+            int totalUnitsSold=soldStock+unitsSold;
+            transaction.setUpdatedStock(totalUnitsSold);
+            transaction.setStockedQuantity(stockedQuantity-totalUnitsSold);
             myTransactionArray.add(transaction);
 
             int totalShillings = 0;
@@ -564,22 +535,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 String terminal = transactions[i].getTerminalId();
                 DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Transactions").child("Sales");
                 myRef.child(key).setValue(transaction).addOnCompleteListener(task -> {
-                });
 
-            }
-
-            for (Transaction trans:transactions){
-                String productId = trans.getProductId();
-                int updatedStock = trans.getUpdatedStock();
-                String terminal=trans.getTerminalId();
-
-                DatabaseReference myRef1 = FirebaseDatabase.getInstance().getReference("Users").
-                        child(terminal).child("Catalogue").child(productId).child("soldItems");
-                myRef1.setValue(updatedStock).addOnCompleteListener(task1 -> {
-                    if (task1.isSuccessful()) {
-
-                        myTransactionArray.clear();
-                    }
                 });
 
             }
@@ -587,19 +543,52 @@ public class SellFragment extends Fragment implements View.OnClickListener {
             return null;
         }
 
-        private void updateCatalogue(Transaction[] transactions) {
-
-        }
-
-
         @Override
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
-
             SellFragment fragment = weakReference.get();
             if (fragment == null || fragment.isRemoving()) return;
-            dialogs.dismissProgressDialog();
-            Navigation.findNavController(weakReference.get().requireView()).navigate(R.id.mainFragment);
+            updateStock(myTransactionArray,fragment);
+
+        }
+
+        private void updateStock(ArrayList<Transaction> myTransactionArray, SellFragment fragment) {
+
+            for (Transaction trans:myTransactionArray){
+                int buyingPrice=trans.getBuyingPrice();
+                int markedPrice=trans.getSellingPrice();
+                String productId=trans.getProductId();
+                String product=trans.getProduct();
+                String shop=trans.getStore();
+                String category=trans.getTransactionType();
+
+                int updatedStock=trans.getUpdatedStock();
+                int availableStock=trans.getStockedQuantity();
+                String terminalId=trans.getTerminalId();
+                Toast.makeText(fragment.requireActivity(), "Updating "+updatedStock+" for id :"+productId, Toast.LENGTH_SHORT).show();
+                DatabaseReference myRef1 = FirebaseDatabase.getInstance().getReference("Users").
+                        child(terminalId).child("Catalogue").child(productId);
+
+                Catalogue catalogue=new Catalogue();
+                catalogue.setShop(shop);
+                catalogue.setProduct(product);
+                catalogue.setProdId(productId);
+                catalogue.setBuyingPrice(buyingPrice);
+                catalogue.setMarkedPrice(markedPrice);
+                catalogue.setCategory(category);
+                catalogue.setStockedQuantity(availableStock);
+                catalogue.setSoldItems(updatedStock);
+
+                myRef1.setValue(catalogue).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+
+                        myTransactionArray.clear();
+                        dialogs.dismissProgressDialog();
+                        Navigation.findNavController(fragment.requireView()).navigate(R.id.mainFragment);
+                    }
+                });
+
+            }
         }
     }
 

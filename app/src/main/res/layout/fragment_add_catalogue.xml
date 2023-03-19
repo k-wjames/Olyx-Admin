@@ -231,19 +231,19 @@
                         android:textCursorDrawable="@null"
                         android:textSize="14sp" />
 
-
                     <Button
                         android:id="@+id/btn_add_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:fontFamily="@font/lato"
                         android:padding="10dp"
                         android:text="@string/add_catalogue_item"
                         android:textAllCaps="false"
-                        android:textColor="@color/buttonBg"
-                        app:backgroundTint="@color/black"
-                        android:layout_gravity="end"/>
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/buttonBg"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="20dp"/>
 
 
                 </LinearLayout>

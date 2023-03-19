@@ -1,22 +1,18 @@
 package ke.co.ideagalore.olyxadmin.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 public class Transaction {
 
     String transactionId, transactionType, productId, product, store, time, attendant, terminalId;
-    int quantity, buyingPrice, sellingPrice, totalPrice, profit, updatedStock;
+    int quantity, buyingPrice, sellingPrice, totalPrice, profit, stockedQuantity, updatedStock;
     long date;
 
     public Transaction() {
     }
 
     public Transaction(String transactionId, String transactionType, String productId, String product,
-                       String store, String time, String attendant, String terminalId, int quantity,
-                       int buyingPrice, int sellingPrice, int totalPrice, int profit, long date,int updatedStock) {
+                       String store, String time, String attendant, String terminalId,
+                       int quantity, int buyingPrice, int sellingPrice, int totalPrice, int profit,
+                       int stockedQuantity, int updatedStock, long date) {
         this.transactionId = transactionId;
         this.transactionType = transactionType;
         this.productId = productId;
@@ -30,35 +26,9 @@ public class Transaction {
         this.sellingPrice = sellingPrice;
         this.totalPrice = totalPrice;
         this.profit = profit;
+        this.stockedQuantity = stockedQuantity;
+        this.updatedStock = updatedStock;
         this.date = date;
-        this.updatedStock = updatedStock;
-    }
-
-    protected Transaction(Parcel in) {
-        transactionId = in.readString();
-        transactionType = in.readString();
-        productId = in.readString();
-        product = in.readString();
-        store = in.readString();
-        time = in.readString();
-        attendant = in.readString();
-        terminalId = in.readString();
-        quantity = in.readInt();
-        buyingPrice = in.readInt();
-        sellingPrice = in.readInt();
-        totalPrice = in.readInt();
-        profit = in.readInt();
-        updatedStock = in.readInt();
-        date = in.readLong();
-    }
-
-
-    public int getUpdatedStock() {
-        return updatedStock;
-    }
-
-    public void setUpdatedStock(int updatedStock) {
-        this.updatedStock = updatedStock;
     }
 
     public String getTransactionId() {
@@ -163,6 +133,22 @@ public class Transaction {
 
     public void setProfit(int profit) {
         this.profit = profit;
+    }
+
+    public int getStockedQuantity() {
+        return stockedQuantity;
+    }
+
+    public void setStockedQuantity(int stockedQuantity) {
+        this.stockedQuantity = stockedQuantity;
+    }
+
+    public int getUpdatedStock() {
+        return updatedStock;
+    }
+
+    public void setUpdatedStock(int updatedStock) {
+        this.updatedStock = updatedStock;
     }
 
     public long getDate() {

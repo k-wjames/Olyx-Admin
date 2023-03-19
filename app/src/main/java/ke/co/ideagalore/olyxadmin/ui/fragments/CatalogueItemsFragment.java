@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -197,6 +198,9 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         RelativeLayout rlUpdateCatalogue = myDialog.findViewById(R.id.rl_update_item);
         RelativeLayout rlRestockCatalogue = myDialog.findViewById(R.id.rl_restock_item);
         RelativeLayout rlDeleteCatalogue = myDialog.findViewById(R.id.rl_delete_item);
+
+        ImageView imageView=myDialog.findViewById(R.id.iv_cancel);
+        imageView.setOnClickListener(view -> myDialog.dismiss());
 
         rlUpdateCatalogue.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
