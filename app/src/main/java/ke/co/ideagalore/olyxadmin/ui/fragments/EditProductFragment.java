@@ -2,7 +2,6 @@ package ke.co.ideagalore.olyxadmin.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,13 +35,17 @@ import ke.co.ideagalore.olyxadmin.models.Stores;
 public class EditProductFragment extends Fragment implements View.OnClickListener {
     FragmentEditProductBinding binding;
     String terminal, productCategory, product, productId, selectedItem,selectedShop,shop;
-    int bPrice, sPrice, numberStoked;
+    int bPrice, sPrice, numberStoked, availableStock, soldStock;
     DatabaseReference reference;
 
     CustomDialogs customDialogs = new CustomDialogs();
     ValidateFields validator = new ValidateFields();
 
     List<String> storesList = new ArrayList<>();
+
+    ArrayAdapter<String> categoryAdapter, shopAdapter;
+
+    String[] category;
 
     public EditProductFragment() {
 
@@ -58,11 +62,12 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getPreferenceData();
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
         getBundleData();
         getStoresData();
 
-        String[] category = new String[]{"Gas Refill", "New Gas", "Accessories"};
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(),
+        category = new String[]{"Gas Refill", "New Gas", "Accessories"};
+        categoryAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item,
                 category);
         categoryAdapter.setDropDownViewResource(R.layout.spinner_item);
@@ -79,7 +84,11 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         });
         binding.spinnerCategory.setAdapter(categoryAdapter);
 
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
+        shopAdapter = new ArrayAdapter<>(requireActivity(),
+                android.R.layout.simple_spinner_item,
+                storesList);
+        shopAdapter.setDropDownViewResource(R.layout.spinner_item);
+
         binding.tvDelete.setOnClickListener(this);
         binding.btnEditItem.setOnClickListener(this);
     }
@@ -88,7 +97,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view == binding.btnEditItem) {
-            updateItemData(productId);
+            updateItemData(productId, availableStock, soldStock);
         }else if (view==binding.tvDelete){
             deleteProduct(productId);
         }
@@ -109,12 +118,13 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
             numberStoked = arguments.getInt("stockedItems");
             productId = arguments.get("productId").toString();
             shop=arguments.get("shop").toString();
+            availableStock=arguments.getInt("availableStock");
+            soldStock=arguments.getInt("soldItems");
             setViews(productCategory,shop,product, bPrice, sPrice, numberStoked);
         }
     }
 
     private void setViews(String productCategory,String shop,String product, int bPrice, int sPrice, int numberStoked) {
-
         binding.spinnerCategory.setSelection(binding.spinnerCategory.getSelectedItemPosition());
         binding.spinnerShop.setSelection(binding.spinnerShop.getSelectedItemPosition());
         binding.edtProduct.setText(product);
@@ -123,7 +133,7 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
         binding.edtStocked.setText(String.valueOf(numberStoked));
     }
 
-    private void updateItemData(String productId) {
+    private void updateItemData(String productId, int availableStock, int soldStock) {
 
         if (validator.validateEditTextFields(getActivity(), binding.edtProduct, "Product")
                 && validator.validateEditTextFields(getActivity(), binding.edtBuyingPrice, "Buying price")
@@ -136,7 +146,8 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
             catalogue.setBuyingPrice(Integer.parseInt(binding.edtBuyingPrice.getText().toString()));
             catalogue.setMarkedPrice(Integer.parseInt(binding.edtMarkedPrice.getText().toString()));
             catalogue.setProduct(binding.edtProduct.getText().toString());
-            catalogue.setSoldItems(0);
+            catalogue.setSoldItems(soldStock);
+            catalogue.setAvailableStock(availableStock);
             catalogue.setStockedQuantity(Integer.parseInt(binding.edtStocked.getText().toString()));
             reference.child(productId).setValue(catalogue).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -168,10 +179,6 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
                         return;
                     }
 
-                    ArrayAdapter<String> shopAdapter = new ArrayAdapter<>(requireActivity(),
-                            android.R.layout.simple_spinner_item,
-                            storesList);
-                    shopAdapter.setDropDownViewResource(R.layout.spinner_item);
                     binding.spinnerShop.setAdapter(shopAdapter);
                     binding.spinnerShop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

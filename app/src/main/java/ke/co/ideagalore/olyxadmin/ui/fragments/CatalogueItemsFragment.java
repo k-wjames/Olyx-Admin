@@ -29,7 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.CatalogueAdapter;
@@ -211,13 +213,15 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
             bundle.putInt("buyingPrice", item.getBuyingPrice());
             bundle.putInt("sellingPrice", item.getMarkedPrice());
             bundle.putString("shop", item.getShop());
+            bundle.putInt("availableStock",item.getAvailableStock());
+            bundle.putInt("soldItems", item.getSoldItems());
             myDialog.dismiss();
             Navigation.findNavController(CatalogueItemsFragment.this.requireView()).navigate(R.id.editProductFragment, bundle);
         });
 
         rlRestockCatalogue.setOnClickListener(view -> {
             myDialog.dismiss();
-            restockProduct(item.getProdId(),item.getStockedQuantity(), item.getProduct());
+            restockProduct(item.getProdId(),item.getStockedQuantity(), item.getAvailableStock(), item.getSoldItems(), item.getProduct());
         });
 
         rlDeleteCatalogue.setOnClickListener(view -> deleteProduct(item.getProdId(), myDialog));
@@ -225,7 +229,7 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         myDialog.show();
     }
 
-    private void restockProduct(String prodId, int stockedQuantity, String product) {
+    private void restockProduct(String prodId, int stockedQuantity, int availableStock,int soldItems, String product) {
 
         Dialog dialog = new Dialog(requireActivity());
         dialog.setContentView(R.layout.restock_catalogue_dialog);
@@ -244,10 +248,36 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
         Button restockBtn = dialog.findViewById(R.id.btn_restock_item);
         restockBtn.setOnClickListener(view -> {
             if (validator.validateEditTextFields(getActivity(), editText, "Product quantity")) {
-                reference.child(prodId).child("").setValue(10).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) dialog.dismiss();
+
+                int newStock=Integer.parseInt(editText.getText().toString());
+                int updatedAvailableItems=availableStock+newStock;
+                int updatedSoldItems;
+                int updatedStockedQuantity;
+
+                if (newStock>soldItems){
+                    updatedSoldItems=0;
+                }else {
+                    updatedSoldItems=soldItems-newStock;
+                }
+
+                if (updatedSoldItems==0){
+                    updatedStockedQuantity=updatedAvailableItems;
+                }else {
+                    updatedStockedQuantity=updatedAvailableItems+updatedSoldItems;
+                }
+
+
+                Map<String, Object>map=new HashMap<>();
+                map.put("soldItems",updatedSoldItems);
+                map.put("availableStock",updatedAvailableItems);
+                map.put("stockedQuantity",updatedStockedQuantity);
+
+                reference.child(prodId).updateChildren(map).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+
+                        customDialogs.showSnackBar(requireActivity(), "Item successfully restocked.");
+                        dialog.dismiss();
+                        getCatalogueData();
                     }
                 });
             }

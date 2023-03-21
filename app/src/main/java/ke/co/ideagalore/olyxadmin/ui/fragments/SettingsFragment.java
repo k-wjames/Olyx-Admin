@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -254,7 +255,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     Attendant attendant = attendantsSnapshot.getValue(Attendant.class);
                     attendantList.add(attendant);
                 }
-                AttendantsAdapter adapter = new AttendantsAdapter(attendantList);
+                AttendantsAdapter adapter = new AttendantsAdapter(attendantList, new AttendantsAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Attendant attendant) {
+                        //Implement attendant termination and transfars
+                        Toast.makeText(requireActivity(), attendant.getAttendant(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 binding.rvAttendants.setLayoutManager(new LinearLayoutManager(getActivity()));
                 binding.rvAttendants.setHasFixedSize(true);
                 binding.rvAttendants.setAdapter(adapter);

@@ -26,6 +26,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,9 +61,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
     ArrayList<TransactionItem> myGasArray, myAccessoriesArray, myGasRefillArray;
     static ArrayList<Transaction> myTransactionArray = new ArrayList<>();
     ArrayList<Catalogue> catalogueArrayList = new ArrayList<>();
-    Map<String, Object> catalogueUpdateList=new HashMap<>();
-
-    List<Catalogue>catalogueList=new ArrayList<>();
 
     TransactionItem transactionItem;
 
@@ -165,10 +164,11 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                             int buyingPrice = catalogueArrayList.get(i).getBuyingPrice();
                             int stockedQuantity = catalogueArrayList.get(i).getStockedQuantity();
                             int soldStock=catalogueArrayList.get(i).getSoldItems();
+                            int availableStock=catalogueArrayList.get(i).getAvailableStock();
 
                             transactionItem = new TransactionItem();
 
-                            if (category.equals("New Gas") && stockedQuantity!=soldStock) {
+                            if (category.equals("New Gas") && soldStock!=stockedQuantity) {
                                 myGasArray.clear();
                                 transactionItem.setMarkedPrice(price);
                                 transactionItem.setProduct(prod);
@@ -179,7 +179,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
                                 myGasArray.add(transactionItem);
 
-                            } else if (category.equals("Accessories")&& stockedQuantity!=soldStock) {
+                            } else if (category.equals("Accessories") && soldStock!=stockedQuantity) {
                                 myAccessoriesArray.clear();
                                 transactionItem.setMarkedPrice(price);
                                 transactionItem.setProduct(prod);
@@ -189,7 +189,8 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                                 transactionItem.setProductId(catalogueId);
                                 myAccessoriesArray.add(transactionItem);
 
-                            } else if (category.equals("Gas Refill")&& stockedQuantity!=soldStock){
+                                //&& stockedQuantity!=soldStock
+                            } else if (category.equals("Gas Refill")  && soldStock!=stockedQuantity){
                                 myGasRefillArray.clear();
                                 transactionItem.setMarkedPrice(price);
                                 transactionItem.setProduct(prod);
@@ -579,14 +580,20 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 catalogue.setStockedQuantity(availableStock);
                 catalogue.setSoldItems(updatedStock);
 
-                myRef1.setValue(catalogue).addOnCompleteListener(task1 -> {
-                    if (task1.isSuccessful()) {
+                Map<String, Object>map=new HashMap<>();
+                map.put("availableStock",availableStock);
+                map.put("soldItems",updatedStock);
+                map.put("shop",shop);
+
+                myRef1.updateChildren(map).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
 
                         myTransactionArray.clear();
                         dialogs.dismissProgressDialog();
                         Navigation.findNavController(fragment.requireView()).navigate(R.id.mainFragment);
                     }
                 });
+
 
             }
         }

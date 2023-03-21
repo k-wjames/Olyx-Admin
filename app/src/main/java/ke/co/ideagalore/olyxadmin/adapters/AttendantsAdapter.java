@@ -15,10 +15,15 @@ import ke.co.ideagalore.olyxadmin.models.Attendant;
 
 public class AttendantsAdapter extends RecyclerView.Adapter<AttendantsAdapter.ViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(Attendant attendant);
+    }
     List<Attendant> attendants;
+    private final OnItemClickListener listener;
 
-    public AttendantsAdapter(List<Attendant> attendants) {
+    public AttendantsAdapter(List<Attendant> attendants, OnItemClickListener listener) {
         this.attendants = attendants;
+        this.listener = listener;
     }
 
     @NonNull
@@ -31,10 +36,13 @@ public class AttendantsAdapter extends RecyclerView.Adapter<AttendantsAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Attendant attendant=attendants.get(position);
         int pos=position+1;
+        holder.bind(pos,attendants.get(position), listener);
+        /*
+        Attendant attendant=attendants.get(position);
+
         holder.attendant.setText(pos+". "+attendant.getAttendant());
-        holder.store.setText(attendant.getStore());
+        holder.store.setText(attendant.getStore());*/
 
     }
 
@@ -44,11 +52,18 @@ public class AttendantsAdapter extends RecyclerView.Adapter<AttendantsAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView attendant, store;
+        TextView attendantName, store;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            attendant=itemView.findViewById(R.id.tv_attendant);
+            attendantName=itemView.findViewById(R.id.tv_attendant);
             store=itemView.findViewById(R.id.tv_store);
+        }
+
+        public void bind(int pos, final Attendant attendant, final OnItemClickListener listener) {
+
+            attendantName.setText(pos+". "+attendant.getAttendant());
+            store.setText(attendant.getStore());
+            itemView.setOnClickListener(v -> listener.onItemClick(attendant));
         }
     }
 }
