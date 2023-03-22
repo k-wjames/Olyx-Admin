@@ -12,15 +12,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +35,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ke.co.ideagalore.olyxadmin.R;
 import ke.co.ideagalore.olyxadmin.adapters.AttendantsAdapter;
@@ -49,9 +55,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     FragmentSettingsBinding binding;
     ValidateFields validator = new ValidateFields();
     CustomDialogs customDialogs = new CustomDialogs();
-    String business, terminal, name;
+    String business, terminal, name, selectedShop;
     Dialog myDialog;
     List<Stores> storesList = new ArrayList<>();
+
+    List<String> storeNames = new ArrayList<>();
     List<Attendant> attendantList = new ArrayList<>();
 
     public SettingsFragment() {
@@ -144,14 +152,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         });
 
     }
-
     private void clearSharedPrefs() {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
         sharedPreferences.edit().clear().apply();
         startActivity(new Intent(getActivity(), Onboard.class));
         getActivity().finish();
     }
-
     public void showAddStoreDialog() {
         myDialog = new Dialog(getActivity());
         myDialog.setContentView(R.layout.add_shop_dialog);
@@ -179,7 +185,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         });
     }
-
     private void addNewStore(String store, String location) {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Stores");
@@ -201,16 +206,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         });
 
     }
-
     private void getPreferenceData() {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Terminal", MODE_PRIVATE);
         business = sharedPreferences.getString("business", null);
         terminal = sharedPreferences.getString("terminal", null);
         name = sharedPreferences.getString("name", null);
 
-            binding.tvBusiness.setText("Enterprise:\n"+business);
-            binding.tvProprietor.setText("Hi "+name);
-            binding.tvTerminal.setText(terminal);
+        binding.tvBusiness.setText(business);
+        binding.tvProprietor.setText("Hi " + name + ",");
+        binding.tvTerminal.setText(terminal);
     }
 
     private void getStoresData() {
@@ -223,9 +227,18 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     Stores stores = storeSnapshot.getValue(Stores.class);
                     storesList.add(stores);
 
+                    String storeName = stores.getStore();
+                    storeNames.add(storeName);
+
                     if (storesList.size() >= 1) {
 
-                        StoreAdapter adapter = new StoreAdapter(storesList);
+                        StoreAdapter adapter = new StoreAdapter(storesList, store -> {
+                            Bundle bundle=new Bundle();
+                            bundle.putString("store", store.getStore());
+                            bundle.putString("storeId", store.getStoreId());
+                            bundle.putString("storeLocation", store.getLocation());
+                            Navigation.findNavController(requireView()).navigate(R.id.editStoreFragment,bundle);
+                        });
                         binding.rvStores.setLayoutManager(new LinearLayoutManager(getActivity()));
                         binding.rvStores.setHasFixedSize(true);
                         binding.rvStores.setAdapter(adapter);
@@ -251,17 +264,22 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                attendantList.clear();
+
                 for (DataSnapshot attendantsSnapshot : snapshot.getChildren()) {
+
                     Attendant attendant = attendantsSnapshot.getValue(Attendant.class);
-                    attendantList.add(attendant);
-                }
-                AttendantsAdapter adapter = new AttendantsAdapter(attendantList, new AttendantsAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Attendant attendant) {
-                        //Implement attendant termination and transfars
-                        Toast.makeText(requireActivity(), attendant.getAttendant(), Toast.LENGTH_SHORT).show();
+                    String status = attendant.getStatus();
+                    if (!status.equals("terminated")) {
+                        attendantList.add(attendant);
                     }
+                }
+                AttendantsAdapter adapter = new AttendantsAdapter(attendantList, outletAttendant -> {
+
+                    showManageAttendantDialog(outletAttendant, reference);
+
                 });
+
                 binding.rvAttendants.setLayoutManager(new LinearLayoutManager(getActivity()));
                 binding.rvAttendants.setHasFixedSize(true);
                 binding.rvAttendants.setAdapter(adapter);
@@ -275,6 +293,97 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+    }
+
+    private void showManageAttendantDialog(Attendant outletAttendant, DatabaseReference reference) {
+        Dialog dialog = new Dialog(requireActivity());
+        dialog.setContentView(R.layout.manage_attendant_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+
+        ImageView imageView = dialog.findViewById(R.id.iv_cancel);
+        imageView.setOnClickListener(view -> dialog.dismiss());
+
+        TextView attendantName = dialog.findViewById(R.id.tv_attendant);
+        attendantName.setText(outletAttendant.getAttendant());
+
+        TextView outletName = dialog.findViewById(R.id.tv_outlet);
+        outletName.setText(outletAttendant.getStore());
+
+        Button btnTerminate = dialog.findViewById(R.id.btn_terminate);
+        btnTerminate.setOnClickListener(view -> {
+            terminateAttendant(outletAttendant.getAttendantId(), reference, dialog);
+        });
+
+        Button btnTransfer = dialog.findViewById(R.id.btn_transfer);
+        btnTransfer.setOnClickListener(view -> transferAttendant(outletAttendant.getAttendantId(), reference, dialog));
+    }
+
+    private void transferAttendant(String attendantId, DatabaseReference reference, Dialog dialog) {
+        showStoresDialog(attendantId, reference, dialog);
+    }
+
+    private void showStoresDialog(String attendantId, DatabaseReference reference, Dialog dialog) {
+        dialog.dismiss();
+        Dialog storesDialog = new Dialog(requireActivity());
+        storesDialog.setContentView(R.layout.outlets_spinner_dialog);
+        storesDialog.setCanceledOnTouchOutside(false);
+        storesDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        storesDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        storesDialog.show();
+
+        ImageView ivCancel = storesDialog.findViewById(R.id.iv_cancel);
+        ivCancel.setOnClickListener(view -> storesDialog.dismiss());
+
+        Spinner spinnerShop = storesDialog.findViewById(R.id.spinner_shop);
+
+        ArrayAdapter<String> shopAdapter = new ArrayAdapter<>(requireActivity(),
+                android.R.layout.simple_spinner_item,
+                storeNames);
+        shopAdapter.setDropDownViewResource(R.layout.spinner_item);
+
+        spinnerShop.setAdapter(shopAdapter);
+        spinnerShop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedShop = spinnerShop.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        spinnerShop.setAdapter(shopAdapter);
+
+        Button commitTransfer = storesDialog.findViewById(R.id.btn_commit_transfer);
+        commitTransfer.setOnClickListener(view -> {
+
+            Map<String, Object> map=new HashMap<>();
+            map.put("store",selectedShop);
+            map.put("status","authenticate");
+            reference.child(attendantId).updateChildren(map).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    storesDialog.dismiss();
+                    customDialogs.showSnackBar(requireActivity(), "Outlet attendant successfully transferred.");
+                }
+            });
+
+        });
+    }
+
+    private void terminateAttendant(String attendantId, DatabaseReference reference, Dialog dialog) {
+        reference.child(attendantId).child("status").setValue("terminated").addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                customDialogs.showSnackBar(requireActivity(), "Outlet attendant successfully terminated.");
+                dialog.dismiss();
+                getAttendantsData();
+            }
+
+        });
+
     }
 
 

@@ -1,15 +1,16 @@
 package ke.co.ideagalore.olyxadmin.models;
 
 public class Attendant {
-    String attendant, attendantId, store;
+    String attendant, attendantId, store, status;
 
     public Attendant() {
     }
 
-    public Attendant(String attendant, String attendantId, String store) {
+    public Attendant(String attendant, String attendantId, String store, String status) {
         this.attendant = attendant;
         this.attendantId = attendantId;
         this.store = store;
+        this.status = status;
     }
 
     public String getAttendant() {
@@ -34,5 +35,13 @@ public class Attendant {
 
     public void setStore(String store) {
         this.store = store;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

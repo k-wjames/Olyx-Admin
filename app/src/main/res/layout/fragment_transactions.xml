@@ -14,37 +14,78 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/lato"
-            android:text="Transactions"
-            android:textColor="@color/text"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginTop="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/lato"
+                android:text="@string/transactions"
+                android:textColor="@color/text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_light_background"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:visibility="gone">
+
+                <Spinner
+                    android:id="@+id/spinner_shop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent"
+                    android:spinnerMode="dialog"
+                    tools:listitem="@layout/spinner_item" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="@color/cardLight">
+            android:layout_marginBottom="10dp">
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                app:defaultQueryHint="@string/search_transaction"
-                app:iconifiedByDefault="false"
-                app:queryBackground="@android:color/transparent"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/search_view_background">
 
-        </androidx.cardview.widget.CardView>
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    app:defaultQueryHint="@string/search_transaction"
+                    app:iconifiedByDefault="false"
+                    app:queryBackground="@android:color/transparent"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_filter"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/filter_background"
+                android:src="@drawable/filter_list"
+                app:tint="@color/buttonBg"
+                android:padding="5dp"/>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_transactions"

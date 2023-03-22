@@ -83,7 +83,6 @@ public class EditProductFragment extends Fragment implements View.OnClickListene
             }
         });
         binding.spinnerCategory.setAdapter(categoryAdapter);
-
         shopAdapter = new ArrayAdapter<>(requireActivity(),
                 android.R.layout.simple_spinner_item,
                 storesList);

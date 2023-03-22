@@ -33,7 +33,7 @@
     <string name="catalogue">Catalogue</string>
     <string name="item_category">item category</string>
     <string name="search_hint">search expenditure</string>
-    <string name="search_transaction">search by category</string>
+    <string name="search_transaction">search by product</string>
     <string name="logout_from_the_app">Logout from the app?</string>
     <string name="logout">Logout</string>
     <string name="not_now">Not now</string>
@@ -58,6 +58,20 @@
     <string name="search_credit_sales">search by phone</string>
     <string name="new_sale">New sale</string>
     <string name="restock_product">Restock product</string>
+    <string name="terminate">Terminate</string>
+    <string name="transfer">Transfer</string>
+    <string name="outlet_name">Outlet name</string>
+    <string name="outlet">Outlet</string>
+    <string name="attendant">Attendant</string>
+    <string name="attendant_name">Attendant name</string>
+    <string name="manage_attendant">Manage Attendant</string>
+    <string name="enterprise">Enterprise :</string>
+    <string name="select_outlet">Select outlet</string>
+    <string name="commit_this_transfer">Commit this transfer</string>
+    <string name="welcome_to">Welcome to:</string>
+    <string name="overview">Here\'s an overview of your business :</string>
+    <string name="transactions">Transactions</string>
+    <string name="filter_by_outlet">Filter by outlet</string>
 
     <string-array name="stockItems">
         <item>Select category</item>

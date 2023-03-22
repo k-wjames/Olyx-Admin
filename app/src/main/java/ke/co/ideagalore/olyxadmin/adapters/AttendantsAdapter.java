@@ -38,11 +38,6 @@ public class AttendantsAdapter extends RecyclerView.Adapter<AttendantsAdapter.Vi
 
         int pos=position+1;
         holder.bind(pos,attendants.get(position), listener);
-        /*
-        Attendant attendant=attendants.get(position);
-
-        holder.attendant.setText(pos+". "+attendant.getAttendant());
-        holder.store.setText(attendant.getStore());*/
 
     }
 

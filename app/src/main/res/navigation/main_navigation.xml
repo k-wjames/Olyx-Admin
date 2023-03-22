@@ -20,13 +20,16 @@
             app:popUpTo="@id/catalogueItemsFragment" />
         <action
             android:id="@+id/action_mainFragment_to_sellFragment"
-            app:destination="@id/sellFragment" />
+            app:destination="@id/sellFragment"
+            app:popUpTo="@id/sellFragment" />
         <action
             android:id="@+id/action_mainFragment_to_creditFragment"
-            app:destination="@id/creditFragment" />
+            app:destination="@id/creditFragment"
+            app:popUpTo="@id/creditFragment" />
         <action
             android:id="@+id/action_mainFragment_to_statisticsFragment"
-            app:destination="@id/statisticsFragment" />
+            app:destination="@id/statisticsFragment"
+            app:popUpTo="@id/statisticsFragment"/>
     </fragment>
 
     <fragment
@@ -40,7 +43,9 @@
             app:popUpTo="@id/editStoreFragment"/>
         <action
             android:id="@+id/action_settingsFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
+
     </fragment>
 
     <fragment
@@ -131,7 +136,8 @@
             app:popUpTo="@id/mainFragment"/>
         <action
             android:id="@+id/action_sellFragment_to_checkoutFragment"
-            app:destination="@id/checkoutFragment" />
+            app:destination="@id/checkoutFragment"
+            app:popUpTo="@id/checkoutFragment"/>
     </fragment>
     <fragment
         android:id="@+id/creditFragment"

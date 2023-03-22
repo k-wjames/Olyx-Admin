@@ -13,15 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ke.co.ideagalore.olyxadmin.R;
+import ke.co.ideagalore.olyxadmin.models.Attendant;
 import ke.co.ideagalore.olyxadmin.models.Stores;
 
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> {
     List<Stores>stores;
 
-    public StoreAdapter(List<Stores> stores) {
-        this.stores = stores;
+    public interface OnItemClickListener {
+        void onItemClick(Stores store);
     }
 
+    private final OnItemClickListener listener;
+    public StoreAdapter(List<Stores> stores, OnItemClickListener listener) {
+        this.stores = stores;
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -32,19 +38,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        Stores stores = this.stores.get(position);
         int pos=position+1;
-        holder.store.setText(pos+". "+ stores.getStore()+",");
-        holder.location.setText(stores.getLocation()+".");
-        holder.itemView.setOnClickListener(view -> {
-            Bundle bundle=new Bundle();
-            bundle.putString("store", stores.getStore());
-            bundle.putString("storeId", stores.getStoreId());
-            bundle.putString("storeLocation", stores.getLocation());
-            Navigation.findNavController(view).navigate(R.id.editStoreFragment,bundle);
+        holder.bind(pos,stores.get(position), listener);
 
-        });
     }
 
     @Override
@@ -53,14 +49,18 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         TextView store, location;
-        ImageView more;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             store=itemView.findViewById(R.id.tv_store);
             location=itemView.findViewById(R.id.tv_location);
-            more=itemView.findViewById(R.id.iv_more);
+        }
+
+        public void bind(int pos, final Stores selectedStore, final OnItemClickListener listener) {
+
+            store.setText(pos+". "+selectedStore.getStore()+", ");
+            location.setText(selectedStore.getLocation());
+            itemView.setOnClickListener(v -> listener.onItemClick(selectedStore));
         }
     }
 
