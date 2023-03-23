@@ -259,7 +259,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getAttendantsData() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Attendants");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Attendants");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -270,7 +270,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
                     Attendant attendant = attendantsSnapshot.getValue(Attendant.class);
                     String status = attendant.getStatus();
-                    if (!status.equals("terminated")) {
+                    String accessTerminal=attendant.getTerminal();
+                    if (!status.equals("terminated") && accessTerminal.equals(terminal)) {
                         attendantList.add(attendant);
                     }
                 }

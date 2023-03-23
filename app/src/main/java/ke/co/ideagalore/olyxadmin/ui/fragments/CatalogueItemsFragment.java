@@ -128,13 +128,14 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
     }
 
     private void getCatalogueData() {
-        catalogueList.clear();
-        refillCatalogueItems.clear();
-        newGasCylinderItems.clear();
-        accessories.clear();
         reference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                catalogueList.clear();
+                refillCatalogueItems.clear();
+                newGasCylinderItems.clear();
+                accessories.clear();
                 for (DataSnapshot catalogueSnapshot : snapshot.getChildren()) {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
                     catalogueList.add(0, catalogue);
