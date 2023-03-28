@@ -159,6 +159,8 @@ public class AddCatalogueFragment extends Fragment implements View.OnClickListen
                 && validator.validateEditTextFields(requireActivity(), binding.edtBuyingPrice, "")
                 && validator.validateEditTextFields(requireActivity(), binding.edtMarkedPrice, "")
                 && validator.validateEditTextFields(requireActivity(), binding.edtStocked, "")) {
+
+            int newStock=Integer.parseInt(binding.edtStocked.getText().toString().trim());
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(terminal).child("Catalogue");
             String prodId = reference.push().getKey();
             Catalogue catalogue = new Catalogue();
@@ -167,7 +169,8 @@ public class AddCatalogueFragment extends Fragment implements View.OnClickListen
             catalogue.setProduct(binding.edtProduct.getText().toString().trim());
             catalogue.setBuyingPrice(Integer.parseInt(binding.edtBuyingPrice.getText().toString().trim()));
             catalogue.setMarkedPrice(Integer.parseInt(binding.edtMarkedPrice.getText().toString().trim()));
-            catalogue.setStockedQuantity(Integer.parseInt(binding.edtStocked.getText().toString().trim()));
+            catalogue.setStockedQuantity(newStock);
+            catalogue.setAvailableStock(newStock);
             catalogue.setSoldItems(0);
             catalogue.setShop(selectedShop);
             assert prodId != null;

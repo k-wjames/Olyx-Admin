@@ -26,8 +26,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +40,6 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import ke.co.ideagalore.olyxadmin.R;
@@ -150,7 +147,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                     Catalogue catalogue = catalogueSnapshot.getValue(Catalogue.class);
 
                     assert catalogue != null;
-                    int stock = catalogue.getStockedQuantity();
+                    int stock = catalogue.getAvailableStock();
 
                     if (stock > 0) {
                         catalogueArrayList.add(catalogue);
@@ -583,7 +580,6 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 Map<String, Object>map=new HashMap<>();
                 map.put("availableStock",availableStock);
                 map.put("soldItems",updatedStock);
-                map.put("shop",shop);
 
                 myRef1.updateChildren(map).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

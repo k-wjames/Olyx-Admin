@@ -276,8 +276,8 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
                 reference.child(prodId).updateChildren(map).addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
 
-                        customDialogs.showSnackBar(requireActivity(), "Item successfully restocked.");
                         dialog.dismiss();
+                        customDialogs.showSnackBar(requireActivity(), "Item successfully restocked.");
                         getCatalogueData();
                     }
                 });
@@ -288,8 +288,8 @@ public class CatalogueItemsFragment extends Fragment implements View.OnClickList
     private void deleteProduct(String productId, Dialog dialog) {
         reference.child(productId).setValue(null).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                customDialogs.showSnackBar(requireActivity(), "Item successfully deleted.");
                 dialog.dismiss();
+                customDialogs.showSnackBar(requireActivity(), "Item successfully deleted.");
                 getCatalogueData();
             }
 
